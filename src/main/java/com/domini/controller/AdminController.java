@@ -2,7 +2,7 @@ package com.domini.controller;
 
 
 import com.domini.model.User;
-import com.domini.services.IUserService;
+import com.domini.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
-    private final IUserService userService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {

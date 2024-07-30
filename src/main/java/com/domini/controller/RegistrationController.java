@@ -1,15 +1,11 @@
 package com.domini.controller;
 
-import com.domini.dtos.RegistrationUserDto;
 import com.domini.model.User;
-import com.domini.services.IUserService;
 import com.domini.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/registration")
