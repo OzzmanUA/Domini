@@ -20,5 +20,6 @@ public class JwtRequestResponse {
     private String email;
     private String password;
     private String role;
+    private String phone;
     private User user;
 }

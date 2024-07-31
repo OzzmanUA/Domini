@@ -34,11 +34,12 @@ public class AuthService {
             user.setUsername(jwtRequestResponse.getUsername());
             user.setEmail(jwtRequestResponse.getEmail());
             user.setPassword(passwordEncoder.encode(jwtRequestResponse.getPassword()));
-            user.setRoles(jwtRequestResponse.getRole());
+            user.setRoles("ROLE_USER");                                    //в конце изменить на только пользователей
             user.setDateOfRegistration(String.valueOf(new Date()));
             user.setStatus(UserStatus.CREATED);
-            user.setPhone(null);
+            user.setPhone(jwtRequestResponse.getPhone());
             User savedUser = userRepository.save(user);
+
             if (savedUser != null && savedUser.getId()>0) {
                 response.setUser(savedUser);
                 response.setMessage("User successfully saved!");
