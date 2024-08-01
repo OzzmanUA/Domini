@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Категории и Подкатегории</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #4CAF50;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            margin: 20px;
+        }
+        .horizontal-list {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-bottom: 20px;
+        }
+        .horizontal-list-item {
+            background-color: #ffffff;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .horizontal-list-item a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            font-size: 16px;
+        }
+        .horizontal-list-item a:hover {
+            color: #4CAF50;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Категории и Подкатегории</h1>
+</div>
+
+<div class="container">
+
+    <!-- Горизонтальный список категорий -->
+    <div class="horizontal-list">
+        <h2>Категории</h2>
+        <div id="categories"></div>
+    </div>
+
+    <!-- Изображение -->
+    <div class="image-container">
+        <img src="https://via.placeholder.com/800x300.png?text=Image+Placeholder" alt="Placeholder Image">
+    </div>
+
+    <!-- Горизонтальный список подкатегорий -->
+    <div class="horizontal-list">
+        <h2>Популярные подкатегории</h2>
+        <div id="top-subcategories"></div>
+    </div>
+
+</div>
+
+<script>
+    // Загружаем категории
+    fetch('/categories')
+        .then(response => response.json())
+        .then(data => {
+            const categoriesDiv = document.getElementById('categories');
+            data.forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.classList.add('horizontal-list-item');
+                const categoryLink = document.createElement('a');
+                categoryLink.href = `/categories/${category.id}`;
+                categoryLink.textContent = category.name;
+                categoryDiv.appendChild(categoryLink);
+                categoriesDiv.appendChild(categoryDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+
+    // Загружаем топ 10 подкатегорий
+    fetch('/top-subcategories')
+        .then(response => response.json())
+        .then(data => {
+            const subcategoriesDiv = document.getElementById('top-subcategories');
+            data.forEach(subcategory => {
+                const subcategoryDiv = document.createElement('div');
+                subcategoryDiv.classList.add('horizontal-list-item');
+                const subcategoryLink = document.createElement('a');
+                subcategoryLink.href = `/categories/${subcategory.id}`;
+                subcategoryLink.textContent = subcategory.name;
+                subcategoryDiv.appendChild(subcategoryLink);
+                subcategoriesDiv.appendChild(subcategoryDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching subcategories:', error));
+</script>
+
+</body>
+</html>

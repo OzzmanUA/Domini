@@ -3,6 +3,9 @@ package com.domini.services;
 import com.domini.model.Category;
 import com.domini.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +38,14 @@ public class CategoryService{
                 .filter(category -> category.getParentCategory() == null)
                 .peek(category -> category.setSubcategories(categoryRepository.findByParentCategory(category)))
                 .collect(Collectors.toList());
+    }
+
+    public List<Category> getAllParentCategories() {
+        return categoryRepository.findByParentCategoryIsNull();
+    }
+
+    public List<Category> getTop10SubcategoriesWithMostTasks() {
+        Pageable topTen = PageRequest.of(0, 10);
+        return categoryRepository.findTop10SubcategoriesWithMostTasks(topTen);
     }
 }
