@@ -50,6 +50,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "private_information_id", referencedColumnName = "id")
+    private PrivateInformation privateInformation;
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL)
@@ -69,6 +73,16 @@ public class User implements UserDetails {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL)
     private List<Review> reviewsAsWorker;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<Message> sentMessages;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+    private List<Message> receivedMessages;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

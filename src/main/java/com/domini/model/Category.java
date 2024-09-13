@@ -40,6 +40,9 @@ public class Category {
     @EqualsAndHashCode.Exclude
     private List<Task> tasks;
 
+    @OneToOne
+    private Photo photo;
+
     public void addSubcategory(Category subcategory) {
         subcategories.add(subcategory);
         subcategory.setParentCategory(this);
