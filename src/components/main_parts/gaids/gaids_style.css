@@ -1,0 +1,42 @@
+
+
+.gayd p{
+    max-width: 491px;
+    font-size: 20px;
+    margin: 10px;
+    font-weight: 400;
+}
+
+.h2-gayds{
+    text-align: left;
+    font-weight: normal;
+    font-size: 48px;
+    margin-left: 200px;
+}
+.container-gayds {
+    max-width: 1520px;
+    display: flex;
+    overflow-x: scroll;
+}
+.container-gayds::-webkit-scrollbar{
+    display: none;
+}
+.useful-guides{
+    display: flex;
+    flex: none;
+}
+.useful-guides img {
+    width: 491px;
+    height: 356px;
+    border-radius: 10px;
+    margin: 10px;
+}
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.controls #rightBtn, .controls #leftBtn{
+    cursor: pointer;
+    margin: 20px;
+}

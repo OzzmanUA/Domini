@@ -3,6 +3,7 @@ import { loginUser } from "../utils/ApiFunctions"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "./AuthProvider"
 
+
 const Login = () => {
 	const [errorMessage, setErrorMessage] = useState("")
 	const [login, setLogin] = useState({
@@ -28,6 +29,7 @@ const Login = () => {
 			const token = success.token
 			auth.handleLogin(token)
 			navigate(redirectUrl, { replace: true })
+
 		} else {
 			setErrorMessage("Invalid username or password. Please try again.")
 		}

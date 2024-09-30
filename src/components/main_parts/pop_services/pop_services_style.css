@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+}
+
+
+.pop_services {
+    text-align: left;
+    margin-left: 200px;
+    margin-bottom: 40px;
+    font-size: 48px;
+    font-weight: normal;
+}
+
+.container_pop {
+    max-width: 1520px;
+    margin: 0 auto;
+    margin-bottom: 88px;
+    position: relative;
+    overflow: hidden; /* скрывает скроллбар */
+}
+
+.scroll-container {
+    max-height: 400px;
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* скрыть скроллбар в Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none; /* скрыть скроллбар в Chrome, Safari, Opera */
+}
+
+.item {
+    max-width: 272px; /* Ограничение максимальной ширины */
+    height: 380px;
+    margin: 0 20px; /* Отступ между элементами: 20px слева и справа = 40px */
+    flex-shrink: 0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column; /* Вертикальное выравнивание */
+    justify-content: space-between; /* Раздвигаем текст и изображение */
+}
+
+.item h3 {
+    margin-top: 38px;
+    margin-bottom: 10px; /* Отступ между заголовком и изображением */
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.item img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: auto; /* Позиционирует изображение внизу */
+}
+
+.green {
+    background-color: #029802;
+    margin-left: 0px;
+}
+
+.blue {
+    background-color: #006F81;
+}
+
+.red {
+    background-color: #970428;
+}
+
+.yellow {
+    background-color: #E19F20;
+}
+
+.darkblue {
+    background-color: #00446A;
+}
+
+/* Стили для стрелок прокрутки */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 10px;
+    z-index: 100; /* Чтобы кнопки были поверх элементов */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Легкая тень для кнопок */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-btn img {
+    width: 24px; /* Размер изображения внутри кнопки */
+    height: 24px;
+}
+
+.left {
+    left: 10px; /* Отступ от левого края контейнера */
+}
+
+.right {
+    right: 10px; /* Отступ от правого края контейнера */
+}
+
+.scroll-btn:hover {
+    background-color: #e0e0e0; /* Легкое изменение цвета при наведении */
+}
+
+@media (max-width: 768px) {
+    .pop_services {
+        margin-left: 20px;
+        font-size: 36px;
+    }
+
+    .item {
+        max-width: 200px;
+        height: 300px;
+    }
+
+    .scroll-btn {
+        padding: 8px;
+    }
+
+    .scroll-btn img {
+        width: 20px;
+        height: 20px;
+    }
+}

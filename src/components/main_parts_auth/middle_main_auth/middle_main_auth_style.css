@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    font-family: "Rubik", sans-serif;
+    background-color: #f8f9fa;
+}
+
+.bg_middle_div {
+    max-width: 1520px;
+    height: 550px;
+    border-radius: 10px;
+    /* Убираем background-image, так как оно добавлено через inline-стиль в JSX */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.learn-more-btn {
+    width: 188px;
+    height: 44px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #317B7E;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 50px;
+    margin-top: 458px;
+}
+
+.learn-more-btn:hover {
+    background-color: #FFD54F;
+}
