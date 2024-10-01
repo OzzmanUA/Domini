@@ -1,8 +1,7 @@
 
-import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "/node_modules/bootstrap/dist/js/bootstrap.min.js";
-import "./App.css";
+
 import NavBar from "./component/common/NavBar";
 import {
 	BrowserRouter as Router,
@@ -40,7 +39,7 @@ function App() {
 
 
   return (
-    <main className="container mt-5">
+    <main>
 			<AuthProvider>
 				<Router>
 					{/* <NavBar /> */}
@@ -49,7 +48,7 @@ function App() {
 					<Route path="/register" element={<Registration />} />	
 					</Routes>
 
-					<div>
+					<div className="App">
 						<Header />
       					<Admin_UserList users={users} />
       					<Categories categories={categoriesList} />
