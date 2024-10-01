@@ -10,7 +10,7 @@ import appleIcon from '../images/icon_apple.png';
 import facebookIcon from '../images/icon_facebook.png';
 import leftSideImage from '../images/left_side.png';
 
-const RegistrStep1 = () => {
+const Registration = () => {
   return (
     <div className='all_reg_step1'>
     <div className="container">
@@ -54,4 +54,4 @@ const RegistrStep1 = () => {
   );
 };
 
-export default RegistrStep1;
+export default Registration;

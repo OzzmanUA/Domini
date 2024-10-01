@@ -1,24 +1,23 @@
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "/node_modules/bootstrap/dist/js/bootstrap.min.js";
-
-import NavBar from "./component/common/NavBar";
+import NavBar from './components/common/NavBar'
+// import NavBar from "./components/common/NavBar";
 import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
 } from "react-router-dom";
-import Login from "./component/auth/Login"
-import Registration from "./component/auth/Registration"
-import { AuthProvider } from "./component/auth/AuthProvider"
-import RequireAuth from './component/auth/RequireAuth';
+import Login from "./components/auth/Login"
+import { AuthProvider } from "./components/auth/AuthProvider"
+import RequireAuth from './components/auth/RequireAuth';
 
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import Header_auth from './components/header/Header_auth'
 
-import Registr_step1 from './components/registration_steps/reg_step1/registration_step1'
-import Registr_step2 from './components/registration_steps/reg_step2/registration_step2'
+import Registr_step1 from './components/reg_step1/registration_step1'
+import Registration from './components/reg_step2/registration_step2'
 
 import TopNoneAuth from './components/main_parts/top_none_auth/top_none_auth_index'
 import PopServices from './components/main_parts/pop_services/pop_services_index'
@@ -57,8 +56,7 @@ function App() {
 					</div>
 
 				</Router>
-			</AuthProvider>
-			
+			</AuthProvider>			
 		</main>
   );
 }
