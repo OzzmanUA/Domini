@@ -35,7 +35,7 @@ import users from './components/admin/users_demo'
 import CategoryForm from './components/admin/categories_admin_form'
 
 import PerformerProfilePay from './components/profiles/performer-profile-pay/performer-profile-pay'
-import PerformerProfile from './components/profiles/performer-profile/performer-profile'
+
 
 function App() {
 
