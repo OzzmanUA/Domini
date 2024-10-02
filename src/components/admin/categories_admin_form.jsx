@@ -65,7 +65,7 @@ const CategoryForm = () => {
 
   return (
     <div className="category-form-container">
-      <h2>Category Management</h2>
+      <h2 className="cat-manegH2">Category Management</h2>
 
       {/* Форма для добавления/редактирования категории */}
       <div className="form-section">
