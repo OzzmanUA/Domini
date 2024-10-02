@@ -1,4 +1,4 @@
-import './performer-profile-pay-style.css';
+import './performer_profile_pay_style.css';
 import demoUserImg from './images/demo_user.png';
 import mapImg from './images/map.png';
 import checkSmallImg from './images/checksmall.png';
