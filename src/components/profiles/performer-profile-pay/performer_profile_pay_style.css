@@ -1,0 +1,200 @@
+body {
+    font-family: "Rubik", sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .userParts {
+    width: 1520px;
+    display: flex;
+    margin: 0 auto;
+  }
+  
+  .userPartLeft {
+    width: 50%;
+    display: flex;
+  }
+  
+  .userImg {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .userInformation {
+    margin-left: 24px;
+  }
+  
+  .userInformation h1 {
+    font-size: 48px;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  
+  .map {
+    display: flex;
+    align-items: center;
+  }
+  
+  .map img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .map p {
+    font-size: 24px;
+    color: #727272;
+  }
+  
+  .informationParts {
+    width: 1520px;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 32px;
+  }
+  
+  .infoPartLeft {
+    width: 40%;
+  }
+  
+  .userWorkInfoTop {
+    border-bottom: 3px solid #cfcfcf;
+    display: flex;
+    gap: 80px;
+  }
+  
+  .infoTopItem h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  
+  .infoTopItem p {
+    font-size: 16px;
+    color: #727272;
+    margin-bottom: 32px;
+  }
+  
+  .userWorkInfoMiddle {
+    padding-bottom: 10px;
+    border-bottom: 3px solid #cfcfcf;
+  }
+  
+  .userWorkInfoMiddle h2 {
+    color: #0e142b;
+    font-size: 24px;
+  }
+  
+  .userWorkInfoMiddle ul {
+    padding-left: 0;
+  }
+  
+  .userWorkInfoMiddle ul li {
+    height: 26px;
+    margin-top: 8px;
+  }
+  
+  .userWorkInfoMiddle ul li p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .infoMiddleItem {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .infoMiddleItem p {
+    color: #0e142b;
+    font-size: 18px;
+  }
+  
+  .infoMiddleItemLeft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .infoMiddleItemLeft img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .symaTimeWork {
+    display: flex;
+    justify-content: space-between;
+    height: 32px;
+    margin-bottom: 16px;
+  }
+  
+  .symaTimeWork h3 {
+    font-size: 24px;
+  }
+  
+  .symaTimeWork p {
+    font-size: 18px;
+  }
+  
+  .infoMarginPartMiddle {
+    width: 2%;
+  }
+  
+  .infoPartRight {
+    width: 58%;
+    padding-left: 27px;
+    border-left: 3px solid #cfcfcf;
+  }
+  
+  .userCategories {
+    display: flex;
+  }
+  
+  .categLeft {
+    width: 80%;
+  }
+  
+  .categLeft h2 {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  
+  .categRight {
+    width: 20%;
+  }
+  
+  .categRight h2 {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  
+  .infoPartRight p {
+    width: 896px;
+    font-size: 18px;
+    color: #727272;
+  }
+  
+  .pMargin {
+    content: "";
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  .confirmAndPay {
+    width: 303px;
+    height: 56px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 48px;
+  }
+  
+  .confirmAndPay button {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    color: #fefffc;
+    background-color: #1cc41c;
+    border-radius: 10px;
+    border: none;
+  }
+  
