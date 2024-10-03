@@ -55,7 +55,7 @@ public class AdminController {
 
     @GetMapping("/categories")
     public List<CategoryNameDTO> getAllParentCategories() {
-        return categoryService.getAllCategories();
+        return categoryService.getAllParentCategoriesDTO();
     }
 
     @PostMapping("/categories")

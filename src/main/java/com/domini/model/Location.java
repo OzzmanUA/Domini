@@ -20,6 +20,9 @@ public class Location {
     private Long id;
 
     @Column(nullable = false)
+    private String country;
+
+    @Column(nullable = false)
     private String city;
 
     private String district;
@@ -32,7 +35,8 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private List<Task> tasks;
 
-    public Location(String city) {
+    public Location(String country, String city) {
+        this.country = country;
         this.city = city;
     }
 }

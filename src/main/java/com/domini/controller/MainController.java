@@ -1,6 +1,7 @@
 package com.domini.controller;
 
 import com.domini.dtos.CategoryDTO;
+import com.domini.dtos.CategoryNameDTO;
 import com.domini.model.Category;
 import com.domini.services.CategoryService;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,8 @@ public class MainController {
     private final CategoryService categoryService;
 
     @GetMapping("/categories")
-    public List<Category> categories() {
-        return categoryService.getAllParentCategories();
+    public List<CategoryNameDTO> categories() {
+        return categoryService.getAllParentCategoriesDTO();
     }
 
     @GetMapping("/top-subcategories")
