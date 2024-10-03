@@ -1,6 +1,8 @@
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "/node_modules/bootstrap/dist/js/bootstrap.min.js";
+
+import Home from './pages/Home';
 import NavBar from './components/common/NavBar'
 // import NavBar from "./components/common/NavBar";
 import {
@@ -8,6 +10,8 @@ import {
 	Routes,
 	Route,
 } from "react-router-dom";
+import { Fragment } from "react";
+import { redirect } from "react-router-dom";
 import Login from "./components/auth/Login"
 import { AuthProvider } from "./components/auth/AuthProvider"
 import RequireAuth from './components/auth/RequireAuth';
@@ -35,32 +39,56 @@ import users from './components/admin/users_demo'
 import CategoryForm from './components/admin/categories_admin_form'
 
 import PerformerProfilePay from './components/profiles/performer-profile-pay/performer-profile-pay'
+import HomeReg from "./pages/HomeReg";
 
 
 function App() {
+// 	const [token, setToken] = useState();
+
+//   if(!token) {
+//     return <Login setToken={setToken} />
+//   }
 
 
   return (
-    <main>
-			<AuthProvider>
+	<AuthProvider>
+    	<main>
+			
 				<Router>
-					{/* <NavBfar /> */}
+					
+					
 					<Routes>
+					<Route path="/" element={<Home />}/>
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Registration />} />	
-					</Routes>
+					
+					<Route
+ 						path="/homereg"
+  						element={
+    					<RequireAuth>
+      						<HomeReg />
+    					</RequireAuth>
+  						}
 
-					<div className="App">
+					/>
+        			
+
+					</Routes>
+					
+
+					{/* <div className="App">
 						<Header />
       					<Admin_UserList users={users} />
       					<Categories categories={categoriesList} />
 						<CategoryForm/>
       					<Footer/>
-					</div>
+					</div> */}
 
 				</Router>
-			</AuthProvider>			
+				
+					
 		</main>
+	</AuthProvider>	
   );
 }
 

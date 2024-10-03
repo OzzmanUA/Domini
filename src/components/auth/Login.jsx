@@ -12,11 +12,11 @@ const Login = () => {
 		password: "",
 		phone: ""
 	})
-
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const navigate = useNavigate()
 	const auth = useAuth()
 	const location = useLocation()
-	const redirectUrl = location.state?.path || "/"
+	const redirectUrl = location.state?.path || "/homereg"
 
 	const handleInputChange = (e) => {
 		setLogin({ ...login, [e.target.name]: e.target.value })
@@ -29,6 +29,8 @@ const Login = () => {
 			const token = success.token
 			auth.handleLogin(token)
 			navigate(redirectUrl, { replace: true })
+			// setIsLoggedIn(true);
+			// this.props.history.push('/homereg')
 
 		} else {
 			setErrorMessage("Invalid username or password. Please try again.")

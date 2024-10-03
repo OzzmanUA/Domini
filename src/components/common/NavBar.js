@@ -33,6 +33,16 @@ const NavBar = () => {
 								Sign In
 								</Link>
 							</li>
+							<li>
+								<Link className="nav-item" to={"/homereg"}>
+								HomeReg
+								</Link>
+							</li>
+							<li>
+								<Link className="nav-item" to={"/home"}>
+								Home
+								</Link>
+							</li>
 						</li>
 					</ul>
 				</div>
