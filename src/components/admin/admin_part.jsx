@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import "./admin_style.css";
-
+// const [User, setRooms] = useState([{ id: "", roomType: "", roomPrice: "" }])
+// const fetchRooms = async () => {
+//   setIsLoading(true)
+//   try {
+//     const result = await getAllRooms()
+//     setRooms(result)
+//     setIsLoading(false)
+//   } catch (error) {
+//     setErrorMessage(error.message)
+//     setIsLoading(false)
+//   }
+// }
 const usersData = [
   { login: "johndoe", email: "johndoe@example.com", phone: "123-456-7890" },
   { login: "janedoe", email: "janedoe@example.com", phone: "987-654-3210" },

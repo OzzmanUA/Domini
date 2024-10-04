@@ -77,3 +77,33 @@ export async function getUser(userId, token) {
 	}
 }
 
+// export async function updateCat(roomId, roomData) {
+// 	const formData = new FormData()
+// 	formData.append("roomType", roomData.roomType)
+// 	formData.append("roomPrice", roomData.roomPrice)
+// 	formData.append("photo", roomData.photo)
+// 	const response = await api.put(`/rooms/update/${roomId}`, formData,{
+// 		headers: getHeader()
+// 	})
+// 	return response
+// }
+
+// export async function deleteCat(roomId) {
+// 	try {
+// 		const result = await api.delete(`/rooms/delete/room/${roomId}`, {
+// 			headers: getHeader()
+// 		})
+// 		return result.data
+// 	} catch (error) {
+// 		throw new Error(`Error deleting room ${error.message}`)
+// 	}
+// }
+
+export async function getAllCats() {
+	try {
+		const result = await api.get("/main/categories")
+		return result.data
+	} catch (error) {
+		throw new Error("Error fetching categories")
+	}
+}

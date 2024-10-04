@@ -1,4 +1,5 @@
 // Импортируем изображения
+
 import image1 from './images/dom_master.png';
 import image2 from './images/rem_tech.png';
 import image3 from './images/ozdob_rob.png';

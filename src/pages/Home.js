@@ -49,6 +49,7 @@ function Home() {
 					<div className="Home">
 						<Header />
 						<MiddleNonAuth />
+						<CategoryForm />
       					<Footer/>
 					</div>
 

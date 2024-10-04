@@ -1,15 +1,38 @@
-import React, { useState } from "react";
-import categoriesListData from "../main_parts_auth/categories/categoriesList";
+import React, { useEffect, useState } from "react"
+import { getAllCats } from "../utils/ApiFunctions";
+import categoriesList from "../main_parts_auth/categories/categoriesList";
 import "./categories_admin_form_style.css";
 
 const CategoryForm = () => {
-  const [categories, setCategories] = useState(categoriesListData);
+  const [categories, setCategories] = useState(categoriesList);
   const [editingCategory, setEditingCategory] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     subcategories: "",
     image: ""
   });
+
+
+
+  // const [isLoading, setIsLoading] = useState(false)
+  // const [errorMessage, setErrorMessage] = useState("")
+  // useEffect(() => {
+  // fetchCats()
+  // }, [])
+
+  // const fetchCats = async () => {
+  // setIsLoading(true)
+  // try {
+  //   const result = await getAllCats()
+  //   categoriesList(result)
+  //   setIsLoading(false)
+  //   } catch (error) {
+  //   setErrorMessage(error.message)
+  //   setIsLoading(false)
+  //   }
+  // }
+
+
 
   // Удаление категории
   const deleteCategory = (title) => {
