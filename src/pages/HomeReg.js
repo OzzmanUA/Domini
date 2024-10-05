@@ -53,7 +53,7 @@ function HomeReg() {
 					<div className="HomeReg">
 						<Header_auth />
 						<MiddleMainAuth />
-						<Categories categories={categoriesList} />
+						<Categories categories={categoriesList2} />
 						{/* <Categories /> */}
       					<Footer/>
 					</div>
