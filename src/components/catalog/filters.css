@@ -1,0 +1,148 @@
+.filter-container {
+    width: 300px;
+}
+
+.filter-section {
+    margin-bottom: 10px;
+}
+
+.collapsible {
+    background-color: #f1f1f1;
+    color: #0E142B;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.arrow-icon.rotate {
+    transform: rotate(180deg);
+}
+
+.content {
+    padding: 10px 0;
+    margin-left: 5px;
+    display: block;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox input {
+    margin-right: 6px;
+    width: 16px;
+    height: 16px;
+}
+
+.checkbox label{
+    font-size: 14px;
+    font-weight: 500;
+    color: #0E142B;
+    margin-bottom: 0;
+}
+
+.price-range {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+.price-range input[type=range] {
+    -webkit-appearance: none; /* Отключаем стандартный вид ползунка */
+    appearance: none;
+    width: 100%; /* Ширина трека */
+    height: 2px; /* Высота трека */
+    background: #0E142B; /* Цвет фона трека */
+    outline: none; /* Убираем стандартную обводку */
+    opacity: 0.7; /* Прозрачность трека по умолчанию */
+    transition: opacity 0.2s;
+}
+/* Стилизация ползунка для WebKit */
+.price-range input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Отключаем стандартный вид ползунка */
+    appearance: none;
+    width: 15px; /* Ширина ползунка */
+    height: 15px; /* Высота ползунка */
+    border-radius: 50%; /* Делаем ползунок круглый */
+    background: #0E142B; /* Цвет ползунка */
+    cursor: pointer; /* Указатель при наведении */
+}
+
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.price-values input {
+    width: 70px;
+}
+.price-values input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.price-values span {
+    width: 44px;
+    border: 1px solid #0E142B;
+}
+
+#location{
+    width: 290px;
+    height: 32px;
+    border: 1px solid #0E142B;
+    font-size: 14px;
+}
+
+.popular-requests h4{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.popular-requests ul {
+    list-style: none;
+    padding: 0;
+}
+
+.popular-requests li {
+    margin: 10px 0;
+    border: 1px solid #ECECEC;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.popular-requests img {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.popular-requests ul li a {
+    text-decoration: none;
+    color: #0E142B;
+    font-weight: 500;
+}
+.popular-requests ul li a:hover {
+    text-decoration: underline;
+}
+.popular-requests ul li a img {
+    margin-right: 8px;
+ }

@@ -107,7 +107,7 @@ body {
     margin: 0 auto;
   }
   
-  h2 {
+  .services-container h2 {
     font-size: 48px;
     font-weight: 400;
     margin-bottom: 20px;

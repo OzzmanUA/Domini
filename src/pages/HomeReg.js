@@ -34,7 +34,7 @@ import users from './../components/admin/users_demo'
 import CategoryForm from './../components/admin/categories_admin_form'
 import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
-
+import ProfilesCatalog from '../components/catalog/profilesCatalog'
 
 function HomeReg() {
 	const categoriesList2 = getAllParentCategories()
@@ -55,6 +55,7 @@ function HomeReg() {
 						<MiddleMainAuth />
 						<Categories categories={categoriesList2} />
 						{/* <Categories /> */}
+						<ProfilesCatalog />
       					<Footer/>
 					</div>
 

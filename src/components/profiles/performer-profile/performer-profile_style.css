@@ -1,222 +1,350 @@
-/* Общий стиль контейнера профиля */
-.profile-container {
-    font-family: Arial, sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-  
-  /* Левый и правый блоки профиля */
-  .user-parts {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  /* Левая часть с фото пользователя */
-  .user-part-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-  
-  .user-information h1 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .map {
-    display: flex;
-    align-items: center;
-  }
-  
-  .map img {
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-  }
-  
-  /* Правая часть с рейтингом и кнопками */
-  .user-part-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-rating {
-    margin-right: 20px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-rating img {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-  }
-  
-  .user-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .send_user-btn,
-  .make_work-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .send_user-btn img {
-    margin-right: 5px;
-    width: 16px;
-    height: 16px;
-  }
-  
-  .send_user-btn:hover,
-  .make_work-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Информация о работе и клиентах */
-  .user-work-info-top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .info_top_item h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: #007bff;
-  }
-  
-  .user-work-info-bottom {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .info_bottom_item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .info_bottom_item img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
-  
-  /* Категории и описание пользователя */
-  .user-categories {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .categ_left h2,
-  .categ_right h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .categ_right h2 {
-    color: #28a745;
-  }
-  
-  /* Портфолио */
-  .portfolio {
-    margin-bottom: 20px;
-  }
-  
-  .portfolio h2 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-  }
-  
-  .portfolio-images {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .portfolio-images img {
-    width: 180px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  /* Список отзывов */
-  .review-container {
-    margin-bottom: 30px;
-  }
-  
-  .review-container h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .review-list .review-item {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .review-item h3 {
-    margin: 0 0 5px 0;
-  }
-  
-  .review-item p {
-    margin: 5px 0;
-  }
-  
-  /* Стиль для аккордеонов */
-  .accordion {
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  .accordion-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f7f7f7;
-    cursor: pointer;
-  }
-  
-  .accordion-header h2 {
-    margin: 0;
-    font-size: 1.2rem;
-  }
-  
-  .accordion-content {
-    padding: 10px;
-    background-color: #fff;
-  }
-  
-  .accordion-icon {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-  }
-  
-  .accordion-icon.open {
-    transform: rotate(180deg);
-  }
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.user-parts{
+  width: 1520px;
+  display: flex;
+  margin: 0 auto;
+}
+
+
+.user-part-left{
+  width: 50%;
+  display: flex;
+}
+.user-img{
+  width: 140px;
+  height: 140px;
+}
+.user-information{
+  margin-left: 24px;
+}
+.user-information h1{
+  font-size: 48px;
+  font-weight: 400;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.map{
+  display: flex;
+  align-items: center;
+}
+.map img{
+  width: 32px;
+  height: 32px;
+}
+.map p{
+  font-size: 24px;
+  color: #727272;
+}
+
+
+.user-part-right{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+.user-rating{
+  display: flex;
+  align-items: center;
+}
+.user-rating img{
+  width: 40px;
+  height: 40px;
+}
+.user-rating p{
+  font-size: 16px;
+  color: #727272;
+}
+.user-buttons{
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 16px;
+}
+.send_user-btn{
+  width: 250px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+  font-size: 16px;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  color: #1CC41C;
+  border: 2px solid #4CAF50;
+  border-radius: 5px;
+  background-color: white;
+}
+.send_user-btn img{
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+.make_work-btn{
+  width: 250px;
+  height: 44px;
+  font-size: 16px;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  border-radius: 5px;
+  background-color: #1CC41C;
+  color: white;
+  border: none;
+}
+
+
+.information-parts{
+  width: 1520px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 32px;
+}
+.info-part-left{
+  width: 40%;
+}
+.user-work-info-top{
+  border-bottom: 3px solid #CFCFCF;
+  display: flex;
+  gap: 80px;
+}
+.info_top_item h2{
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.info_top_item p{
+  font-size: 16px;
+  color: #727272;
+  margin-bottom: 32px;
+}
+
+.user-work-info-bottom{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding-top: 27px;
+}
+.info_bottom_item{
+  width: 267px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ECECEC;
+  border-radius: 15px;
+}
+.info_bottom_item img{
+  width: 52px;
+  height: 52px;
+  margin-left: 16px;
+}
+.bottom-item-describe{
+  margin-left: 12px;
+}
+.bottom-item-describe h2{
+  font-size: 24px;
+  font-weight: 400;
+  color: #1CC41C;
+  margin-bottom: 8px;
+}
+.bottom-item-describe p{
+  font-size: 16px;
+  color: #727272;
+}
+
+
+.info-margin-part-middle{
+  width: 2%;
+}
+
+
+.info-part-right{
+  width: 58%;
+  padding-left: 27px;
+  border-left: 3px solid #CFCFCF;
+}
+.user-categories{
+  display: flex;
+}
+.categ_left{
+  width: 80%;
+}
+.categ_left h2{
+  font-size: 22px;
+  font-weight: 500;
+}
+.categ_right{
+  width: 20%;
+}
+.categ_right h2{
+  font-size: 22px;
+  font-weight: 500;
+}
+.info-part-right p{
+  width: 896px;
+  font-size: 18px;
+  color: #727272;
+}
+.p-margin{
+  content: "";
+  display: block;
+  margin-bottom: 20px;
+}
+
+
+.portfolio {
+  width: 1520px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.portfolio h2 {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.portfolio-images {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.portfolio-images img {
+  width: 293px;
+  height: 228px;
+  border-radius: 10px;
+}
+
+
+
+.review-container {
+  padding: 20px;
+  max-width: 1520px;
+  margin: 0 auto;
+}
+.review-container h2{
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.review-list {
+  max-height: 507px; /* Фиксированная высота для прокрутки */
+  overflow-y: auto;  /* Добавляем вертикальную прокрутку */
+  display: grid;
+  grid-template-columns: 1fr; /* Одноколоночная сетка */
+  gap: 20px; /* Расстояние между отзывами */
+  padding-right: 10px; /* Добавим отступ для видимости полосы прокрутки */
+}
+
+.review {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #1CC41C;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.review p {
+  margin: 8px 0;
+  font-size: 18px;
+  color: #727272;
+}
+
+/* Стили для полосы прокрутки */
+.review-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.review-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.review-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+
+.container {
+  max-width: 1520px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.accordion {
+  margin-bottom: 20px;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 24px;
+  background-color: #eee;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-header h2 {
+  font-size: 20px;
+  color: #0E142B;
+}
+
+.accordion-icon {
+  transition: transform 0.3s ease; /* Добавляем плавное вращение */
+}
+
+.accordion-icon.rotate {
+  transform: rotate(180deg); /* Поворачиваем на 180 градусов */
+}
+
+.accordion-content {
+  display: none; /* Скрываем контент по умолчанию */
+  color: #727272;
+  font-size: 18px;
+  padding: 24px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.language-block, .skills-list, .education-block {
+  margin-top: 10px;
+}
+
+.language-block{
+  display: flex;
+  gap: 24px;
+}
+.education-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.language-item, .education-item {
+  width: 700px;
+  display: flex;
+  color: #727272;
+  font-size: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #CFCFCF;
+  padding: 12px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+}

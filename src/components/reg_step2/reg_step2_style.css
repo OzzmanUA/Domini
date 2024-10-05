@@ -109,6 +109,6 @@ label {
     margin-top: 10px;
 }
 
-button:hover {
+.reg_btn button:hover {
     background-color: #008F00;
 }
