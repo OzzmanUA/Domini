@@ -22,7 +22,7 @@ import { getAllParentCategories } from "../../utils/ApiFunctions";
 
 const Category = ({ image, name, subcategories }) => {
   return (
-    <body>
+
     <div className="category-card">
       <img src={image} alt={name} className="category-image" />
       <h3>{name}</h3>
@@ -33,7 +33,7 @@ const Category = ({ image, name, subcategories }) => {
       </ul>
       <a href="#"><h4>Показати ще 🡣</h4></a>
     </div>
-    </body>
+
   );
 };
 // const categoriesList2 = getAllParentCategories();
@@ -41,9 +41,9 @@ const Categories = ({ categories }) => {
 
   return (
     <div className="categories-container">
-      {categories.map((category, key) => (
+      {categories.map((category, index) => (
         <Category
-          key={key}
+          key={index}
           image={category.image}
           name={category.name}
           subcategories={category.subcategories}

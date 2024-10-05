@@ -77,11 +77,11 @@ export async function getUser(userId, token) {
 	}
 }
 
-// export async function updateCat(roomId, roomData) {
+// export async function updateCat(catId, catData) {
 // 	const formData = new FormData()
-// 	formData.append("roomType", roomData.roomType)
-// 	formData.append("roomPrice", roomData.roomPrice)
-// 	formData.append("photo", roomData.photo)
+// 	formData.append("name", catData.catName)
+// 	// formData.append("roomPrice", catData.roomPrice)
+// 	formData.append("photo_id", catData.photo_id)
 // 	const response = await api.put(`/rooms/update/${roomId}`, formData,{
 // 		headers: getHeader()
 // 	})
