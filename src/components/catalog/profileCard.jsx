@@ -6,7 +6,7 @@ import favouriteIcon from './images/favourite.png';
 import moneyLogo from './images/money_logo.png';
 import reviewsLogo from './images/reviews_logo.png';
 import successLogo from './images/success_logo.png';
-
+//hi
 
 const ProfileCard = ({ profile }) => {
     return (
