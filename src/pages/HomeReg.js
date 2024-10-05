@@ -32,11 +32,13 @@ import categoriesList from './../components/main_parts_auth/categories/categorie
 import Admin_UserList from './../components/admin/admin_part'
 import users from './../components/admin/users_demo'
 import CategoryForm from './../components/admin/categories_admin_form'
+import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
 
 
 function HomeReg() {
-
+	const categoriesList2 = getAllParentCategories()
+	// console.log (categoriesList2)
 
   return (
     <main>
@@ -50,6 +52,8 @@ function HomeReg() {
 					<div className="HomeReg">
 						<Header_auth />
 						<MiddleMainAuth />
+						<Categories categories={categoriesList} />
+						{/* <Categories /> */}
       					<Footer/>
 					</div>
 

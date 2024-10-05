@@ -99,11 +99,29 @@ export async function getUser(userId, token) {
 // 	}
 // }
 
-export async function getAllCats() {
+//------------------------------------------------------------------
+
+
+// export async function getAllCats() {
+// 	try {
+// 		const result = await api.get("/category/categories")
+// 		return result.data		
+// 	} catch (error) {
+// 		console.error('Error fetching categories:', error);
+// 		throw new Error("Error fetching categories")
+// 	}
+// }
+
+//------------------------------------------------------------------
+
+export async function getAllParentCategories() {
 	try {
-		const result = await api.get("/main/categories")
-		return result.data
+	  const response = await api.get("/category/categories");
+	  const categories = response.data;
+	  console.log(categories)
+	  return categories;
+ 		// Assuming the response is an array of categories
 	} catch (error) {
-		throw new Error("Error fetching categories")
+	  console.error('Error fetching categories:', error);
 	}
-}
+  };

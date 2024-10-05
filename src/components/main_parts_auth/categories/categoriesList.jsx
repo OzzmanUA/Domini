@@ -1,4 +1,6 @@
 // Импортируем изображения
+import React, { useState, } from "react"
+import { getAllCats } from "../../utils/ApiFunctions"
 
 import image1 from './images/dom_master.png';
 import image2 from './images/rem_tech.png';
@@ -8,6 +10,28 @@ import image5 from './images/mebl_rob.png';
 import image6 from './images/clean_poslug.png';
 import image7 from './images/transport_poslugs.png';
 import image8 from './images/pobut_poslugs.png';
+// const categoriesList = () => {
+//   const categoriesList = []
+//   const [isLoading, setIsLoading] = useState(false)
+//   const [errorMessage, setErrorMessage] = useState("")
+//   // useEffect(() => {
+//   // fetchCats()
+//   // }, [])
+
+//   const fetchCats = async () => {
+//   setIsLoading(true)
+//   try {
+//     const result = await getAllCats()
+//     categoriesList(result)
+//     setIsLoading(false)
+//     } catch (error) {
+//     setErrorMessage(error.message)
+//     setIsLoading(false)
+//     }
+//   }
+// }
+// export default categoriesList
+
 
 const categoriesList = [
     {
@@ -52,4 +76,4 @@ const categoriesList = [
     }
   ];
 
-  export default categoriesList;
+export default categoriesList;

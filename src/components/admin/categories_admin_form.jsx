@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { getAllCats } from "../utils/ApiFunctions";
 import categoriesList from "../main_parts_auth/categories/categoriesList";
 import "./categories_admin_form_style.css";
+import { getAllParentCategories } from "../utils/ApiFunctions";
 
 
 const CategoryForm = () => {
+
+  const [categories, setCategories] = useState(categoriesList);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    subcategories: "",
+    image: ""
+  });
   // const [isLoading, setIsLoading] = useState(false)
   // const [errorMessage, setErrorMessage] = useState("")
   // useEffect(() => {
@@ -14,7 +22,7 @@ const CategoryForm = () => {
   // const fetchCats = async () => {
   // setIsLoading(true)
   // try {
-  //   const result = await getAllCats()
+  //   const result = await getAllParentCategories()
   //   categoriesList(result)
   //   setIsLoading(false)
   //   } catch (error) {
@@ -22,13 +30,6 @@ const CategoryForm = () => {
   //   setIsLoading(false)
   //   }
   // }
-  const [categories, setCategories] = useState(categoriesList);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [formData, setFormData] = useState({
-    title: "",
-    subcategories: "",
-    image: ""
-  });
 
 
 

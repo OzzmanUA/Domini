@@ -35,9 +35,12 @@ import CategoryForm from './../components/admin/categories_admin_form'
 
 import PerformerProfilePay from './../components/profiles/performer-profile-pay/performer-profile-pay'
 import HomeReg from './HomeReg';
+import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
 
 function Home() {
+	// const categoriesList2 = getAllParentCategories()
+	// console.log (getAllParentCategories)
 
 
   return (
@@ -49,7 +52,8 @@ function Home() {
 					<div className="Home">
 						<Header />
 						<MiddleNonAuth />
-						<CategoryForm />
+						
+
       					<Footer/>
 					</div>
 
