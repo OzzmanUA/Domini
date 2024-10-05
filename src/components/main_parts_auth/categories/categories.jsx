@@ -27,8 +27,8 @@ const Category = ({ image, name, subcategories }) => {
       <img src={image} alt={name} className="category-image" />
       <h3>{name}</h3>
       <ul>
-        {subcategories.map((sub, id) => (
-          <li id={id}>{sub}</li>
+        {subcategories.map((sub, key) => (
+          <li key={key}>{sub}</li>
         ))}
       </ul>
       <a href="#"><h4>Показати ще 🡣</h4></a>
@@ -41,9 +41,9 @@ const Categories = ({ categories }) => {
 
   return (
     <div className="categories-container">
-      {categories.map((category, id) => (
+      {categories.map((category, key) => (
         <Category
-          id={id}
+          key={key}
           image={category.image}
           name={category.name}
           subcategories={category.subcategories}

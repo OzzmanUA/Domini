@@ -32,31 +32,30 @@ import categoriesList from './../components/main_parts_auth/categories/categorie
 import Admin_UserList from './../components/admin/admin_part'
 import users from './../components/admin/users_demo'
 import CategoryForm from './../components/admin/categories_admin_form'
+
+import PerformerProfilePay from './../components/profiles/performer-profile-pay/performer-profile-pay'
+import HomeReg from './HomeReg';
 import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
 
+function Catlist() {
+	// const categoriesList2 = getAllParentCategories()
+	// console.log (getAllParentCategories)
 
-function HomeReg() {
-	const categoriesList2 = getAllParentCategories()
-	console.log (categoriesList)
-	console.log (categoriesList2)
 
   return (
     <main>
 			<AuthProvider>
-					{/* <NavBfar /> */}
-					{/* <Routes>
-					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Registration />} />	
-					</Routes> */}
 
-					<div className="HomeReg">
-						<Header_auth />
-						<MiddleMainAuth />
-						<Categories categories={categoriesList} />
-						{/* <Categories /> */}
+					{/* <NavBfar /> */}
+
+					{/* <div className="Catlist">
+						<Header />
+						<MiddleNonAuth />
+						
+
       					<Footer/>
-					</div>
+					</div> */}
 
 
 			</AuthProvider>			
@@ -64,4 +63,4 @@ function HomeReg() {
   );
 }
 
-export default HomeReg;
+export default Catlist;
