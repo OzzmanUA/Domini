@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class WorkerInfoDTO {
     private Long userId;
-    private String username;
     private String firstName;  // Добавить в модель User поле для имени
     private String lastName;   // Добавить в модель User поле для фамилии
     private String category;   // Текущая категория

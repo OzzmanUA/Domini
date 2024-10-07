@@ -1,13 +1,7 @@
 package com.domini.services;
 
-import com.domini.dtos.CategoryDTO;
-import com.domini.dtos.CategoryNameDTO;
-import com.domini.dtos.CategoryWithSubcategoriesDTO;
-import com.domini.dtos.WorkerInfoDTO;
-import com.domini.model.Category;
-import com.domini.model.Location;
-import com.domini.model.PrivateInformation;
-import com.domini.model.User;
+import com.domini.dtos.*;
+import com.domini.model.*;
 import com.domini.repository.CategoryRepository;
 import com.domini.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -120,7 +114,6 @@ public class CategoryService{
 
         return new WorkerInfoDTO(
                 user.getId(),
-                user.getUsername(),
                 privateInfo.getFirstName(),   // Имя из PrivateInformation
                 privateInfo.getLastName(),    // Фамилия из PrivateInformation
                 categories.get(0),            // Основная категория
@@ -130,6 +123,99 @@ public class CategoryService{
                 privateInfo.getServicePrice(), // Цена за услуги
                 privateInfo.getAbout(),        // Описание
                 categories                    // Все категории
+        );
+    }
+
+    // Метод для преобразования сущности Review в ReviewDTO
+    private ReviewDTO convertToReviewDTO(Review review) {
+        return new ReviewDTO(
+                review.getTask().getDescription(),          // Описание задания
+                review.getOverallRating(),                  // Общая оценка
+                review.getTask().getCompletionDate(),       // Дата завершения задания
+                review.getFeedback(),                       // Примечание от клиента
+                review.getWorkQualityRating(),              // Оценка качества работы (если имеется)
+                review.getPolitenessRating(),               // Оценка вежливости (если имеется)
+                review.getPunctualityRating(),              // Оценка пунктуальности (если имеется)
+                review.getClient().getPrivateInformation().getFirstName() // Имя клиента
+        );
+    }
+
+    public WorkerDetailedDTO getWorkerDetailedInfoById(Long workerId) {
+        User worker = userRepository.findById(workerId)
+                .orElseThrow(() -> new RuntimeException("Работник не найден"));
+
+        PrivateInformation privateInfo = worker.getPrivateInformation();
+        Location location = worker.getLocation();
+
+        // Собираем категории
+        List<String> categories = privateInfo.getCategories().stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
+
+        // Собираем изображения портфолио
+        List<String> portfolioImages = privateInfo.getPortfolio().stream()
+                .map(Photo::getUrl)
+                .collect(Collectors.toList());
+
+        // Собираем отзывы
+        List<ReviewDTO> reviews = worker.getReviewsAsWorker().stream()
+                .map(this::convertToReviewDTO)
+                .collect(Collectors.toList());
+
+        // Подсчитываем статистику по отзывам
+        ReviewStatisticsDTO reviewStatistics = calculateReviewStatistics(worker);
+
+        return new WorkerDetailedDTO(
+                worker.getId(),
+                privateInfo.getFirstName(),
+                privateInfo.getLastName(),
+                location.getCountry(),
+                location.getCity(),
+                calculateEarnings(worker),  // Рассчитываем общие заработки
+                worker.getTasksAsExecutor().size(),  // Количество выполненных заданий
+                categories,
+                privateInfo.getAbout(),
+                portfolioImages,
+                reviews,
+                reviewStatistics,
+                privateInfo.getLanguage(),
+                privateInfo.getSkills(),
+                privateInfo.getEducation()
+        );
+    }
+
+    private double calculateEarnings(User worker) {
+        return worker.getTasksAsExecutor().stream()
+                .mapToDouble(Task::getPrice) // Преобразуем в DoubleStream
+                .sum(); // Суммируем значения
+    }
+
+    private ReviewStatisticsDTO calculateReviewStatistics(User worker) {
+        List<Review> reviews = worker.getReviewsAsWorker();
+        int reviewCount = reviews.size();
+
+        if (reviewCount == 0) {
+            return new ReviewStatisticsDTO(0, 0, 0, 0);  // Если нет отзывов, возвращаем нулевые оценки
+        }
+
+        float totalScore = 0;
+        float totalQualityScore = 0;
+        float totalPolitenessScore = 0;
+        float totalPunctualityScore = 0;
+
+        for (Review review : reviews) {
+            totalScore += review.getOverallRating();
+            // Допустим, что оценка качества, вежливости и пунктуальности хранятся в дополнительных полях:
+            totalQualityScore += review.getWorkQualityRating();
+            totalPolitenessScore += review.getPolitenessRating();
+            totalPunctualityScore += review.getPunctualityRating();
+        }
+
+        return new ReviewStatisticsDTO(
+                totalScore / reviewCount,
+                totalQualityScore / reviewCount,
+                totalPolitenessScore / reviewCount,
+                totalPunctualityScore / reviewCount
         );
     }
 }

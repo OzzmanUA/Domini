@@ -26,7 +26,10 @@ public class Task {
     private String details;
 
     @Column(nullable = false)
-    private String price;
+    private Double price;
+
+    @Column(nullable = false)
+    private String completionDate;  // Дата завершения задачи (для отображения в отзыве)
 
     @Column(nullable = false)
     private boolean isConfirmed;

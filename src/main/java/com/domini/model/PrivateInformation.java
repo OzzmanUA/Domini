@@ -2,13 +2,17 @@ package com.domini.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Data
 @RequiredArgsConstructor
+@Getter
+@Setter
 @Table(name = "private_information")
 public class PrivateInformation {
     @Id

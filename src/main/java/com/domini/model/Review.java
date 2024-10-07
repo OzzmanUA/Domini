@@ -17,10 +17,19 @@ public class Review {
     private Long id;
 
     @Column(nullable = false)
-    private float score;
+    private float overallRating;  // Общая оценка работника
+
+    @Column(nullable = false)
+    private float workQualityRating;  // Оценка за качество работы
+
+    @Column(nullable = false)
+    private float politenessRating;  // Оценка за вежливость
+
+    @Column(nullable = false)
+    private float punctualityRating;  // Оценка за пунктуальность
 
     @Column(length = 1024)
-    private String text;
+    private String feedback;  // Текст отзыва от клиента
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
@@ -35,4 +44,6 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id")
     private User worker;
+
+
 }
