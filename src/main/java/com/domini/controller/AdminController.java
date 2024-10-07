@@ -65,12 +65,17 @@ public class AdminController {
             if (file == null || file.isEmpty()) {
                 return new ResponseEntity<>("Файл не выбран или пустой", HttpStatus.BAD_REQUEST);
             }
+            if (category.getName() == null || category.getName().isEmpty()) {
+                return new ResponseEntity<>("Имя категории не может быть пустым", HttpStatus.BAD_REQUEST);
+            }
 
             String imageUrl = photoUploadService.uploadPhoto(file);
             System.out.println("Uploaded image URL: " + imageUrl);
 
             Photo photo = new Photo();
             photo.setUrl(imageUrl);
+            photo = photoUploadService.save(photo);
+
             category.setPhoto(photo);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

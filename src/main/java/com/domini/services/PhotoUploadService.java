@@ -1,6 +1,8 @@
 package com.domini.services;
 
 import com.domini.model.Photo;
+import com.domini.repository.PhotoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,8 +16,15 @@ import java.util.UUID;
 @Service
 public class PhotoUploadService {
 
+    @Autowired
+    private  PhotoRepository photoRepository;
+
     @Value("${upload.path}")  // Путь загрузки из application.properties
     private String uploadDir;
+
+    public Photo save(Photo photo) {
+        return photoRepository.save(photo);  // Сохраняем фото
+    }
 
     public String uploadPhoto(MultipartFile file) throws IOException {
         // Проверка на пустой файл
