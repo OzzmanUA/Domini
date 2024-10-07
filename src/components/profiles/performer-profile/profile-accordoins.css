@@ -1,0 +1,101 @@
+.container-accordions {
+    max-width: 1520px;
+    margin: 60px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* Важный момент: расположение в колонку */
+}
+
+/* Стили для аккордеона */
+.accordion {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%; /* Ширина на всю строку */
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    background-color: #F5F5F5;
+    transition: background-color 0.3s ease;
+    border: 1px solid #CFCFCF;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 100%; /* Ширина на всю строку */
+}
+
+.accordion-header:hover {
+    background-color: #E0E0E0;
+}
+
+.accordion-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0E142B;
+    margin: 0;
+}
+
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+
+.accordion-icon.rotate {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #727272;
+    border: 1px solid #CFCFCF;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 100%; /* Ширина на всю строку */
+}
+
+/* Контейнер для языков и образования */
+.language-block, .education-block {
+    margin-top: 10px;
+}
+
+.language-block {
+    display: flex;
+    font-weight: 600;
+    gap: 10px;
+}
+
+.education-block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Две колонки одинаковой ширины */
+    gap: 16px;
+}
+
+.language-item, .education-item {
+    padding: 10px;
+    background-color: #F0F0F0;
+    border-radius: 4px;
+    border: 1px solid #CFCFCF;
+    font-size: 20px;
+    font-weight: 600;
+    color: #505050;
+    width: 100%; /* Растягиваем на всю ширину */
+}
+
+/* Общий стиль для пунктов в аккордеоне */
+.language-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.language-item span p{
+    color: #065460;
+}

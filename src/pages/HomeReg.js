@@ -36,6 +36,10 @@ import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
 import ProfilesCatalog from '../components/catalog/profilesCatalog'
 
+import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
+
+import Order from '../components/order/order'
+
 function HomeReg() {
 	const categoriesList2 = getAllParentCategories()
 	console.log (categoriesList)
@@ -55,7 +59,8 @@ function HomeReg() {
 						<MiddleMainAuth />
 						<Categories categories={categoriesList2} />
 						{/* <Categories /> */}
-						<ProfilesCatalog />
+						<PerformerProfile/>
+						<Order/>
       					<Footer/>
 					</div>
 

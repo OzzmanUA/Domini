@@ -1,0 +1,125 @@
+.order-form {
+    width: 100%;
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .order-form h2{
+    color: #0E142B;
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .order-top-bg{
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-top: 24px;
+
+  }
+  .form-group-border{
+    border-bottom: 2px solid #CFCFCF;
+    margin-bottom: 32px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 0;
+    color: #0E142B;
+  }
+  
+  input[type="text"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: #727272;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  #category, #short-description, #detailed-description{
+    width: 900px;
+  }
+  
+  
+  .address-fields {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .address-fields span{
+    font-size: 20px;
+    color: #0E142B;
+  }
+  
+  .address-fields input,
+  .address-fields select {
+    width: 365px;
+    flex: 1;
+  }
+  
+  .checkbox {
+    display: flex;
+    align-items: center;
+  }
+  .checkbox label{
+    color: #0E142B;
+    font-size: 14px;
+  }
+  
+  .checkbox input {
+    margin-right: 8px;
+  }
+  
+  input[type="date"] {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+.order-bottom{
+    max-width: 1520px;
+    display: flex;
+    gap: 10%;
+}
+
+.order-bottom-left{
+    width: 45%;
+}
+.order-bottom-right{
+    width: 45%;
+}
+#price{
+    width: 313px;
+}
+
+
+  
+  .submit-btn {
+    width: 150px;
+    padding: 15px;
+    background-color: #1CC41C;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+    margin-top: 93px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #218838;
+  }
+  
