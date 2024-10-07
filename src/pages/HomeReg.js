@@ -39,6 +39,7 @@ import ProfilesCatalog from '../components/catalog/profilesCatalog'
 import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
 
 import Order from '../components/order/order'
+import AddCategory from '../components/admin/AddCategory';
 
 function HomeReg() {
 	const categoriesList2 = getAllParentCategories()
@@ -58,6 +59,7 @@ function HomeReg() {
 						<Header_auth />
 						<MiddleMainAuth />
 						<Categories categories={categoriesList2} />
+						<AddCategory />
 						{/* <Categories /> */}
 						<PerformerProfile/>
 						<Order/>
