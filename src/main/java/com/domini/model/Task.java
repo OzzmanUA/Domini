@@ -4,6 +4,7 @@ import com.domini.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,7 +18,7 @@ import java.util.List;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String description;
@@ -29,7 +30,7 @@ public class Task {
     private Double price;
 
     @Column(nullable = false)
-    private String completionDate;  // Дата завершения задачи (для отображения в отзыве)
+    private LocalDate completionDate;  // Дата завершения задачи (для отображения в отзыве)
 
     @Column(nullable = false)
     private boolean isConfirmed;
@@ -58,6 +59,6 @@ public class Task {
 
     // Связь с локацией
     @ManyToOne
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 }

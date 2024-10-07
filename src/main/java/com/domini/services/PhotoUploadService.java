@@ -29,6 +29,12 @@ public class PhotoUploadService {
         // Путь для сохранения файла
         Path filePath = Paths.get(uploadDir, uniqueFileName);
 
+        // Логирование пути сохранения
+        System.out.println("Saving file to: " + filePath.toString());
+
+        // Создание директорий, если их нет
+        Files.createDirectories(filePath.getParent());
+
         // Копирование файла в директорию
         Files.copy(file.getInputStream(), filePath);
 

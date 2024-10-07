@@ -131,7 +131,7 @@ public class CategoryService{
         return new ReviewDTO(
                 review.getTask().getDescription(),          // Описание задания
                 review.getOverallRating(),                  // Общая оценка
-                review.getTask().getCompletionDate(),       // Дата завершения задания
+                review.getTask().getCompletionDate().toString(),       // Дата завершения задания (в формате гггг-мм-дд)
                 review.getFeedback(),                       // Примечание от клиента
                 review.getWorkQualityRating(),              // Оценка качества работы (если имеется)
                 review.getPolitenessRating(),               // Оценка вежливости (если имеется)

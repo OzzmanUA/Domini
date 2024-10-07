@@ -29,6 +29,8 @@ public class Location {
 
     private String street;
 
+    private String house;
+
     @OneToOne(mappedBy = "location")
     private User user;
 

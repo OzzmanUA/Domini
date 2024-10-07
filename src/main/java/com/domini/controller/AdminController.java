@@ -62,13 +62,19 @@ public class AdminController {
     public ResponseEntity<String> addCategory(@ModelAttribute("category") Category category,
                                               @RequestParam("file") MultipartFile file) {
         try {
-            // Загружаем изображение на сервер и получаем URL
-            String imageUrl = photoUploadService.uploadPhoto(file);
+            if (file == null || file.isEmpty()) {
+                return new ResponseEntity<>("Файл не выбран или пустой", HttpStatus.BAD_REQUEST);
+            }
 
-            // Устанавливаем URL изображения в категорию
+            String imageUrl = photoUploadService.uploadPhoto(file);
+            System.out.println("Uploaded image URL: " + imageUrl);
+
             Photo photo = new Photo();
             photo.setUrl(imageUrl);
             category.setPhoto(photo);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>("Ошибка при загрузке изображения", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,7 +84,13 @@ public class AdminController {
             category.setParentCategory(null);
         }
 
-        categoryService.saveCategory(category);
+        try {
+            categoryService.saveCategory(category);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Ошибка при сохранении категории", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         return new ResponseEntity<>("Категория добавлена успешно", HttpStatus.OK);
     }
 
