@@ -20,7 +20,7 @@ const AddCategory = () => {
 
     // Create form data object to hold the inputs
     const formData = new FormData();
-    formData.append('category.name', categoryName); // Assuming your backend expects 'category.name'
+    formData.append('name', categoryName); // Assuming your backend expects 'category.name'
     formData.append('file', imageFile); // Append the image file
 
     try {
@@ -77,3 +77,87 @@ const AddCategory = () => {
 };
 
 export default AddCategory;
+
+
+// const AddCategory = () => {
+//   const [categoryName, setCategoryName] = useState('');
+//   const [parentCategory, setParentCategory] = useState(null);
+//   const [file, setFile] = useState(null);
+
+//   // Handle the file input change
+//   const handleFileChange = (e) => {
+//     setFile(e.target.files[0]);
+//   };
+
+//   // Handle form submission
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     // Create FormData object to send category data and the file
+//     const formData = new FormData();
+//     const categoryData = {
+//       name: categoryName,
+//       parentCategory: parentCategory ? { id: parentCategory } : null,
+//     };
+
+//     // Append category data as a string (since @ModelAttribute in backend expects it)
+//     formData.append('category', new Blob([JSON.stringify(categoryData)], { type: 'application/json' }));
+//     formData.append('file', file);
+
+//     try {
+//       const token = localStorage.getItem("token")
+//       // Send a POST request to the backend
+//       const response = await api.post('/admin/categories', formData, {
+
+//         headers: {
+          
+//           'Content-Type': 'multipart/form-data',
+//           'Authorization': `Bearer ${token}`, // Add token here
+//         },
+//       });
+
+//       // Handle success response
+//       console.log('Category added successfully:', response.data);
+//       alert('Category added successfully');
+//     } catch (error) {
+//       // Handle errors
+//       console.error('Error adding category:', error.response ? error.response.data : error.message);
+//       alert('Error adding category');
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h2>Add New Category</h2>
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label>Category Name:</label>
+//           <input
+//             type="text"
+//             value={categoryName}
+//             onChange={(e) => setCategoryName(e.target.value)}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label>Parent Category ID (optional):</label>
+//           <input
+//             type="number"
+//             value={parentCategory || ''}
+//             onChange={(e) => setParentCategory(e.target.value)}
+//           />
+//         </div>
+
+//         <div>
+//           <label>Upload Image:</label>
+//           <input type="file" accept="image/*" onChange={handleFileChange} required />
+//         </div>
+
+//         <button type="submit">Add Category</button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default AddCategory;

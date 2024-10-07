@@ -116,7 +116,7 @@ export async function getUser(userId, token) {
 
 export async function getAllParentCategories() {
 	try {
-	  const response = await api.get("/category/categories");
+	  const response = await api.get("/category/all-categories");
 	  const categories = response.data;
 	  console.log(categories)
 	  return categories;

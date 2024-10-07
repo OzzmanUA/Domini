@@ -50,7 +50,7 @@ const Categories = () => {
       {categories.map((category) => (
         <Category
           key={category.id}
-          image={defaultImage}  // Одно изображение для всех категорий
+          image={category.imageUrl ? `http://localhost:8080${category.imageUrl}` : defaultImage}  // Use server image or fallback to default
           name={category.name}  // Выводим только имя категории
         />
       ))}
