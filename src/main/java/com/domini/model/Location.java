@@ -1,15 +1,14 @@
 package com.domini.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,5 +39,13 @@ public class Location {
     public Location(String country, String city) {
         this.country = country;
         this.city = city;
+    }
+
+    public Location(String country, String city, String district, String street, String house) {
+        this.country = country;
+        this.city = city;
+        this.district = district;
+        this.street = street;
+        this.house = house;
     }
 }
