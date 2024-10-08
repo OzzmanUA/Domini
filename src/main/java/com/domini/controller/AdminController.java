@@ -60,8 +60,13 @@ public class AdminController {
 
     @PostMapping("/categories")
     public ResponseEntity<String> addCategory(@ModelAttribute("category") Category category,
-                                              @RequestParam("file") MultipartFile file) {
+                                              @RequestParam("file") MultipartFile file,
+                                              @RequestParam(value = "parentCategoryId", required = false) Long parentCategoryId) {
         try {
+            if (parentCategoryId != null) {
+                Category parentCategory = categoryService.findById(parentCategoryId);
+                category.setParentCategory(parentCategory);
+            }
             if (file == null || file.isEmpty()) {
                 return new ResponseEntity<>("Файл не выбран или пустой", HttpStatus.BAD_REQUEST);
             }

@@ -11,13 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 public class WorkerInfoDTO {
     private Long userId;
-    private String firstName;  // Добавить в модель User поле для имени
-    private String lastName;   // Добавить в модель User поле для фамилии
-    private String category;   // Текущая категория
-    private String subcategory; // Текущая подкатегория
-    private String country;    // Страна
-    private String city;       // Город
-    private Double servicePrice; // Цена за услуги
-    private String about;      // Описание (из privateInformation)
-    private List<String> categories;  // Все категории, в которых работает пользователь
+    private String firstName;           // Добавить в модель User поле для имени
+    private String lastName;            // Добавить в модель User поле для фамилии
+    private List<String> categories;    // Список названий категорий
+    private String subcategory;         // Текущая подкатегория
+    private String country;             // Страна
+    private String city;                // Город
+    private List<CategoryWithPriceDTO> categoriesWithPrices;  // Категории с ценами
+    private String about;               // Описание (из privateInformation)
+    private String skillLevel;          // Уровень навыков на основе опыта
 }

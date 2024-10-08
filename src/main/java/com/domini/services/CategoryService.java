@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,21 +109,30 @@ public class CategoryService{
     private WorkerInfoDTO convertToWorkerInfoDTO(User user) {
         PrivateInformation privateInfo = user.getPrivateInformation();
         Location location = user.getLocation();
-        List<String> categories = privateInfo.getCategories().stream()
-                .map(Category::getName)
+
+        // Список категорий с ценами
+        List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
+                .map(workerCategoryPrice -> new CategoryWithPriceDTO(
+                        workerCategoryPrice.getCategory().getName(),
+                        workerCategoryPrice.getServicePrice()))
+                .collect(Collectors.toList());
+
+        // Получаем названия категорий
+        List<String> categoryNames = privateInfo.getCategories().stream()
+                .map(Category::getName) // Получаем названия категорий
                 .collect(Collectors.toList());
 
         return new WorkerInfoDTO(
                 user.getId(),
-                privateInfo.getFirstName(),   // Имя из PrivateInformation
-                privateInfo.getLastName(),    // Фамилия из PrivateInformation
-                categories.get(0),            // Основная категория
-                categories.size() > 1 ? categories.get(1) : null,  // Подкатегория (если есть)
-                location.getCountry(),        // Страна
-                location.getCity(),           // Город
-                privateInfo.getServicePrice(), // Цена за услуги
-                privateInfo.getAbout(),        // Описание
-                categories                    // Все категории
+                privateInfo.getFirstName(),
+                privateInfo.getLastName(),
+                categoryNames, // Список названий категорий
+                null, // Если нужна подкатегория, добавьте соответствующее значение
+                location.getCountry(),
+                location.getCity(),
+                categoriesWithPrices,
+                privateInfo.getAbout(),
+                privateInfo.getSkillLevel() // Уровень навыков
         );
     }
 
@@ -147,9 +157,11 @@ public class CategoryService{
         PrivateInformation privateInfo = worker.getPrivateInformation();
         Location location = worker.getLocation();
 
-        // Собираем категории
-        List<String> categories = privateInfo.getCategories().stream()
-                .map(Category::getName)
+        // Список категорий с ценами
+        List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
+                .map(workerCategoryPrice -> new CategoryWithPriceDTO(
+                        workerCategoryPrice.getCategory().getName(),
+                        workerCategoryPrice.getServicePrice()))
                 .collect(Collectors.toList());
 
         // Собираем изображения портфолио
@@ -173,14 +185,15 @@ public class CategoryService{
                 location.getCity(),
                 calculateEarnings(worker),  // Рассчитываем общие заработки
                 worker.getTasksAsExecutor().size(),  // Количество выполненных заданий
-                categories,
+                categoriesWithPrices,  // Категории с ценами
                 privateInfo.getAbout(),
                 portfolioImages,
                 reviews,
                 reviewStatistics,
                 privateInfo.getLanguage(),
                 privateInfo.getSkills(),
-                privateInfo.getEducation()
+                privateInfo.getEducation(),
+                privateInfo.getSkillLevel()  // Уровень навыков
         );
     }
 
@@ -205,7 +218,6 @@ public class CategoryService{
 
         for (Review review : reviews) {
             totalScore += review.getOverallRating();
-            // Допустим, что оценка качества, вежливости и пунктуальности хранятся в дополнительных полях:
             totalQualityScore += review.getWorkQualityRating();
             totalPolitenessScore += review.getPolitenessRating();
             totalPunctualityScore += review.getPunctualityRating();
@@ -217,5 +229,39 @@ public class CategoryService{
                 totalPolitenessScore / reviewCount,
                 totalPunctualityScore / reviewCount
         );
+    }
+
+    public List<WorkerInfoDTO> getWorkersByCategory(Long categoryId, Double minPrice, Double maxPrice, Integer experienceYears, String country, String city) {
+        List<User> workers = userRepository.findWithFilters(categoryId, minPrice, maxPrice, experienceYears, country, city);
+        List<WorkerInfoDTO> workerInfoList = new ArrayList<>();
+
+        for (User worker : workers) {
+            PrivateInformation privateInfo = worker.getPrivateInformation();
+            Location loc = worker.getLocation();
+
+            List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
+                    .filter(price -> price.getCategory().getId().equals(categoryId))
+                    .map(price -> new CategoryWithPriceDTO(price.getCategory().getName(), price.getServicePrice()))
+                    .collect(Collectors.toList());
+
+            // Получаем названия категорий
+            List<String> categoryNames = privateInfo.getCategories().stream()
+                    .map(Category::getName) // Здесь мы получаем названия категорий
+                    .collect(Collectors.toList());
+
+            workerInfoList.add(new WorkerInfoDTO(
+                    worker.getId(),
+                    privateInfo.getFirstName(),
+                    privateInfo.getLastName(),
+                    categoryNames, // Здесь заменяем на список названий категорий
+                    null, // Если нужна подкатегория, добавьте соответствующее значение
+                    loc.getCountry(),
+                    loc.getCity(),
+                    categoriesWithPrices,
+                    privateInfo.getAbout(),
+                    privateInfo.getSkillLevel() // Используем метод для определения уровня навыков
+            ));
+        }
+        return workerInfoList;
     }
 }

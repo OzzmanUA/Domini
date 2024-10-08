@@ -32,7 +32,10 @@ public class PrivateInformation {
 
     private String education;
 
-    private Double servicePrice;  // Цена за услуги в категории
+    @OneToMany(mappedBy = "privateInformation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WorkerCategoryPrice> workerCategoryPrices;  // Список категорий с ценами
+
+    private int experienceYears;  // Количество лет опыта работы
 
     @ManyToMany
     @JoinTable(
@@ -47,4 +50,15 @@ public class PrivateInformation {
 
     @OneToMany(mappedBy = "privateInformation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Photo> portfolio;
+
+    // Метод для определения уровня навыков на основе лет опыта
+    public String getSkillLevel() {
+        if (experienceYears < 3) {
+            return "Начальный уровень";
+        } else if (experienceYears <= 5) {
+            return "Средний уровень";
+        } else {
+            return "Эксперт";
+        }
+    }
 }

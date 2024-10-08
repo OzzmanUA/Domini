@@ -5,12 +5,12 @@ import com.domini.dtos.CategoryNameDTO;
 import com.domini.dtos.CategoryWithSubcategoriesDTO;
 import com.domini.dtos.WorkerInfoDTO;
 import com.domini.model.Category;
+import com.domini.model.User;
 import com.domini.services.CategoryService;
+import com.domini.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+    private final UserService userService;
 
     // Вывод только имен родительских категорий
     @GetMapping("/categories")
@@ -44,9 +45,30 @@ public class CategoryController {
         return categoryService.getWorkersByCategory(categoryId);
     }
 
-    // Получение информации о работнике по ID категории или подкатегории
-    @GetMapping("/{workerId}/worker-info")
-    public WorkerInfoDTO getWorkerInfo(@PathVariable Long workerId) {
-        return categoryService.getWorkerInfoById(workerId);
+    // Получение списка пользователей, работающих в категории или подкатегории с фильтрацией
+    @GetMapping("/{categoryId}/workers/filter")
+    public List<WorkerInfoDTO> getWorkersByCategory(@PathVariable Long categoryId,
+                                                    @RequestParam(required = false) Double minPrice,
+                                                    @RequestParam(required = false) Double maxPrice,
+                                                    @RequestParam(required = false) String skillLevel,
+                                                    @RequestParam(required = false) String country,
+                                                    @RequestParam(required = false) String city) {
+        Integer experienceYears = skillLevel != null ? convertSkillLevelToYears(skillLevel) : null; // Если skillLevel не null, конвертируем
+        return categoryService.getWorkersByCategory(categoryId, minPrice, maxPrice, experienceYears, country, city);
+    }
+
+    // Метод для преобразования уровня навыков в годы опыта
+    private Integer convertSkillLevelToYears(String skillLevel) {
+        // Здесь можно добавить логику для конвертации уровня навыков в количество лет
+        switch (skillLevel.toLowerCase()) {
+            case "junior":
+                return 1;
+            case "middle":
+                return 3;
+            case "senior":
+                return 5;
+            default:
+                return null; // Если уровень навыков не распознан
+        }
     }
 }

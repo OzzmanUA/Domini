@@ -1,9 +1,11 @@
 package com.domini.services;
 
+import com.domini.dtos.WorkerInfoDTO;
 import com.domini.exceptions.UserNotFoundException;
 import com.domini.exceptions.UserAlreadyExistsException;
 import com.domini.model.User;
 import com.domini.repository.UserRepository;
+import com.domini.repository.WorkerRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final WorkerRepositoryCustom workerRepository;
 
     public User createUser(User user) {
         if(userAlreadyExists(user.getEmail())){
@@ -59,4 +62,8 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
+    public List<WorkerInfoDTO> filterWorkers(List<String> ratingLevels, Double minPrice, Double maxPrice, List<String> history, String location) {
+        // Логика фильтрации работников на основании параметров
+        return workerRepository.findWithFilters(ratingLevels, minPrice, maxPrice, history, location);
+    }
 }

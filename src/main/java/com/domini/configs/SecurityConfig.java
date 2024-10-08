@@ -32,23 +32,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/auth/**", "/registration", "/main/**","/category/**").permitAll()
+                        .requestMatchers("/auth/**", "/registration", "/main/**","/category/**","/uploads/**").permitAll()
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()                                              //vernut' authenticated()
-
                 )
                 .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .formLogin(formLogin -> formLogin
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/", true)  // Переход на домашнюю страницу после успешного входа
-//                        .permitAll()
-//                )
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/login?logout")  // Переход на страницу логина после выхода
-//                        .permitAll()
-//                )
                 .userDetailsService(userService)
                 .addFilterBefore(new JwtRequestFilter(jwtTokenUtils, userService), UsernamePasswordAuthenticationFilter.class);
 
