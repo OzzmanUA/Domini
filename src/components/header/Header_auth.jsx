@@ -9,6 +9,7 @@ import notification from './images/notification.png';
 import new_task from './images/new_task.png';
 import ukr_lang_auth from './images/ukr_lang_auth.png';
 import user_demo from './images/user_demo.png';
+import NavMenu from '../main_parts_auth/categories/navmenu';
 
 
 const Header_auth = () => {
@@ -45,7 +46,8 @@ const Header_auth = () => {
       </div>
     </div>
           <div className="nav-container">
-          <ul className="nav-menu">
+            <NavMenu />
+          {/* <ul className="nav-menu">
               <li><a href="#">Домашній майстер</a></li>
               <li><a href="#">Ремонт техніки</a></li>
               <li><a href="#">Оздоблювальні роботи</a></li>
@@ -54,7 +56,7 @@ const Header_auth = () => {
               <li><a href="#">Клінінгові послуги</a></li>
               <li><a href="#">Транспортні та складські послуги</a></li>
               <li><a href="#">Побутові послуги</a></li>
-          </ul>
+          </ul> */}
       </div>
       </div>
   );

@@ -1,7 +1,6 @@
 
 import './reg_step1_style.css';
 
-
 // Импорт изображений
 import checkMark from '../images/check_mark.png';
 import googleIcon from '../images/icon_google.png';
@@ -9,8 +8,49 @@ import emailIcon from '../images/icon_email.png';
 import appleIcon from '../images/icon_apple.png';
 import facebookIcon from '../images/icon_facebook.png';
 import leftSideImage from '../images/left_side.png';
+import React, { useState } from "react"
+import { loginUser } from "../utils/ApiFunctions"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useAuth } from '../auth/AuthProvider';
 
-const Registration = () => {
+const Login2 = () => {
+	const [errorMessage, setErrorMessage] = useState("")
+	const [login, setLogin] = useState({
+		username: "",
+		email: "",
+		password: "",
+		phone: ""
+	})
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const navigate = useNavigate()
+	const auth = useAuth()
+	const location = useLocation()
+	const redirectUrl = location.state?.path || "/homereg"
+
+	const handleInputChange = (e) => {
+		setLogin({ ...login, [e.target.name]: e.target.value })
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		const success = await loginUser(login)
+		if (success) {
+			const token = success.token
+			auth.handleLogin(token)
+			navigate(redirectUrl, { replace: true })
+
+			setIsLoggedIn(true);
+			// this.props.history.push('/homereg')
+
+		} else {
+			setErrorMessage("Invalid username or password. Please try again.")
+		}
+		setTimeout(() => {
+			setErrorMessage("")
+		}, 4000)
+  }
+	
+
   return (
     <div className='all_reg_step1'>
     <div className="container">
@@ -24,7 +64,7 @@ const Registration = () => {
       </div>
       <div className="right-section">
         <h2>Створіть новий аккаунт</h2>
-        <p className='reg_step1_p'>Уже маєте аккаунт? <a href="#">Увійдіть</a></p>
+        <p className='reg_step1_p'>Уже маєте аккаунт? <a><Link to="/register"><button className="regist-btn">Реєстрація</button></Link></a></p>
         <div className="social-buttons">
           <button className="google_email">
             <img src={googleIcon} alt="Google" />Продовжити з Google
@@ -54,4 +94,5 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+
+export default Login2;

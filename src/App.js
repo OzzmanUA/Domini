@@ -40,7 +40,7 @@ import CategoryForm from './components/admin/categories_admin_form'
 
 import PerformerProfilePay from './components/profiles/performer-profile-pay/performer-profile-pay'
 import HomeReg from "./pages/HomeReg";
-
+import Login2 from "./components/reg_step1/registration_step1";
 
 function App() {
 // 	const [token, setToken] = useState();

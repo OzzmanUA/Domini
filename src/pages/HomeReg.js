@@ -32,7 +32,7 @@ import categoriesList from './../components/main_parts_auth/categories/categorie
 import Admin_UserList from './../components/admin/admin_part'
 import users from './../components/admin/users_demo'
 import CategoryForm from './../components/admin/categories_admin_form'
-import { getAllParentCategories } from '../components/utils/ApiFunctions';
+import { getAllCategories } from '../components/utils/ApiFunctions';
 
 import ProfilesCatalog from '../components/catalog/profilesCatalog'
 
@@ -42,7 +42,7 @@ import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
 
 function HomeReg() {
-	const categoriesList2 = getAllParentCategories()
+	const categoriesList2 = getAllCategories()
 	console.log (categoriesList)
 	console.log (categoriesList2)
 
@@ -59,10 +59,10 @@ function HomeReg() {
 						<Header_auth />
 						<MiddleMainAuth />
 						<Categories categories={categoriesList2} />
-						<AddCategory />
+						{/* <AddCategory /> */}
 						{/* <Categories /> */}
-						<PerformerProfile/>
-						<Order/>
+						{/* <PerformerProfile/> */}
+						{/* <Order/> */}
       					<Footer/>
 					</div>
 

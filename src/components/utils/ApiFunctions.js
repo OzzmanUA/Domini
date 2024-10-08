@@ -114,9 +114,21 @@ export async function getUser(userId, token) {
 
 //------------------------------------------------------------------
 
-export async function getAllParentCategories() {
+export async function getAllCategories() {
 	try {
 	  const response = await api.get("/category/all-categories");
+	  const categories = response.data;
+	  console.log(categories)
+	  return categories;
+ 		// Assuming the response is an array of categories
+	} catch (error) {
+	  console.error('Error fetching categories:', error);
+	}
+  };
+
+export async function getAllParentCategories() {
+	try {
+	  const response = await api.get("/category/categories");
 	  const categories = response.data;
 	  console.log(categories)
 	  return categories;

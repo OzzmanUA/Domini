@@ -7,8 +7,9 @@ import backArrow from '../images/strelka_back.png';
 import leftBackground from '../images/left_part_bg.png';
 import React, { useState } from "react";
 import { registerUser } from "../utils/ApiFunctions";
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate }from "react-router-dom"
 import  redirect from "react-router-dom"
+import BackLink from '../common/Goback';
 
 
 const Registration = () => {
@@ -20,6 +21,9 @@ const Registration = () => {
 	})
   const [errorMessage, setErrorMessage] = useState("")
 	const [successMessage, setSuccessMessage] = useState("")
+  const navigate = useNavigate()
+  const location = useLocation()
+  const redirectUrl = location.state?.path || "/login"
 
 	const handleInputChange = (e) => {
 		setRegistration({ ...registration, [e.target.name]: e.target.value })
@@ -32,7 +36,8 @@ const Registration = () => {
 			// setSuccessMessage(result)
 			setErrorMessage("")
 			setRegistration({ username: "", email: "", password: "", phone: "" })
-			return <redirect to='/#'></redirect>
+      navigate(redirectUrl, { replace: true })
+			// return <redirect to='/#'></redirect>
 		} catch (error) {
 			setSuccessMessage("")
 			setErrorMessage(`Registration error : ${error.message}`)
@@ -51,9 +56,10 @@ const Registration = () => {
       </div>
 
       <div className="right-section">
-        <a href="../registration_step1/registr_step1_index.html" className="back-link">
+        {/* <a href="../registration_step1/registr_step1_index.html" className="back-link">
           <img src={backArrow} alt="Back" /> Назад
-        </a>
+        </a> */}
+        <BackLink />
         <h1>Створіть свій профіль</h1>
         <p className="opis_name" style={{ marginBottom: 0 }}>Додайте унікальне для вас ім'я користувача, так ви будете виглядати для інших.</p>
         <p className="opis_name" style={{ fontWeight: 500, marginTop: 8 }}>Ви не можете змінити своє ім'я користувача, тому обирайте з розумом.</p>
