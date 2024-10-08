@@ -35,7 +35,7 @@
     color: #0E142B;
   }
   
-  input[type="text"],
+  .form-group input[type="text"],
   textarea,
   select {
     width: 100%;

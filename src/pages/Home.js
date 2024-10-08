@@ -51,8 +51,10 @@ function Home() {
 
 					<div className="Home">
 						<Header />
+						<TopNoneAuth/>
+						<PopServices/>
 						<MiddleNonAuth />
-						
+						<UsefulGuides/>
 
       					<Footer/>
 					</div>

@@ -57,12 +57,14 @@ function HomeReg() {
 
 					<div className="HomeReg">
 						<Header_auth />
+						<TopMainAuth/>
 						<MiddleMainAuth />
 						<Categories categories={categoriesList2} />
 						{/* <AddCategory /> */}
 						{/* <Categories /> */}
 						{/* <PerformerProfile/> */}
 						{/* <Order/> */}
+						<UsefulGuides/>
       					<Footer/>
 					</div>
 

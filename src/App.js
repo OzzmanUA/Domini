@@ -42,6 +42,15 @@ import PerformerProfilePay from './components/profiles/performer-profile-pay/per
 import HomeReg from "./pages/HomeReg";
 import Login2 from "./components/reg_step1/registration_step1";
 import Profile from "./pages/Profile";
+
+import PCatalog from "./pages/PCatalog";
+import OCatalog from "./pages/OCatalog";
+
+import PerfProfile from "./pages/PerfProfile";
+import PerfProfilePay from "./pages/PerfProfilePay";
+
+import OrderP from "./pages/OrderP";
+
 function App() {
 // 	const [token, setToken] = useState();
 
@@ -61,7 +70,12 @@ function App() {
 					<Route path="/" element={<Home />}/>
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Registration />} />
-
+					<Route path="/pCatalog" element={<PCatalog />} />
+					<Route path="/oCatalog" element={<OCatalog />} />
+					<Route path="/perfProfile" element={<PerfProfile />} />
+					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
+					<Route path="/orderP" element={<OrderP />} />					
+					
 					<Route 
 						path="/private-information" 
 						element={

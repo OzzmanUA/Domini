@@ -1,0 +1,126 @@
+.catalog-container {
+    width: 1520px;
+    margin: 0 auto;
+}
+
+.catalog-h2-top {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.catalog-content {
+    display: flex;
+}
+
+.catalog-left {
+    width: 25%;
+}
+
+.catalog-right {
+    width: 75%;
+}
+
+.img-middle-catalog {
+    width: 1520px;
+    height: 456px;
+    /* Указываем фоновое изображение через CSS */
+    background-size: cover;
+    margin: 0 auto 40px auto;
+    position: relative;
+}
+
+.img-middle-catalog button {
+    background-color: #1CC41C;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 69px;
+    left: 48px;
+}
+
+.img-middle-catalog button:hover {
+    background-color: #00a843;
+}
+
+.newsletter {
+    width: 1520px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    margin-top: 90px;
+    margin-bottom: 90px;
+    gap: 25px;
+}
+
+.checkbox_newsletter {
+    display: flex;
+    align-items: center;
+    color: #727272;
+}
+
+.checkbox_newsletter input {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.checkbox_newsletter label {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.newsletter_left_part h3 {
+    width: 436px;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 12px;
+}
+
+.user-info-input {
+    width: 370px;
+    height: 70px;
+    font-size: 18px;
+    border: 2px solid #ECECEC;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.newsletter button {
+    width: 185px;
+    height: 60px;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    background-color: #1CC41C;
+    border-radius: 10px;
+}
+
+.user-info-input::placeholder {
+    padding: 20px;
+}
+
+.catalog-top-left h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.work-price-item {
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.work-price-item p {
+    margin: 0;
+}
+
+.catalog-top-left ul {
+    padding-left: 0;
+    list-style: none;
+}

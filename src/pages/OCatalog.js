@@ -35,16 +35,14 @@ import CategoryForm from '../components/admin/categories_admin_form'
 import { getAllCategories } from '../components/utils/ApiFunctions';
 
 import ProfilesCatalog from '../components/catalog/profilesCatalog'
+import ProfilesCatalogOrder from "../components/catalog-orders/profilesCatalog-orders"
 
 import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
-import { useAuth } from '../components/auth/AuthProvider';
+
 import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
-import ProfileCard from '../components/catalog/profileCard';
-import ProfilePage from '../components/catalog/ProfilePage';
 
-function Profile() {
-const { userId, token } = useAuth(); // Get userId and token from context
+function OCatalog() {
 
   return (
     <main>
@@ -55,16 +53,9 @@ const { userId, token } = useAuth(); // Get userId and token from context
 					<Route path="/register" element={<Registration />} />	
 					</Routes> */}
 
-					<div className="profile">
+					<div className="OCatalog">
 						<Header_auth />
-						<MiddleMainAuth />
-
-                        <ProfilePage userId={userId}/>
-						{/* <AddCategory /> */}
-						{/* <Categories /> */}
-						{/* <PerformerProfile/> */}
-						{/* <Order/> */}
-						
+						<ProfilesCatalogOrder/>
       					<Footer/>
 					</div>
 
@@ -74,4 +65,4 @@ const { userId, token } = useAuth(); // Get userId and token from context
   );
 }
 
-export default Profile;
+export default OCatalog;
