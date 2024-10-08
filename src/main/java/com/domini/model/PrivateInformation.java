@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -49,7 +50,19 @@ public class PrivateInformation {
     private User user;
 
     @OneToMany(mappedBy = "privateInformation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Photo> portfolio;
+    private List<Photo> portfolio = new ArrayList<>(); // Инициализируем список
+
+    // Метод для добавления фотографии
+    public void addPhoto(Photo photo) {
+        photo.setPrivateInformation(this); // Устанавливаем связь с PrivateInformation
+        portfolio.add(photo); // Добавляем фото в портфолио
+    }
+
+    // Метод для удаления фотографии
+    public void removePhoto(Photo photo) {
+        photo.setPrivateInformation(null); // Удаляем связь с PrivateInformation
+        portfolio.remove(photo); // Удаляем фото из портфолио
+    }
 
     // Метод для определения уровня навыков на основе лет опыта
     public String getSkillLevel() {
