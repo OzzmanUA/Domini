@@ -14,42 +14,55 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from '../auth/AuthProvider';
 
 const Login2 = () => {
-	const [errorMessage, setErrorMessage] = useState("")
-	const [login, setLogin] = useState({
-		username: "",
-		email: "",
-		password: "",
-		phone: ""
-	})
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const navigate = useNavigate()
-	const auth = useAuth()
-	const location = useLocation()
-	const redirectUrl = location.state?.path || "/homereg"
+	// const [errorMessage, setErrorMessage] = useState("")
+	// const [login, setLogin] = useState({
+	// 	username: "",
+	// 	email: "",
+	// 	password: "",
+	// 	phone: ""
+	// })
+	// const [isLoggedIn, setIsLoggedIn] = useState(false);
+	// const navigate = useNavigate()
+	// const auth = useAuth()
+	// const location = useLocation()
+	// const redirectUrl = location.state?.path || "/homereg"
 
-	const handleInputChange = (e) => {
-		setLogin({ ...login, [e.target.name]: e.target.value })
-	}
+	// const handleInputChange = (e) => {
+	// 	setLogin({ ...login, [e.target.name]: e.target.value })
+	// }
 
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-		const success = await loginUser(login)
-		if (success) {
-			const token = success.token
-			auth.handleLogin(token)
-			navigate(redirectUrl, { replace: true })
+	// const handleSubmit1 = async (e) => {
+	// 	e.preventDefault()
+	// 	const success = await loginUser(login)
+	// 	if (success) {
+	// 		const token = success.token
+	// 		auth.handleLogin(token)
+	// 		navigate(redirectUrl, { replace: true })
 
-			setIsLoggedIn(true);
-			// this.props.history.push('/homereg')
+	// 		setIsLoggedIn(true);
+	// 		// this.props.history.push('/homereg')
 
-		} else {
-			setErrorMessage("Invalid username or password. Please try again.")
-		}
-		setTimeout(() => {
-			setErrorMessage("")
-		}, 4000)
-  }
+	// 	} else {
+	// 		setErrorMessage("Invalid username or password. Please try again.")
+	// 	}
+	// 	setTimeout(() => {
+	// 		setErrorMessage("")
+	// 	}, 4000)
+  // }
 	
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log({ username, email, password, phoneNumber });
+  };
+
+
 
   return (
     <div className='all_reg_step1'>
@@ -63,8 +76,54 @@ const Login2 = () => {
         </ul>
       </div>
       <div className="right-section">
-        <h2>Створіть новий аккаунт</h2>
-        <p className='reg_step1_p'>Уже маєте аккаунт? <a><Link to="/register"><button className="regist-btn">Реєстрація</button></Link></a></p>
+        <h2>Увійдіть у ваш аккаутн</h2>
+
+        <form className="auth_form" onSubmit={handleSubmit}>
+      <div>
+        <label>Введіть ім'я користувача</label>
+        <input 
+          type="text" 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)} 
+          placeholder="Введіть ім'я користувача"
+        />
+      </div>
+
+      <div>
+        <label>Вкажіть email</label>
+        <input 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="Введіть email"
+        />
+      </div>
+
+      <div>
+        <label>Введіть пароль</label>
+        <input 
+          type="password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Придумайте пароль"
+        />
+      </div>
+
+      <div>
+        <label>Вкажіть номер телефону</label>
+        <input 
+          type="tel" 
+          value={phoneNumber} 
+          onChange={(e) => setPhoneNumber(e.target.value)} 
+          placeholder="Введіть номер телефону"
+        />
+      </div>
+
+      <button type="submit">Продовжити</button>
+    </form>
+
+
+        <div className="or">ЧИ</div>
         <div className="social-buttons">
           <button className="google_email">
             <img src={googleIcon} alt="Google" />Продовжити з Google
@@ -75,19 +134,11 @@ const Login2 = () => {
           >
             <img src={emailIcon} alt="Email" />Продовжити з email
           </button>
-          <div className="or">ЧИ</div>
-          <div className="btns_ap_fec">
-            <button className="apple_facebook">
-              <img src={appleIcon} alt="Apple" />Apple
-            </button>
-            <button className="apple_facebook">
-              <img src={facebookIcon} alt="Facebook" />Facebook
-            </button>
-          </div>
         </div>
-        <p className="terms">
-          Приєднуючись, ви погоджуєтесь з <a href="#">Умовами надання послуг Domini</a> та періодично отримувати від нас електронні листи. Будь ласка, прочитайте нашу <a href="#">Політику конфіденційності</a>, щоб дізнатися, як ми використовуємо ваші персональні дані.
-        </p>
+        <div className="reg-if-no-acc">
+          <p className='reg_step1_p'>Уже маєте аккаунт? <a><Link to="/register">
+          <button className="regist-btn">Реєстрація</button></Link></a></p>
+        </div>
       </div>
     </div>
     </div>

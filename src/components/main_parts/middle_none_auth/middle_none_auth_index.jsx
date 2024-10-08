@@ -13,6 +13,17 @@ import dariaImg from './images/demo_img/daria.png';
 import andriiImg from './images/demo_img/andrii.png';
 import supportUkraineImg from './images/support_Ukraine.png';
 import starImg from './images/spec_star.png';
+import gallery_1 from './images/galery_1.png'
+import gallery_2 from './images/galery_2.png'
+import gallery_3 from './images/galery_3.png'
+import gallery_4 from './images/galery_4.png'
+import gallery_5 from './images/galery_5.png'
+import gallery_6 from './images/galery_6.png'
+import gallery_7 from './images/galery_7.png'
+import gallery_8 from './images/galery_8.png'
+import gallery_9 from './images/galery_9.png'
+import gallery_10 from './images/galery_10.png'
+import gallery_11 from './images/galery_11.png'
 
 
 const MiddleNonAuth = () => {
@@ -132,11 +143,25 @@ const MiddleNonAuth = () => {
       <section className="created-on-domini">
         <h2>Створено на Domini</h2>
         <div className="gallery">
-          <img src="https://via.placeholder.com/200" alt="Приклад" />
-          <img src="https://via.placeholder.com/200" alt="Приклад" />
-          <img src="https://via.placeholder.com/200" alt="Приклад" />
-          <img src="https://via.placeholder.com/200" alt="Приклад" />
-          <img src="https://via.placeholder.com/200" alt="Приклад" />
+            <div className="gallery-column">
+            <img id="gallery_1" src={gallery_1}/>
+            <img id="gallery_2" src={gallery_2}/>
+            <img id="gallery_3" src={gallery_3}/>
+            </div>
+            <div className="gallery-column">
+            <img id="gallery_4" src={gallery_4}/>
+            <img id="gallery_5" src={gallery_5}/>
+            <img id="gallery_6" src={gallery_6}/>
+            </div>
+            <div className="gallery-column">
+            <img id="gallery_7" src={gallery_7}/>
+            <img id="gallery_8" src={gallery_8}/>
+            </div>
+            <div className="gallery-column">
+            <img id="gallery_9" src={gallery_9}/>
+            <img id="gallery_10" src={gallery_10}/>
+            <img id="gallery_11" src={gallery_11}/>
+            </div>
         </div>
       </section>
 

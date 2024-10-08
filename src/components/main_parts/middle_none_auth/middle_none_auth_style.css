@@ -31,8 +31,9 @@ body {
 
 .how-work-domini h1 {
     text-align: center;
+    margin-left: 300px;
     font-size: 48px;
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 40px;
 }
 
@@ -187,19 +188,30 @@ body {
     margin-bottom: 40px;
     text-align: center;
 }
+.created-on-domini h2{
+    font-size: 48px;
+    margin-bottom: 40px;
+    text-align: left;
+    margin-left: 200px;
+}
 
 .gallery {
+    max-width: 1520px;
+    margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+    gap: 16px;
 }
 
-.gallery img {
-    max-width: 200px;
-    height: auto;
+.gallery-column img{
     border-radius: 10px;
+    width: 368px;
+    margin-bottom: 16px;
 }
+.gallery-column{
+    gap: 16px;
+}
+
+
 
 .support-container {
     display: flex;
