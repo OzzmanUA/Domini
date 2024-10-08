@@ -10,6 +10,7 @@ import new_task from './images/new_task.png';
 import ukr_lang_auth from './images/ukr_lang_auth.png';
 import user_demo from './images/user_demo.png';
 import NavMenu from '../main_parts_auth/categories/navmenu';
+import UserProfileLink from '../common/UserProfileLink';
 
 
 const Header_auth = () => {
@@ -40,9 +41,10 @@ const Header_auth = () => {
           <img src={new_task} alt="new_task" />
         </a>
         </div>
-        <a href="#" className="demo_user">
+        {/* <a href="#" className="demo_user">
           <img src={user_demo} alt="user_demo" />
-        </a>
+        </a> */}
+        <UserProfileLink />
       </div>
     </div>
           <div className="nav-container">

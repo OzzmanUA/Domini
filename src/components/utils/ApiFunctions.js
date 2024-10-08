@@ -137,3 +137,13 @@ export async function getAllParentCategories() {
 	  console.error('Error fetching categories:', error);
 	}
   };
+
+export const getProfileData = async (userId) => {
+	try {
+	  const response = await api.get(`/private-information/${userId}`);
+	  return response.data;
+	} catch (error) {
+	  console.error("Error fetching profile data", error);
+	  throw error;
+	}
+  };

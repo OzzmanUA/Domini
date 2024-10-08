@@ -41,7 +41,7 @@ import CategoryForm from './components/admin/categories_admin_form'
 import PerformerProfilePay from './components/profiles/performer-profile-pay/performer-profile-pay'
 import HomeReg from "./pages/HomeReg";
 import Login2 from "./components/reg_step1/registration_step1";
-
+import Profile from "./pages/Profile";
 function App() {
 // 	const [token, setToken] = useState();
 
@@ -60,7 +60,18 @@ function App() {
 					<Routes>
 					<Route path="/" element={<Home />}/>
 					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Registration />} />	
+					<Route path="/register" element={<Registration />} />
+
+					<Route 
+						path="/profile:userId" 
+						element={
+						<RequireAuth>
+							<Profile /> 
+						</RequireAuth>
+						}
+						
+					/>
+					{/* <Route path="/profile" element={<Profile />} />	 */}
 					
 					<Route
  						path="/homereg"
