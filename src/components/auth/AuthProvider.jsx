@@ -3,19 +3,23 @@ import {jwtDecode} from "jwt-decode"
 
 export const AuthContext = createContext({
 	user: null,
+	userId: null,
 	handleLogin: (token) => {},
 	handleLogout: () => {}
 })
 
 export const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState(null)
+	const [user, setUser] = useState(null);
+	const [userId, setUserId] = useState(null);
 
 	const handleLogin = (token) => {
-		const decodedUser = jwtDecode(token)
+		const decodedUser = jwtDecode(token);
+		const userId = decodedUser.sub;
 		localStorage.setItem("userId", decodedUser.sub)
 		localStorage.setItem("userRole", decodedUser.roles)
 		localStorage.setItem("token", token)
-		setUser(decodedUser)
+		setUser(decodedUser);
+		setUserId(userId);
 	}
 
 	const handleLogout = () => {
@@ -26,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
+		<AuthContext.Provider value={{ userId, user, handleLogin, handleLogout }}>
 			{children}
 		</AuthContext.Provider>
 	)

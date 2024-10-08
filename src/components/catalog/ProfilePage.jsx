@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { getProfileData } from '../utils/ApiFunctions';
+import { getPrivateInformation } from '../utils/ApiFunctions';
 import ProfileCard from './profileCard';
+import { useAuth } from '../auth/AuthProvider';
 
 const ProfilePage = ({ userId }) => {
   const [profile, setProfile] = useState(null); // State to hold profile data
   const [loading, setLoading] = useState(true); // State to handle loading status
   const [error, setError] = useState(null); // State to handle errors
-
+  
   useEffect(() => {
     const fetchData = async () => {
+      
       try {
-        const profileData = await getProfileData(userId); // Fetch profile data
+        const profileData = await getPrivateInformation(userId); // Fetch profile data
         setProfile({
           image: "http://localhost:8080/path-to-image", // Change to the actual image path
           name: `${profileData.firstName} ${profileData.lastName}`,

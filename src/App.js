@@ -63,7 +63,7 @@ function App() {
 					<Route path="/register" element={<Registration />} />
 
 					<Route 
-						path="/profile:userId" 
+						path="/private-information" 
 						element={
 						<RequireAuth>
 							<Profile /> 

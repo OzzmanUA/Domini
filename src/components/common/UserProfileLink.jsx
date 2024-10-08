@@ -5,7 +5,7 @@ import Profile from '../../pages/Profile';
 
 const UserProfileLink = () => {
   return (
-    <Link to="/profile" className="demo_user">
+    <Link to="/private-information" className="demo_user">
       <img src={user_demo} alt="User Demo" />
     </Link>
   );

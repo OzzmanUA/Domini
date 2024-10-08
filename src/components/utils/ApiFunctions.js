@@ -1,4 +1,5 @@
 import axios from "axios"
+import {jwtDecode} from "jwt-decode"
 
 export const api = axios.create({
 	baseURL: "http://localhost:8080"
@@ -42,40 +43,40 @@ export async function loginUser(login) {
 }
 
 /*  This is function to get the user profile */
-export async function getUserProfile(userId, token) {
-	try {
-		const response = await api.get(`users/profile/${userId}`, {
-			headers: getHeader()
-		})
-		return response.data
-	} catch (error) {
-		throw error
-	}
-}
+// export async function getUserProfile(userId, token) {
+// 	try {
+// 		const response = await api.get(`users/profile/${userId}`, {
+// 			headers: getHeader()
+// 		})
+// 		return response.data
+// 	} catch (error) {
+// 		throw error
+// 	}
+// }
 
-/* This isthe function to delete a user */
-export async function deleteUser(userId) {
-	try {
-		const response = await api.delete(`/users/delete/${userId}`, {
-			headers: getHeader()
-		})
-		return response.data
-	} catch (error) {
-		return error.message
-	}
-}
+// /* This isthe function to delete a user */
+// export async function deleteUser(userId) {
+// 	try {
+// 		const response = await api.delete(`/users/delete/${userId}`, {
+// 			headers: getHeader()
+// 		})
+// 		return response.data
+// 	} catch (error) {
+// 		return error.message
+// 	}
+// }
 
-/* This is the function to get a single user */
-export async function getUser(userId, token) {
-	try {
-		const response = await api.get(`/users/${userId}`, {
-			headers: getHeader()
-		})
-		return response.data
-	} catch (error) {
-		throw error
-	}
-}
+// /* This is the function to get a single user */
+// export async function getUser(userId, token) {
+// 	try {
+// 		const response = await api.get(`/users/${userId}`, {
+// 			headers: getHeader()
+// 		})
+// 		return response.data
+// 	} catch (error) {
+// 		throw error
+// 	}
+// }
 
 // export async function updateCat(catId, catData) {
 // 	const formData = new FormData()
@@ -138,12 +139,75 @@ export async function getAllParentCategories() {
 	}
   };
 
-export const getProfileData = async (userId) => {
+
+//   export const getPrivateInformation = async (userId, token) => {
+// 	try {
+// 	  // Add custom headers, including authorization token if needed
+
+// 	  const response = await api.get(`/private-information/${userId}`, {
+// 		headers: {
+// 		  Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+// 		  'Custom-Header': 'customHeaderValue', // Example of adding another custom header
+// 		},
+// 	  });
+  
+// 	  // Check if the response is valid and has data
+// 	  if (response && response.data) {
+// 		return response.data;
+// 	  } else {
+// 		throw new Error('No data found');
+// 	  }
+// 	} catch (error) {
+// 	  // Better error handling with message
+// 	  console.error("Error fetching private information:", error.message || error);
+// 	  throw error; // Rethrow error to handle it in the calling function
+// 	}
+//   };
+
+// export const getPrivateInformation = async (token) => {
+// 	try {
+// 	  // Decode JWT token to get the userId
+// 	  const decodedToken = jwtDecode(token);
+// 	  const userId = decodedToken.userId; // Assuming `userId` is in the token payload
+  
+// 	  if (!userId) {
+// 		throw new Error('User ID not found in token');
+// 	  }
+  
+// 	  // Make the API call
+// 	  const response = await api.get(`/private-information/${userId}`, {
+// 		headers: {
+// 		  Authorization: `Bearer ${token}`,
+// 		},
+// 	  });
+  
+// 	  return response.data;
+// 	} catch (error) {
+// 	  console.error("Error fetching private information:", error.message || error);
+// 	  throw error;
+// 	}
+//   };
+export const getPrivateInformation = async (userId, token) => {
 	try {
-	  const response = await api.get(`/private-information/${userId}`);
-	  return response.data;
+	  if (!userId) {
+		throw new Error('User ID is not available');
+	  }
+  
+	  const response = await api.get(`/private-information/${userId}`, {
+		headers: {
+		  Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+		  'Custom-Header': 'customHeaderValue', // Example of adding another custom header
+		},
+	  });
+  
+	  // Check if the response is valid and has data
+	  if (response && response.data) {
+		return response.data;
+	  } else {
+		throw new Error('No data found');
+	  }
 	} catch (error) {
-	  console.error("Error fetching profile data", error);
-	  throw error;
+	  console.error("Error fetching private information:", error.message || error);
+	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
