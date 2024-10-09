@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <div className='all_header'>
     <div className="navbar">
-      <a href="#" className="logo">
+      <a href="/" className="logo">
         <img src={logo} alt="Domini Logo" />
       </a>
       <div className="search-bar">

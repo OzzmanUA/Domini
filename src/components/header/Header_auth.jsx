@@ -17,7 +17,7 @@ const Header_auth = () => {
   return (
     <div className='all_header'>
     <div className="navbar">
-      <a href="#" className="logo">
+      <a href="/homereg" className="logo">
         <img src={logo} alt="Domini Logo" />
       </a>
       <div className="search-bar">

@@ -84,7 +84,7 @@ const Registration = () => {
           />
           <label htmlFor="password">Придумайте пароль</label>
           <input className='input_reg' 
-              type="text"
+              type="password"
 							id="password"
 							name="password"
 							value={registration.password}

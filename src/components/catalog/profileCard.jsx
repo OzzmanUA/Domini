@@ -1,6 +1,6 @@
 import React from 'react';
 import './profileCard.css'; // CSS for the profile card
-
+import { Link } from 'react-router-dom';
 // Import images directly
 import favouriteIcon from './images/favourite.png';
 import moneyLogo from './images/money_logo.png';
@@ -73,7 +73,7 @@ const ProfileCard = ({ profile }) => {
           </div>
           <div className="profile-action">
             <img src={favouriteIcon} alt="Favourite" />
-            <button className="view-profile-btn">Переглянути профіль</button>
+            <Link to="/perfprofile"><button className="view-profile-btn">Переглянути профіль</button></Link>
           </div>
         </div>
   

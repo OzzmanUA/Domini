@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null); // Store userId separately
 
   const handleLogin = (token) => {
-    try {
+    // try {
       const decodedUser = jwtDecode(token); // Decode token immediately
       const userIdFromToken = decodedUser.sub; // Access userId from decoded token (assumed to be 'sub')
 
@@ -71,9 +71,9 @@ export const AuthProvider = ({ children }) => {
 
       setUser(decodedUser); // Save decoded user object
       setUserId(userIdFromToken); // Save userId in state
-    } catch (error) {
-      console.error("Error decoding token:", error);
-    }
+    // } catch (error) {
+    //   console.error("Error decoding token:", error);
+    // }
   };
 
   const handleLogout = () => {

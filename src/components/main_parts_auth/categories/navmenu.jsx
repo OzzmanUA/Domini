@@ -26,12 +26,23 @@ const NavMenu = () => {
     return <div>Loading categories...</div>;
   }
 
+  // return (
+  //   <div className="nav-container">
+  //     <ul className="nav-menu">
+  //       {categories.map((category) => (
+  //         <li key={category.id}>
+  //           <a href={`/categories/${category.id}`}>{category.name}</a> {/* Assuming each category has a name */}
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   </div>
+  // );
   return (
     <div className="nav-container">
       <ul className="nav-menu">
         {categories.map((category) => (
           <li key={category.id}>
-            <a href={`/categories/${category.id}`}>{category.name}</a> {/* Assuming each category has a name */}
+            <a href={`/pcatalog`}>{category.name}</a> {/* Assuming each category has a name */}
           </li>
         ))}
       </ul>

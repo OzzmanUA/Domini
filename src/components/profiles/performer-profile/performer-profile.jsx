@@ -1,7 +1,7 @@
 import React from 'react';
 import './performer-profile_style.css'; // CSS for the profile card
 import Accordion from './profile-accordoins'
-
+import { Link } from 'react-router-dom';
 // Import images directly
 import userImage from './images/demo_user.png';
 import mapImage from './images/map.png';
@@ -83,7 +83,7 @@ const PerformerProfile = ({ profile }) => {
             <img src={sendIcon} alt="Send" />
             Написати виконавцю
           </button>
-          <button className="make_work-btn">Запропонувати роботу</button>
+          <Link to="/perfprofilepay"><button className="make_work-btn">Запропонувати роботу</button></Link>
         </div>
       </div>
     </div>

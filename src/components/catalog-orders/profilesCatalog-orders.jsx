@@ -92,7 +92,7 @@ const ProfilesCatalog = () => {
 
     return (
         <div className="catalog-container">
-            <h2 className="catalog-h2-top">Каталог майстрів із меблевих робіт</h2>
+            <h2 className="catalog-h2-top">Каталог замовників з меблевих робіт</h2>
             <div className="catalog-content">
                 <Filters />
                 <div className="catalog-right">

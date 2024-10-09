@@ -1,6 +1,6 @@
 import React from 'react';
 import './top_main_auth_style.css';
-
+import { Link } from 'react-router-dom';
 // Импорт изображений
 import topIcon from './images/top_icon.png';
 import controlLeft from './images/Control_left.png';
@@ -49,7 +49,7 @@ const TopMainAuth = ({ nickname = 'Nikita' }) => {
               </div>
             </div>
           </div>
-          <button className="order-button">Створити замовлення</button>
+          <Link to="/orderP"><button className="order-button">Створити замовлення</button></Link>
         </div>
       </div>
 
