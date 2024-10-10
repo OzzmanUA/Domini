@@ -57,54 +57,108 @@ import successLogo from './images/success_logo.png';
 //         </div>
 //     );
 // };
+// const ProfileCard = ({ profile }) => {
+//     return (
+//       <div className="profile-card">
+//         <div className="profile-header">
+//           <div className="profile-header-left">
+//             <div className="profile-picture">
+//               <img src={profile.image} alt="Profile Picture" />
+//             </div>
+//             <div className="profile-info">
+//               <h2>{profile.name}</h2>
+//               <p className="user_categ">{profile.category}</p>
+//               <p className="location">{profile.location}</p>
+//             </div>
+//           </div>
+//           <div className="profile-action">
+//             <img src={favouriteIcon} alt="Favourite" />
+//             <Link to="/perfprofile"><button className="view-profile-btn">Переглянути профіль</button></Link>
+//           </div>
+//         </div>
+  
+//         <div className="profile-stats">
+//           <div className="stat-item">
+//             <img src={moneyLogo} alt="Price" />
+//             <span>{profile.price}</span>
+//           </div>
+//           <div className="stat-item">
+//             <img src={reviewsLogo} alt="Feedback" />
+//             <span>{profile.feedback}</span>
+//           </div>
+//           <div className="stat-item">
+//             <img src={successLogo} alt="Projects" />
+//             <span>{profile.projects}</span>
+//           </div>
+//         </div>
+  
+//         <div className="profile-services">
+//           {profile.services.map((service, index) => (
+//             <div key={index} className="profile-services-item">
+//               {service}
+//             </div>
+//           ))}
+//         </div>
+  
+//         <div className="profile-description">
+//           <p>{profile.description}</p>
+//         </div>
+//       </div>
+//     );
+//   };
+  
+// export default ProfileCard;
+
 const ProfileCard = ({ profile }) => {
-    return (
-      <div className="profile-card">
-        <div className="profile-header">
-          <div className="profile-header-left">
-            <div className="profile-picture">
-              <img src={profile.image} alt="Profile Picture" />
-            </div>
-            <div className="profile-info">
-              <h2>{profile.name}</h2>
-              <p className="user_categ">{profile.category}</p>
-              <p className="location">{profile.location}</p>
-            </div>
+  return (
+    <div className="profile-card">
+      <div className="profile-header">
+        <div className="profile-header-left">
+          <div className="profile-picture">
+            <img src={profile.image} alt="Profile Picture" />
           </div>
-          <div className="profile-action">
-            <img src={favouriteIcon} alt="Favourite" />
-            <Link to="/perfprofile"><button className="view-profile-btn">Переглянути профіль</button></Link>
+          <div className="profile-info">
+            <h2>{profile.name}</h2>
+            <p className="user_categ">{profile.category}</p>
+            <p className="location">{profile.location}</p>
           </div>
         </div>
-  
-        <div className="profile-stats">
-          <div className="stat-item">
-            <img src={moneyLogo} alt="Price" />
-            <span>{profile.price}</span>
-          </div>
-          <div className="stat-item">
-            <img src={reviewsLogo} alt="Feedback" />
-            <span>{profile.feedback}</span>
-          </div>
-          <div className="stat-item">
-            <img src={successLogo} alt="Projects" />
-            <span>{profile.projects}</span>
-          </div>
-        </div>
-  
-        <div className="profile-services">
-          {profile.services.map((service, index) => (
-            <div key={index} className="profile-services-item">
-              {service}
-            </div>
-          ))}
-        </div>
-  
-        <div className="profile-description">
-          <p>{profile.description}</p>
+        <div className="profile-action">
+          <img src={favouriteIcon} alt="Favourite" />
+          <Link to="/perfprofile">
+            <button className="view-profile-btn">Переглянути профіль</button>
+          </Link>
         </div>
       </div>
-    );
-  };
-  
+
+      <div className="profile-stats">
+        <div className="stat-item">
+          <img src={moneyLogo} alt="Price" />
+          <span>{profile.price}</span>
+        </div>
+        <div className="stat-item">
+          <img src={reviewsLogo} alt="Feedback" />
+          <span>{profile.feedback}</span>
+        </div>
+        <div className="stat-item">
+          <img src={successLogo} alt="Projects" />
+          <span>{profile.projects}</span>
+        </div>
+      </div>
+
+      <div className="profile-services">
+        {profile.services.map((service, index) => (
+          <div key={index} className="profile-services-item">
+            {service}
+          </div>
+        ))}
+      </div>
+
+      <div className="profile-description">
+        <p>{profile.description}</p>
+      </div>
+    </div>
+  );
+};
+
 export default ProfileCard;
