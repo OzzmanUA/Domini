@@ -33,6 +33,9 @@ import Admin_UserList from './../components/admin/admin_part'
 import users from './../components/admin/users_demo'
 import CategoryForm from './../components/admin/categories_admin_form'
 
+import CustomerProfile from '../components/profiles/customer-profile/customer-profile'
+import CustomerProfileForThePerformer from '../components/profiles/customer-profile-for-the-performer/customer-profile-for-the-performer'
+
 import PerformerProfilePay from './../components/profiles/performer-profile-pay/performer-profile-pay'
 import HomeReg from './HomeReg';
 import { getAllParentCategories } from '../components/utils/ApiFunctions';
