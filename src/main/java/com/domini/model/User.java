@@ -48,10 +48,14 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private boolean isWorker;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "private_information_id", referencedColumnName = "id")
     private PrivateInformation privateInformation;

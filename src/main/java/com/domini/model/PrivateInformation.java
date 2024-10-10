@@ -1,10 +1,7 @@
 package com.domini.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +30,15 @@ public class PrivateInformation {
 
     private String education;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "privateInformation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WorkerCategoryPrice> workerCategoryPrices;  // Список категорий с ценами
 
     private int experienceYears;  // Количество лет опыта работы
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "private_information_categories",
@@ -46,9 +47,13 @@ public class PrivateInformation {
     )
     private List<Category> categories;  // Категории/подкатегории, в которых работает пользователь
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "privateInformation")
     private User user;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "privateInformation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Photo> portfolio = new ArrayList<>(); // Инициализируем список
 

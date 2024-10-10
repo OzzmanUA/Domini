@@ -34,6 +34,7 @@ public class AuthService {
             user.setUsername(jwtRequestResponse.getUsername());
             user.setEmail(jwtRequestResponse.getEmail());
             user.setPassword(passwordEncoder.encode(jwtRequestResponse.getPassword()));
+            user.setId(jwtRequestResponse.getUserId());
             user.setRoles("ROLE_ADMIN");                                    //в конце изменить на только пользователей
             user.setDateOfRegistration(String.valueOf(new Date()));
             user.setStatus(UserStatus.CREATED);
@@ -62,7 +63,7 @@ public class AuthService {
             );
             var user = userRepository.findByEmail(jwtRequestResponse.getEmail()).orElseThrow();
             System.out.println("User is: "+user);
-            var jwt = jwtTokenUtils.generateToken(user);
+            var jwt = jwtTokenUtils.generateToken(user, user.getId());
             var refreshToken = jwtTokenUtils.generateRefreshToken(new HashMap<>(), user);
             response.setStatusCode(200);
             response.setToken(jwt);
@@ -80,7 +81,7 @@ public class AuthService {
         String username = jwtTokenUtils.getUsernameFromToken(refreshTokenResponse.getToken());
         User user = userRepository.findByEmail(username).orElseThrow();
         if(jwtTokenUtils.validateToken(refreshTokenResponse.getToken(), user)){
-            var jwt = jwtTokenUtils.generateToken(user);
+            var jwt = jwtTokenUtils.generateToken(user, user.getId());
             response.setStatusCode(200);
             response.setToken(jwt);
             response.setRefreshToken(refreshTokenResponse.getToken());

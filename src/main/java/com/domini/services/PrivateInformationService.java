@@ -53,4 +53,6 @@ public class PrivateInformationService {
         privateInfo.removePhoto(photo);
         privateInformationRepository.save(privateInfo);
     }
+
+
 }

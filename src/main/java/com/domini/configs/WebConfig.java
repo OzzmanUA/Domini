@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000") // Разрешить конкретный источник
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("Content-Type", "Authorization")
+                .allowedHeaders("Content-Type", "Authorization", "Custom-Header")
                 .allowCredentials(false) // Если нужны куки
                 .maxAge(3600); // Время кэширования ответа preflight
     }

@@ -1,4 +1,4 @@
-package com.domini.service;
+package com.domini.services;
 
 import com.domini.model.Message;
 import com.domini.model.User;

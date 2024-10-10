@@ -36,9 +36,11 @@ public class JwtTokenUtils {
         this.jwtLifetime = Duration.parse(jwtLifetime).toMillis();
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, Long userId) {
         Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
         claims.put("roles", userDetails.getAuthorities());
+        claims.put("user", userDetails.getUsername());
+        claims.put("userId", userId);
 
         Date issuedDate = new Date(System.currentTimeMillis());
         Date expirationDate = new Date(issuedDate.getTime() + jwtLifetime);
@@ -47,7 +49,7 @@ public class JwtTokenUtils {
                 .setClaims(claims)
                 .setIssuedAt(issuedDate)
                 .setExpiration(expirationDate)
-                .signWith(secretKey) // Указываем ключ для подписи
+                .signWith(secretKey)                    // Указываем ключ для подписи
                 .compact();
     }
 
@@ -59,16 +61,16 @@ public class JwtTokenUtils {
                 .setClaims(claims)
                 .setIssuedAt(issuedDate)
                 .setExpiration(expirationDate)
-                .signWith(secretKey) // Указываем ключ для подписи
+                .signWith(secretKey)                    // Указываем ключ для подписи
                 .compact();
     }
 
     public Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)              // Устанавливаем ключ для проверки подписи
+                .setSigningKey(secretKey)               // Устанавливаем ключ для проверки подписи
                 .build()
-                .parseClaimsJws(token)                 // Парсим токен и проверяем подпись
-                .getBody();                            // Извлекаем клеймы из токена
+                .parseClaimsJws(token)                  // Парсим токен и проверяем подпись
+                .getBody();                             // Извлекаем клеймы из токена
     }
 
     public String getUsernameFromToken(String token) {

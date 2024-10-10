@@ -1,9 +1,6 @@
 package com.domini.controller;
 
-import com.domini.dtos.CategoryDTO;
-import com.domini.dtos.CategoryNameDTO;
-import com.domini.dtos.CategoryWithSubcategoriesDTO;
-import com.domini.dtos.WorkerInfoDTO;
+import com.domini.dtos.*;
 import com.domini.model.Category;
 import com.domini.model.User;
 import com.domini.services.CategoryService;
@@ -57,18 +54,31 @@ public class CategoryController {
         return categoryService.getWorkersByCategory(categoryId, minPrice, maxPrice, experienceYears, country, city);
     }
 
+    // Получение задач в категории, с фильтрацией по цене и локации
+    @GetMapping("/{categoryId}/tasks")
+    public ResponseEntity<List<TaskDTO>> getTasksInCategory(@PathVariable Long categoryId,
+                                            @RequestParam(required = false) Double minPrice,
+                                            @RequestParam(required = false) Double maxPrice,
+                                            @RequestParam(required = false) String country,
+                                            @RequestParam(required = false) String city) {
+
+        User currentUser = userService.getCurrentUser();
+        if (!currentUser.isWorker()) {
+            return ResponseEntity.status(403).body(null);  // 403 Forbidden - если это не работник
+        }
+
+        List<TaskDTO> tasks = categoryService.getTasksInCategory(categoryId, minPrice, maxPrice, country, city);
+        return ResponseEntity.ok(tasks);
+    }
+
     // Метод для преобразования уровня навыков в годы опыта
     private Integer convertSkillLevelToYears(String skillLevel) {
-        // Здесь можно добавить логику для конвертации уровня навыков в количество лет
-        switch (skillLevel.toLowerCase()) {
-            case "junior":
-                return 1;
-            case "middle":
-                return 3;
-            case "senior":
-                return 5;
-            default:
-                return null; // Если уровень навыков не распознан
-        }
+
+        return switch (skillLevel.toLowerCase()) {
+            case "junior" -> 1;
+            case "middle" -> 3;
+            case "senior" -> 5;
+            default -> null; // Если уровень навыков не распознан
+        };
     }
 }

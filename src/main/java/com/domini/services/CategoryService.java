@@ -3,6 +3,7 @@ package com.domini.services;
 import com.domini.dtos.*;
 import com.domini.model.*;
 import com.domini.repository.CategoryRepository;
+import com.domini.repository.TaskRepository;
 import com.domini.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class CategoryService{
 
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
     // Вывод всех родительских категорий с только именами
     public List<CategoryNameDTO> getAllParentCategoriesDTO() {
@@ -246,22 +248,38 @@ public class CategoryService{
 
             // Получаем названия категорий
             List<String> categoryNames = privateInfo.getCategories().stream()
-                    .map(Category::getName) // Здесь мы получаем названия категорий
+                    .map(Category::getName)
                     .collect(Collectors.toList());
 
             workerInfoList.add(new WorkerInfoDTO(
                     worker.getId(),
                     privateInfo.getFirstName(),
                     privateInfo.getLastName(),
-                    categoryNames, // Здесь заменяем на список названий категорий
-                    null, // Если нужна подкатегория, добавьте соответствующее значение
+                    categoryNames,                  // Здесь заменяем на список названий категорий
+                    null,                           // Если нужна подкатегория, добавьте соответствующее значение
                     loc.getCountry(),
                     loc.getCity(),
                     categoriesWithPrices,
                     privateInfo.getAbout(),
-                    privateInfo.getSkillLevel() // Используем метод для определения уровня навыков
+                    privateInfo.getSkillLevel()     // Используем метод для определения уровня навыков
             ));
         }
         return workerInfoList;
+    }
+
+    public List<TaskDTO> getTasksInCategory(Long categoryId, Double minPrice, Double maxPrice, String country, String city) {
+        return taskRepository.findTasksInCategoryWithFilters(categoryId, minPrice, maxPrice, country, city)
+                .stream()
+                .map(task -> new TaskDTO(
+                        task.getId(),
+//                        task.getUser().getAvatar(),           //раскоментировать после добавления аватара
+                        task.getClient().getPrivateInformation().getFirstName(),
+                        task.getClient().getPrivateInformation().getLastName(),
+                        task.getCategory().getName(),
+                        task.getPrice(),
+                        task.getCompletionDate(),
+                        task.getDescription()
+                ))
+                .toList();
     }
 }

@@ -1,7 +1,7 @@
 package com.domini.controller;
 
 import com.domini.model.Message;
-import com.domini.service.MessageService;
+import com.domini.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -16,6 +16,7 @@ public class JwtRequestResponse {
     private String token;
     private String refreshToken;
     private String expirationTime;
+    private Long userId;
     private String username;
     private String email;
     private String password;

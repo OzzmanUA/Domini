@@ -30,9 +30,13 @@ public class Location {
 
     private String house;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "location")
     private User user;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "location")
     private List<Task> tasks;
 
