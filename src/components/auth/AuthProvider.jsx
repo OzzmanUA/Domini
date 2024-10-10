@@ -46,47 +46,49 @@ import {jwtDecode} from "jwt-decode"; // Ensure you import jwtDecode correctly
 
 export const AuthContext = createContext({
   user: null,
-  userId: null, // Add userId to the context
+  username: null, // Add username to the context
   handleLogin: (token) => {},
   handleLogout: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userId, setUserId] = useState(null); // Store userId separately
+  const [username, setUserName] = useState(null); // Store username separately
 
   const handleLogin = (token) => {
     // try {
+      console.log(token);
       const decodedUser = jwtDecode(token); // Decode token immediately
-      const userIdFromToken = decodedUser.sub; // Access userId from decoded token (assumed to be 'sub')
+      const usernameFromToken = decodedUser.sub; // Access username from decoded token (assumed to be 'sub')
 
       // Debugging logs
       console.log("Decoded User:", decodedUser);
-      console.log("Decoded User ID:", userIdFromToken);
+      console.log("Decoded Username:", usernameFromToken);
+
 
       // Save decoded information
-      localStorage.setItem("userId", userIdFromToken); // Save userId in localStorage
+      localStorage.setItem("username", usernameFromToken); // Save username in localStorage
       localStorage.setItem("userRole", decodedUser.roles); // Save roles
       localStorage.setItem("token", token); // Save token
 
       setUser(decodedUser); // Save decoded user object
-      setUserId(userIdFromToken); // Save userId in state
+      setUserName(usernameFromToken); // Save userId in state
     // } catch (error) {
     //   console.error("Error decoding token:", error);
     // }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
 
     setUser(null);
-    setUserId(null); // Clear the userId state
+    setUserName(null); // Clear the userId state
   };
 
   return (
-    <AuthContext.Provider value={{ user, userId, handleLogin, handleLogout }}>
+    <AuthContext.Provider value={{ user, username, handleLogin, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );

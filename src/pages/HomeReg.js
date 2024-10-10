@@ -43,8 +43,10 @@ import AddCategory from '../components/admin/AddCategory';
 
 function HomeReg() {
 	const categoriesList2 = getAllCategories()
-	console.log (categoriesList)
-	console.log (categoriesList2)
+	// console.log (categoriesList)
+	// console.log (categoriesList2)
+	// const token = localStorage.getItem('token');
+	// console.log(token);
 
   return (
     <main>

@@ -187,27 +187,47 @@ export async function getAllParentCategories() {
 // 	  throw error;
 // 	}
 //   };
-export const getPrivateInformation = async (userId, token) => {
-	try {
-	  if (!userId) {
-		throw new Error('User ID is not available');
-	  }
+// export const getPrivateInformationByUsername = async (username, token) => {
+// 	try {
+// 	  // Make a GET request to the backend API
+// 	  const response = await api.get(`/private-information/by-username`, {
+// 		params: { username }, // Pass username as a query parameter
+// 		headers: {
+// 		  Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+// 		},
+// 	  });
   
-	  const response = await api.get(`/private-information/${userId}`, {
+// 	  // Check if the response has data
+// 	  if (response && response.data) {
+// 		return response.data; // Return the private information DTO
+// 	  } else {
+// 		throw new Error('No data found');
+// 	  }
+// 	} catch (error) {
+// 	  console.error('Error fetching private information by username:', error.message || error);
+// 	  throw error; // Rethrow the error to handle it in the calling function
+// 	}
+//   };
+
+export const getPrivateInformation = async (token) => {
+	try {
+	  // Sending GET request to the server, including the token in the Authorization header
+	  const response = await api.get(`/private-information`, {
 		headers: {
-		  Authorization: `Bearer ${token}`, // Include the token in the Authorization header
-		  'Custom-Header': 'customHeaderValue', // Example of adding another custom header
+		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
 		},
 	  });
   
-	  // Check if the response is valid and has data
+	  // Check if the response has valid data
 	  if (response && response.data) {
-		return response.data;
+		console.log (response.data);
+		return response.data; // Return the private information DTO from the response
+		
 	  } else {
 		throw new Error('No data found');
 	  }
 	} catch (error) {
-	  console.error("Error fetching private information:", error.message || error);
+	  console.error('Error fetching private information:', error.message || error);
 	  throw error; // Rethrow error to handle it in the calling function
 	}
   };

@@ -44,7 +44,9 @@ import ProfileCard from '../components/catalog/profileCard';
 import ProfilePage from '../components/catalog/ProfilePage';
 
 function Profile() {
-const { userId, token } = useAuth(); // Get userId and token from context
+// const { username, token } = useAuth(); // Get userId and token from context
+// console.log(useAuth());
+
 
   return (
     <main>
@@ -59,7 +61,7 @@ const { userId, token } = useAuth(); // Get userId and token from context
 						<Header_auth />
 						<MiddleMainAuth />
 
-                        <ProfilePage userId={userId}/>
+                        <ProfilePage/>
 						{/* <AddCategory /> */}
 						{/* <Categories /> */}
 						{/* <PerformerProfile/> */}
