@@ -51,6 +51,9 @@ import PerfProfilePay from "./pages/PerfProfilePay";
 
 import OrderP from "./pages/OrderP";
 
+import CustomProfile from "./pages/CustomProfile";
+import CustomProfileForPerf from "./pages/CustomProfileForPerf";
+
 function App() {
 // 	const [token, setToken] = useState();
 
@@ -74,7 +77,11 @@ function App() {
 					<Route path="/oCatalog" element={<OCatalog />} />
 					<Route path="/perfProfile" element={<PerfProfile />} />
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
-					<Route path="/orderP" element={<OrderP />} />					
+					<Route path="/orderP" element={<OrderP />} />
+					<Route path="/customProfile" element={<CustomProfile />} />
+					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
+					
+										
 					
 					<Route 
 						path="/private-information" 
