@@ -1,0 +1,97 @@
+.user-orders-container-bg{
+    background-color: #ECECEC;
+    padding-top: 50px;
+    padding-bottom: 90px;
+}
+.user-orders-container {
+    width: 1520px;
+    margin: 0 auto;
+  }
+  
+  .top-user-orders-list h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .top-user-orders-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .filter-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-button {
+    width: 177px;
+    height: 36px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    padding-left: 35px;
+    cursor: pointer;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 1;
+  }
+  
+  .dropdown-button:hover + .dropdown-content,
+  .dropdown-content:hover {
+    display: block;
+  }
+  
+  .dropdown-content div {
+    padding: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  
+  .user-orders-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .user-orders-container thead {
+    background-color: #f0f0f0;
+  }
+  
+  .user-orders-container th, td {
+    text-align: center;
+    padding: 16px 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .status {
+    padding: 8px 18px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .in-progress {
+    background-color: #1CC41C;
+    color: white;
+  }
+  
+  .completed {
+    background-color: #727272;
+    color: white;
+  }
+  .order-details{
+    width: 378px;
+    text-align: left !important;
+    color: #727272;
+  }
+  
