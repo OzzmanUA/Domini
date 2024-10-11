@@ -71,6 +71,13 @@ public class CategoryController {
         return ResponseEntity.ok(tasks);
     }
 
+    // Получение подробной информации о работнике по его ID
+    @GetMapping("/workers/{workerId}")
+    public ResponseEntity<WorkerDetailedDTO> getWorkerDetailedInfo(@PathVariable Long workerId) {
+        WorkerDetailedDTO workerInfo = categoryService.getWorkerDetailedInfoById(workerId);
+        return ResponseEntity.ok(workerInfo);
+    }
+
     // Метод для преобразования уровня навыков в годы опыта
     private Integer convertSkillLevelToYears(String skillLevel) {
 

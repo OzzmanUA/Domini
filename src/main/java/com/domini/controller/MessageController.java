@@ -1,5 +1,6 @@
 package com.domini.controller;
 
+import com.domini.dtos.UserToMessageDTO;
 import com.domini.model.Message;
 import com.domini.model.User;
 import com.domini.services.MessageService;
@@ -19,32 +20,32 @@ public class MessageController {
 
     @PostMapping("/send")
     public Message sendMessage(
-            @RequestParam String senderUsername,
-            @RequestParam String recipientUsername,
+            @RequestParam Long senderId,
+            @RequestParam Long recipientId,
             @RequestParam String content,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-        return messageService.sendMessage(senderUsername, recipientUsername, content, file);
+        return messageService.sendMessageById(senderId, recipientId, content, file);
     }
 
     @GetMapping("/sent")
-    public List<Message> getSentMessages(@RequestParam String senderUsername) {
-        return messageService.getMessagesBySender(senderUsername);
+    public List<Message> getSentMessages(@RequestParam Long senderId) {
+        return messageService.getMessagesBySenderId(senderId);
     }
 
     @GetMapping("/received")
-    public List<Message> getReceivedMessages(@RequestParam String recipientUsername) {
-        return messageService.getMessagesByRecipient(recipientUsername);
+    public List<Message> getReceivedMessages(@RequestParam Long recipientId) {
+        return messageService.getMessagesByRecipientId(recipientId);
     }
 
     @GetMapping("/conversations")
-    public List<User> getConversations(@RequestParam String username) {
-        return messageService.getUsersWithConversations(username);
+    public List<UserToMessageDTO> getConversations(@RequestParam Long userId) {
+        return messageService.getUsersWithConversationsById(userId);
     }
 
     @GetMapping("/conversation")
     public List<Message> getConversation(
-            @RequestParam String currentUsername,
-            @RequestParam String otherUsername) {
-        return messageService.getConversation(currentUsername, otherUsername);
+            @RequestParam Long currentUserId,
+            @RequestParam Long otherUserId) {
+        return messageService.getConversationByUserIds(currentUserId, otherUserId);
     }
 }
