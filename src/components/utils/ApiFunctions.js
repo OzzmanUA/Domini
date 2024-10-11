@@ -287,3 +287,40 @@ export const removePhoto = async (photoId, token) => {
 	  throw error;
 	}
   };
+
+  export const createTask = async (taskData, token) => {
+	try {
+	  // Prepare the data to match the backend's expected structure
+	  const requestData = {
+		description: taskData.description,
+		details: taskData.details,
+		price: taskData.price,
+		completionDate: taskData.completionDate,
+		categoryId: taskData.categoryId,
+		clientId: taskData.clientId,
+		status: taskData.status,
+		country: taskData.location.country,   // Location fields
+		city: taskData.location.city,         // Location fields
+		district: taskData.location.district, // Location fields
+		street: taskData.location.street,     // Location fields
+		house: taskData.location.house        // Location fields
+	  };
+  
+	  // Send a POST request to create the task with the modified request data
+	  const response = await api.post('/task/create', requestData, {
+		headers: {
+		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
+		},
+	  });
+  
+	  // Check if the task was created successfully
+	  if (response.status === 200) {
+		return response.data; // Return success message
+	  } else {
+		throw new Error('Task creation failed.');
+	  }
+	} catch (error) {
+	  console.error('Error creating task:', error.message || error);
+	  throw error; // Rethrow error to handle it in the calling function
+	}
+  };
