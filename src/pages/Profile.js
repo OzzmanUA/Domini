@@ -42,6 +42,7 @@ import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
 import ProfileCard from '../components/catalog/profileCard';
 import ProfilePage from '../components/catalog/ProfilePage';
+import UserProfile from '../components/catalog/UserProfile';
 
 function Profile() {
 // const { username, token } = useAuth(); // Get userId and token from context
@@ -61,7 +62,8 @@ function Profile() {
 						<Header_auth />
 						<MiddleMainAuth />
 
-                        <ProfilePage/>
+                        {/* <ProfilePage/> */}
+						<UserProfile />
 						{/* <AddCategory /> */}
 						{/* <Categories /> */}
 						{/* <PerformerProfile/> */}

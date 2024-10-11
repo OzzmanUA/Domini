@@ -231,3 +231,59 @@ export const getPrivateInformation = async (token) => {
 	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
+
+
+export const updatePrivateInformation = async (privateInfoDTO, token) => {
+	try {
+	  const response = await api.put(`/private-information`, privateInfoDTO, {
+		headers: {
+		  Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+		},
+	  });
+  
+	  if (response.status === 204) {
+		return true; // Success, no content returned
+	  } else {
+		throw new Error('Failed to update private information');
+	  }
+	} catch (error) {
+	  console.error('Error updating private information:', error.message || error);
+	  throw error;
+	}
+  };
+  
+  // Function to add a photo to the user's portfolio
+export const addPhoto = async (file, token) => {
+	try {
+	  const formData = new FormData();
+	  formData.append('file', file);
+  
+	  const response = await api.post(`/private-information/portfolio`, formData, {
+		headers: {
+		  Authorization: `Bearer ${token}`,
+		  'Content-Type': 'multipart/form-data',
+		},
+	  });
+  
+	  return response.data; // Response message
+	} catch (error) {
+	  console.error('Error uploading photo:', error.message || error);
+	  throw error;
+	}
+  };
+  
+  // Function to remove a photo from the user's portfolio
+export const removePhoto = async (photoId, token) => {
+	try {
+	  const response = await api.delete(`/private-information/portfolio/${photoId}`, {
+		headers: {
+		  Authorization: `Bearer ${token}`,
+		},
+	  });
+  
+	  return response.data; // Response message
+	} catch (error) {
+	  console.error('Error removing photo:', error.message || error);
+	  throw error;
+	}
+  };
