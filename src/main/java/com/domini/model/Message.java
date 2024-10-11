@@ -18,6 +18,9 @@ public class Message {
     @Column(nullable = false, length = 1000)
     private String content;
 
+    @Column(nullable = true)
+    private String photoUrl;
+
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
