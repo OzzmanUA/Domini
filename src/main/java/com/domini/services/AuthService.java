@@ -2,6 +2,7 @@ package com.domini.services;
 
 import com.domini.dtos.JwtRequestResponse;
 import com.domini.enums.UserStatus;
+import com.domini.model.PrivateInformation;
 import com.domini.model.User;
 import com.domini.repository.UserRepository;
 import com.domini.utils.JwtTokenUtils;
@@ -26,6 +27,8 @@ public class AuthService {
     private JwtTokenUtils jwtTokenUtils;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private PrivateInformationService privateInformationService;
 
     public JwtRequestResponse signUp(JwtRequestResponse jwtRequestResponse) {
         JwtRequestResponse response = new JwtRequestResponse();
@@ -39,6 +42,11 @@ public class AuthService {
             user.setDateOfRegistration(String.valueOf(new Date()));
             user.setStatus(UserStatus.CREATED);
             user.setPhone(jwtRequestResponse.getPhone());
+
+            // Создание пустой личной информации
+            PrivateInformation privateInformation = new PrivateInformation();
+            user.setPrivateInformation(privateInformation);
+
             User savedUser = userRepository.save(user);
 
             if (savedUser != null && savedUser.getId()>0) {
