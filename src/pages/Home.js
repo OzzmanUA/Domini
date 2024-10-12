@@ -6,7 +6,11 @@ import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
+	Navigate,
 } from "react-router-dom";
+
+import { useContext } from 'react';
+
 import Login from "./../components/auth/Login"
 import { AuthProvider } from "./../components/auth/AuthProvider"
 import RequireAuth from './../components/auth/RequireAuth';
@@ -41,9 +45,13 @@ import HomeReg from './HomeReg';
 import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
 
+
+
+
 function Home() {
 	// const categoriesList2 = getAllParentCategories()
 	// console.log (getAllParentCategories)
+
 
 
   return (

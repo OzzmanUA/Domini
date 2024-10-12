@@ -9,7 +9,9 @@ import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
+	Navigate,
 } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Fragment } from "react";
 import { redirect } from "react-router-dom";
 import Login from "./components/auth/Login"
@@ -53,13 +55,33 @@ import OrderP from "./pages/OrderP";
 
 import CustomProfile from "./pages/CustomProfile";
 import CustomProfileForPerf from "./pages/CustomProfileForPerf";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+
+
 
 function App() {
-// 	const [token, setToken] = useState();
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+  
+	useEffect(() => {
+	  // Check if token exists in localStorage
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); // Only run this effect if the token changes
+  
+	// Add logic to prevent page from rendering while we check authentication
+	if (isAuthenticated === null) {
+	  // While authentication is being checked, you can show a loading indicator
+	  return <div>Loading...</div>;
+	}
+	// 	const [token, setToken] = useState();
 
-//   if(!token) {
-//     return <Login setToken={setToken} />
-//   }
+	//   if(!token) {
+	//     return <Login setToken={setToken} />
+	//   }
 
 
   return (
@@ -70,8 +92,9 @@ function App() {
 					
 					
 					<Routes>
-					<Route path="/" element={<Home />}/>
-					<Route path="/login" element={<Login />} />
+					<Route path="/" element={isAuthenticated ? <Navigate to="/homereg" /> : <Home />} />
+					{/* <Route path="/" element={<Home />}/> */}
+					<Route path="/login" element={isAuthenticated? <Navigate to="/homereg" /> : <Login />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/pCatalog" element={<PCatalog />} />
 					<Route path="/oCatalog" element={<OCatalog />} />
@@ -80,10 +103,13 @@ function App() {
 					<Route path="/orderP" element={<OrderP />} />
 					<Route path="/customProfile" element={<CustomProfile />} />
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
+
+					<Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/login" />} />
+					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/private-information" />} />
 					
 										
 					
-					<Route 
+					{/* <Route 
 						path="/private-information" 
 						element={
 						<RequireAuth>
@@ -91,10 +117,10 @@ function App() {
 						</RequireAuth>
 						}
 						
-					/>
+					/> */}
 					{/* <Route path="/profile" element={<Profile />} />	 */}
 					
-					<Route
+					{/* <Route
  						path="/homereg"
   						element={
     					<RequireAuth>
@@ -102,7 +128,14 @@ function App() {
     					</RequireAuth>
   						}
 
-					/>
+					/> */}
+					{/* <Route element={<ProtectedRoute />}>
+          			<Route path="/private-information" element={<Profile />} />
+        			</Route>
+
+					<Route element={<ProtectedRoute />}>
+          			<Route path="/homereg" element={<HomeReg />} />
+        			</Route> */}
         			
 
 					</Routes>

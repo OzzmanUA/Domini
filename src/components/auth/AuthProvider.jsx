@@ -60,14 +60,17 @@ export const AuthProvider = ({ children }) => {
       console.log(token);
       const decodedUser = jwtDecode(token); // Decode token immediately
       const usernameFromToken = decodedUser.sub; // Access username from decoded token (assumed to be 'sub')
+      const idFromToken = decodedUser.userId;
 
       // Debugging logs
       console.log("Decoded User:", decodedUser);
       console.log("Decoded Username:", usernameFromToken);
+      console.log("Decoded Id:", idFromToken);
 
 
       // Save decoded information
-      localStorage.setItem("username", usernameFromToken); // Save username in localStorage
+      localStorage.setItem("username", usernameFromToken);
+      localStorage.setItem("userId", idFromToken); // Save username in localStorage
       localStorage.setItem("userRole", decodedUser.roles); // Save roles
       localStorage.setItem("token", token); // Save token
 
@@ -80,6 +83,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("username");
+    localStorage.removeItem("userId");
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
 

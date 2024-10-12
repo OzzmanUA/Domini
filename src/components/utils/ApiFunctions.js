@@ -288,22 +288,24 @@ export const removePhoto = async (photoId, token) => {
 	}
   };
 
+
+
   export const createTask = async (taskData, token) => {
 	try {
 	  // Prepare the data to match the backend's expected structure
 	  const requestData = {
 		description: taskData.description,
 		details: taskData.details,
-		price: taskData.price,
+		price: parseFloat(taskData.price), // Ensure price is a number
 		completionDate: taskData.completionDate,
 		categoryId: taskData.categoryId,
 		clientId: taskData.clientId,
-		status: taskData.status,
-		country: taskData.location.country,   // Location fields
-		city: taskData.location.city,         // Location fields
-		district: taskData.location.district, // Location fields
-		street: taskData.location.street,     // Location fields
-		house: taskData.location.house        // Location fields
+		status: taskData.status || 'ACTIVE', // Default task status if not provided
+		country: taskData.country,   // Location fields
+		city: taskData.city,         // Location fields
+		district: taskData.district, // Location fields
+		street: taskData.street,     // Location fields
+		house: taskData.house        // Location fields
 	  };
   
 	  // Send a POST request to create the task with the modified request data
@@ -314,13 +316,14 @@ export const removePhoto = async (photoId, token) => {
 	  });
   
 	  // Check if the task was created successfully
-	  if (response.status === 200) {
-		return response.data; // Return success message
+	  if (response.status >= 200 && response.status < 300) {
+		return response.data; // Return the response data if successful
 	  } else {
-		throw new Error('Task creation failed.');
+		throw new Error('Task creation failed.'); // Handle unsuccessful creation
 	  }
 	} catch (error) {
-	  console.error('Error creating task:', error.message || error);
+	  // Log and throw the error for the calling function to handle
+	  console.error('Error creating task:', error.response?.data?.message || error.message || error);
 	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
