@@ -57,6 +57,8 @@ import CustomProfileForPerf from "./pages/CustomProfileForPerf";
 
 import FavouriteOfertsPage from "./pages/FavouriteOfertsPage";
 
+import ExtendPerfProfile from "./pages/ExtendPerfProfile";
+
 function App() {
 // 	const [token, setToken] = useState();
 
@@ -85,6 +87,8 @@ function App() {
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
 					<Route path="/listOrders" element={<ListOrders />} />
 					<Route path="/favouriteOfertsPage" element={<FavouriteOfertsPage />} />
+					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
+					
 					
 					
 					<Route 

@@ -44,6 +44,8 @@ import UserOrdersList from '../components/user-order-list/user-order-list'
 
 import FavoriteOffers from '../components/user-suggestions/favorite-offers/favorite-offers'
 
+import ExtendedpPerformerProfile from '../components/profiles/extended-performer-profile/extended-performer-profile'
+
 
 function Home() {
 	// const categoriesList2 = getAllParentCategories()
