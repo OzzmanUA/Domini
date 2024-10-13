@@ -52,12 +52,17 @@ import PerfProfile from "./pages/PerfProfile";
 import PerfProfilePay from "./pages/PerfProfilePay";
 
 import OrderP from "./pages/OrderP";
+import ListOrders from "./pages/ListOrders";
 
 import CustomProfile from "./pages/CustomProfile";
 import CustomProfileForPerf from "./pages/CustomProfileForPerf";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
+
+import FavouriteOfertsPage from "./pages/FavouriteOfertsPage";
+
+import ExtendPerfProfile from "./pages/ExtendPerfProfile";
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
