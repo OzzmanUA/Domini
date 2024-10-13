@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect} from "react"
 import { loginUser } from "../utils/ApiFunctions"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "./AuthProvider"
-import BackLink from "../common/Goback"
+import HomeButton from "../common/Homebutton"
 
 
 const Login = () => {
@@ -13,11 +13,11 @@ const Login = () => {
 		password: "",
 		phone: ""
 	})
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 	const navigate = useNavigate()
 	const auth = useAuth()
 	const location = useLocation()
-	const redirectUrl = location.state?.path || "/homereg"
+	const redirectUrl = location.state?.path || "/"
 
 	const handleInputChange = (e) => {
 		setLogin({ ...login, [e.target.name]: e.target.value })
@@ -31,7 +31,8 @@ const Login = () => {
 			auth.handleLogin(token)
 			navigate(redirectUrl, { replace: true })
 
-			setIsLoggedIn(true);
+			
+
 			// this.props.history.push('/homereg')
 
 		} else {
@@ -42,11 +43,13 @@ const Login = () => {
 		}, 4000)
 	}
 
+
+
 	return (
 		<section className="container col-6 mt-5 mb-5">
 			{errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
 			<h2>Login</h2>
-			<BackLink />
+			<HomeButton />
 			<form onSubmit={handleSubmit}>
 			<div className="mb-3 row">
 					<label htmlFor="username" className="col-sm-2 col-form-label">

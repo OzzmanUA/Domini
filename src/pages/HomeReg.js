@@ -1,6 +1,6 @@
 // import "..bootstrap.min.css";
 // import "..bootstrap.min.js";
-import NavBar from './../components/common/NavBar'
+import NavBar from '../components/common/NavBar'
 // import NavBar from "./components/common/NavBar";
 import {
 	BrowserRouter as Router,
