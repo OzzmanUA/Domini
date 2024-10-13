@@ -70,7 +70,6 @@ function HomeReg() {
 						{/* <Order/> */}
 						<UsefulGuides/>
       					<Footer/>
-						<Chat/>
 					</div>
 
 
