@@ -60,7 +60,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
 
-import FavouriteOfertsPage from "./pages/FavouriteOfertsPage";
+import FavouriteOffersPage from "./pages/FavouriteOffersPage";
 
 import ExtendPerfProfile from "./pages/ExtendPerfProfile";
 
@@ -107,7 +107,9 @@ function App() {
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
 					<Route path="/orderP" element={<OrderP />} />
 					<Route path="/customProfile" element={<CustomProfile />} />
+					<Route path="/favouriteOffersPage" element={<FavouriteOffersPage />} />
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
+					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
 
 					<Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/" />} />
 					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/private-information" />} />

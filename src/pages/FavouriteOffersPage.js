@@ -44,7 +44,7 @@ import AddCategory from '../components/admin/AddCategory';
 
 import FavoriteOffers from '../components/user-suggestions/favorite-offers/favorite-offers'
 
-function FavouriteOfertsPage() {
+function FavouriteOffersPage() {
 
   return (
     <main>
@@ -55,7 +55,7 @@ function FavouriteOfertsPage() {
 					<Route path="/register" element={<Registration />} />	
 					</Routes> */}
 
-					<div className="FavouriteOfertsPage">
+					<div className="FavouriteOffersPage">
 						<Header_auth />
 						<FavoriteOffers/>
 						<Footer/>
@@ -67,4 +67,4 @@ function FavouriteOfertsPage() {
   );
 }
 
-export default FavouriteOfertsPage;
+export default FavouriteOffersPage;
