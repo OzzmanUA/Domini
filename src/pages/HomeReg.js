@@ -41,6 +41,8 @@ import PerformerProfile from '../components/profiles/performer-profile/performer
 import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
 
+import Chat from '../components/chat/chat';
+
 function HomeReg() {
 	const categoriesList2 = getAllCategories()
 	// console.log (categoriesList)
@@ -68,6 +70,7 @@ function HomeReg() {
 						{/* <Order/> */}
 						<UsefulGuides/>
       					<Footer/>
+						<Chat/>
 					</div>
 
 
