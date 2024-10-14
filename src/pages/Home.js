@@ -50,11 +50,31 @@ import FavoriteOffers from '../components/user-suggestions/favorite-offers/favor
 
 import ExtendedpPerformerProfile from '../components/profiles/extended-performer-profile/extended-performer-profile'
 
+import { getAllCategories } from '../components/utils/ApiFunctions';
+import { useState, useEffect } from 'react';
 
 
 
 
 function Home() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	const categoriesList2 = getAllCategories()
+  
+	useEffect(() => {
+	  // Check if token exists in localStorage
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); // Only run this effect if the token changes
+  
+	// Add logic to prevent page from rendering while we check authentication
+	if (isAuthenticated === null) {
+	  // While authentication is being checked, you can show a loading indicator
+	  return <div>Loading...</div>;
+	}
 	// const categoriesList2 = getAllParentCategories()
 	// console.log (getAllParentCategories)
 
@@ -62,22 +82,39 @@ function Home() {
 
   return (
     <main>
+		<div className="Home">
+		{isAuthenticated ? (
+
+
+			<AuthProvider>
+				<div>
+						<Header_auth />
+						<TopMainAuth/>
+						<MiddleMainAuth />
+						<Categories categories={categoriesList2} />
+						<UsefulGuides/>
+		  				<Footer/>
+				</div>
+			</AuthProvider>
+		) : (
 			<AuthProvider>
 
-					{/* <NavBfar /> */}
-
-					<div className="Home">
+				{/* <NavBfar /> */}
+				<div>
+	
 						<Header />
 						<TopNoneAuth/>
 						<PopServices/>
 						<MiddleNonAuth />
 						<UsefulGuides/>
-
-      					<Footer/>
-					</div>
-
-
-			</AuthProvider>			
+	
+						<Footer/>
+				</div>
+	
+	
+			</AuthProvider>
+		)}
+		</div>		
 		</main>
   );
 }

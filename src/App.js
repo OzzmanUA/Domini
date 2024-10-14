@@ -97,9 +97,10 @@ function App() {
 					
 					
 					<Routes>
-					<Route path="/" element={isAuthenticated ? <Navigate to="/homereg" /> : <Home />} />
+					<Route path="/" element={<Home />} />
+					{/* <Route path="/" element={isAuthenticated ? <Navigate to="/homereg" /> : <Home />} /> */}
 					{/* <Route path="/" element={<Home />}/> */}
-					<Route path="/login" element={isAuthenticated ? <Navigate to="/homereg" /> : <Login />} />
+					<Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/pCatalog" element={<PCatalog />} />
 					<Route path="/oCatalog" element={<OCatalog />} />
@@ -111,7 +112,7 @@ function App() {
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
 					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
 
-					<Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/" />} />
+					{/* <Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/" />} /> */}
 					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/private-information" />} />
 					
 										
