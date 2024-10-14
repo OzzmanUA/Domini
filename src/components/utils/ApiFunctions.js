@@ -327,3 +327,24 @@ export const removePhoto = async (photoId, token) => {
 	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
+//   export const getWorkersByCategory = async (categoryId, filters = {}) => {
+// 	try {
+// 	  const { minPrice, maxPrice, skillLevel, country, city } = filters;
+// 	  const response = await api.get(`/category/${categoryId}/workers/filter`, {
+// 		params: { minPrice, maxPrice, skillLevel, country, city },
+// 	  });
+// 	  return response.data; // Assuming the API returns a list of WorkerInfoDTO
+// 	} catch (error) {
+// 	  console.error("Error fetching workers:", error);
+// 	  return [];
+// 	}
+//   };
+	export const getWorkersByCategory = async (categoryId) => {
+	try {	  
+	  const response = await api.get(`/category/${categoryId}/workers`);
+	  return response.data; // Assuming the API returns a list of WorkerInfoDTO
+	} catch (error) {
+	  console.error("Error fetching workers:", error);
+	  return [];
+	}
+  };

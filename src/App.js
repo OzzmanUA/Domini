@@ -102,7 +102,10 @@ function App() {
 					{/* <Route path="/" element={<Home />}/> */}
 					<Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
 					<Route path="/register" element={<Registration />} />
-					<Route path="/pCatalog" element={<PCatalog />} />
+					{/* <Route path="/pCatalog" element={<PCatalog />} /> */}
+
+					<Route path="/pcatalog/:categoryId" element={<PCatalog />} />
+
 					<Route path="/oCatalog" element={<OCatalog />} />
 					<Route path="/perfProfile" element={<PerfProfile />} />
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
