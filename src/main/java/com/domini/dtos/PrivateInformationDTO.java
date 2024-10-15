@@ -1,8 +1,6 @@
 package com.domini.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -18,4 +16,6 @@ public class PrivateInformationDTO {
     private String education;
     private int experienceYears;
     private List<Long> categoryIds;
+    private String country;
+    private String city;
 }

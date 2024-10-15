@@ -42,6 +42,7 @@ public class AuthService {
             user.setDateOfRegistration(String.valueOf(new Date()));
             user.setStatus(UserStatus.CREATED);
             user.setPhone(jwtRequestResponse.getPhone());
+            user.setWorker(true);
 
             // Создание пустой личной информации
             PrivateInformation privateInformation = new PrivateInformation();

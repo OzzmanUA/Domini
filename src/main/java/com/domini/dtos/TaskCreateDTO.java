@@ -23,4 +23,5 @@ public class TaskCreateDTO {
     private LocalDate completionDate;  // Дата завершения задачи
     private TaskStatus status;         // Статус задачи
     private Long clientId;             // ID клиента (заказчика)
+    private Long workerId;             // ID работника
 }

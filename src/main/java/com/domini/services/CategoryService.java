@@ -41,6 +41,10 @@ public class CategoryService{
         return categoryRepository.findById(id).orElse(null);
     }
 
+    public List<Category> findByIds(List<Long> categoryIds) {
+        return categoryRepository.findAllById(categoryIds);
+    }
+
     // Удаление категории
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);

@@ -2,10 +2,13 @@ package com.domini.controller;
 
 import com.domini.dtos.PrivateInformationDTO;
 import com.domini.model.Category;
+import com.domini.model.Location;
 import com.domini.model.PrivateInformation;
 import com.domini.model.User;
 import com.domini.repository.PrivateInformationRepository;
 import com.domini.repository.UserRepository;
+import com.domini.services.CategoryService;
+import com.domini.services.LocationService;
 import com.domini.services.PrivateInformationService;
 import com.domini.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +28,12 @@ public class PrivateInformationController {
 
     private final UserRepository userRepository;
     private final PrivateInformationRepository privateInformationRepository;
+
+    @Autowired
+    private LocationService locationService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     private PrivateInformationService privateInformationService;
@@ -49,7 +59,14 @@ public class PrivateInformationController {
         System.out.println("Authorization Header: " + authorizationHeader);
         Optional<User> userOpt = getCurrentUser();
         if (userOpt.isPresent()) {
-            PrivateInformation privateInfo = userOpt.get().getPrivateInformation();
+            User user = userOpt.get();
+            PrivateInformation privateInfo = user.getPrivateInformation();
+            Location location = user.getLocation(); // Получаем локацию пользователя
+
+            // Добавляем данные о локации в DTO
+            String country = (location != null) ? location.getCountry() : null;
+            String city = (location != null) ? location.getCity() : null;
+
             PrivateInformationDTO dto = new PrivateInformationDTO(
                     privateInfo.getFirstName(),
                     privateInfo.getLastName(),
@@ -58,7 +75,9 @@ public class PrivateInformationController {
                     privateInfo.getSkills(),
                     privateInfo.getEducation(),
                     privateInfo.getExperienceYears(),
-                    privateInfo.getCategories().stream().map(Category::getId).toList()
+                    privateInfo.getCategories().stream().map(Category::getId).toList(),
+                    country, // Страна из локации
+                    city     // Город из локации
             );
             return ResponseEntity.ok(dto);
         } else {
@@ -83,7 +102,33 @@ public class PrivateInformationController {
             privateInfo.setEducation(privateInfoDTO.getEducation());
             privateInfo.setExperienceYears(privateInfoDTO.getExperienceYears());
 
-            privateInformationRepository.save(privateInfo); // Сохраняем изменения
+            // Обновляем категории
+            if (privateInfoDTO.getCategoryIds() != null && !privateInfoDTO.getCategoryIds().isEmpty()) {
+                List<Category> updatedCategories = categoryService.findByIds(privateInfoDTO.getCategoryIds());
+                privateInfo.setCategories(updatedCategories); // Обновляем список категорий
+            } else {
+                privateInfo.getCategories().clear(); // Очищаем категории, если список пуст
+            }
+
+            // Обновляем или создаем новую локацию
+            if (privateInfoDTO.getCountry() != null && privateInfoDTO.getCity() != null) {
+                Location location = user.getLocation();
+                if (location != null) {
+                    // Обновляем существующую локацию
+                    location.setCountry(privateInfoDTO.getCountry());
+                    location.setCity(privateInfoDTO.getCity());
+                } else {
+                    // Создаем новую локацию, если её нет
+                    location = new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
+                    Location savedLocation = locationService.addLocation(location);
+                    user.setLocation(savedLocation); // Связываем новую локацию с пользователем
+                }
+            }
+
+            // Сохраняем изменения
+            privateInformationRepository.save(privateInfo);
+            userRepository.save(user); // Сохраняем изменения пользователя с новой или обновленной локацией
+
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(403).build(); // Если пользователь не найден
