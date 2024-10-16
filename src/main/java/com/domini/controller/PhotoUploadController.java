@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/photos")
@@ -25,7 +26,7 @@ public class PhotoUploadController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             // Проверка типа файла (например, только изображения)
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
             // Сохранение файла на сервере
             Path targetLocation = Paths.get(uploadDir).resolve(fileName);

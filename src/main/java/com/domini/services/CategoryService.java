@@ -1,12 +1,13 @@
 package com.domini.services;
 
 import com.domini.dtos.*;
+import com.domini.enums.TaskStatus;
 import com.domini.model.*;
 import com.domini.repository.CategoryRepository;
 import com.domini.repository.TaskRepository;
 import com.domini.repository.UserRepository;
+import com.domini.utils.DTOConverter;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -99,47 +100,15 @@ public class CategoryService{
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         return userRepository.findByPrivateInformation_CategoriesContains(category).stream()
-                .map(this::convertToWorkerInfoDTO)
+                .map(DTOConverter::convertToWorkerInfoDTO)
                 .collect(Collectors.toList());
     }
 
-    // Получение краткой информации о работнике по его ID
     public WorkerInfoDTO getWorkerInfoById(Long workerId) {
         User worker = userRepository.findById(workerId)
                 .orElseThrow(() -> new RuntimeException("Worker not found"));
 
-        return convertToWorkerInfoDTO(worker);
-    }
-
-    // Преобразование User в WorkerInfoDTO
-    private WorkerInfoDTO convertToWorkerInfoDTO(User user) {
-        PrivateInformation privateInfo = user.getPrivateInformation();
-        Location location = user.getLocation();
-
-        // Список категорий с ценами
-        List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
-                .map(workerCategoryPrice -> new CategoryWithPriceDTO(
-                        workerCategoryPrice.getCategory().getName(),
-                        workerCategoryPrice.getServicePrice()))
-                .collect(Collectors.toList());
-
-        // Получаем названия категорий
-        List<String> categoryNames = privateInfo.getCategories().stream()
-                .map(Category::getName) // Получаем названия категорий
-                .collect(Collectors.toList());
-
-        return new WorkerInfoDTO(
-                user.getId(),
-                privateInfo.getFirstName(),
-                privateInfo.getLastName(),
-                categoryNames, // Список названий категорий
-                null, // Если нужна подкатегория, добавьте соответствующее значение
-                location.getCountry(),
-                location.getCity(),
-                categoriesWithPrices,
-                privateInfo.getAbout(),
-                privateInfo.getSkillLevel() // Уровень навыков
-        );
+        return DTOConverter.convertToWorkerInfoDTO(worker);
     }
 
     // Метод для преобразования сущности Review в ReviewDTO
@@ -274,6 +243,7 @@ public class CategoryService{
     public List<TaskDTO> getTasksInCategory(Long categoryId, Double minPrice, Double maxPrice, String country, String city) {
         return taskRepository.findTasksInCategoryWithFilters(categoryId, minPrice, maxPrice, country, city)
                 .stream()
+                .filter(task -> task.getStatus() == TaskStatus.ACTIVE)
                 .map(task -> new TaskDTO(
                         task.getId(),
 //                        task.getUser().getAvatar(),           //раскоментировать после добавления аватара
