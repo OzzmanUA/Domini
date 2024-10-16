@@ -47,7 +47,52 @@ public class TaskService {
 
     @Transactional
     public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        // Проверяем, что статус задачи "ACTIVE"
+        if (!task.getStatus().equals(TaskStatus.ACTIVE)) {
+            throw new IllegalArgumentException("Task cannot be deleted, it is not in active status");
+        }
+
         taskRepository.deleteById(id);
+    }
+
+    // Принятие задачи
+    @Transactional
+    public void acceptTask(Long taskId, Long workerId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        // Проверяем, что задача активная
+        if (!task.getStatus().equals(TaskStatus.ACTIVE)) {
+            throw new IllegalArgumentException("Task cannot be accepted, it is not in active status");
+        }
+
+        // Назначаем исполнителя и меняем статус задачи
+        User worker = userRepository.findById(workerId)
+                .orElseThrow(() -> new IllegalArgumentException("Worker not found"));
+        task.setWorker(worker);
+        task.setStatus(TaskStatus.IN_PROCESS);
+        taskRepository.save(task);
+    }
+
+    // Редактирование задачи (только если она "ACTIVE")
+    @Transactional
+    public void updateTask(Long taskId, MyTaskDTO taskDTO) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        // Проверяем, что задача активная
+        if (!task.getStatus().equals(TaskStatus.ACTIVE)) {
+            throw new IllegalArgumentException("Task cannot be edited, it is not in active status");
+        }
+
+        // Обновляем данные задачи
+        task.setDescription(taskDTO.getDescription());
+        task.setPrice(taskDTO.getPrice());
+        task.setCompletionDate(taskDTO.getCompletionDate());
+        taskRepository.save(task);
     }
 
     public UserTasksDTO getUserTasks(Long userId, TaskStatus status) {

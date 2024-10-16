@@ -16,10 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/task")
 @RequiredArgsConstructor
@@ -28,6 +24,10 @@ public class TaskController {
     private final TaskService taskService;
     private final CategoryService categoryService;
     private final UserService userService;
+
+//    Принятие задачи работает через /task/{taskId}/accept с указанием workerId.
+//    Редактирование и удаление задач возможно только если их статус — "ACTIVE".
+//    Для редактирования и удаления доступны методы /task/{taskId} (PUT для редактирования и DELETE для удаления).
 
     @PostMapping("/create")
     public ResponseEntity<String> createTask(@RequestBody TaskCreateDTO taskCreateDTO) {
@@ -141,11 +141,33 @@ public class TaskController {
         return ResponseEntity.ok("Task created successfully for the selected worker");
     }
 
+    // Эндпоинт для получения задач пользователя
     @GetMapping("/user/{userId}")
     public ResponseEntity<UserTasksDTO> getUserTasks(
             @PathVariable Long userId,
             @RequestParam(required = false) TaskStatus status) {
         UserTasksDTO userTasks = taskService.getUserTasks(userId, status);
         return ResponseEntity.ok(userTasks);
+    }
+
+    // Эндпоинт для принятия задачи
+    @PostMapping("/{taskId}/accept")
+    public ResponseEntity<String> acceptTask(@PathVariable Long taskId, @RequestParam Long workerId) {
+        taskService.acceptTask(taskId, workerId);
+        return ResponseEntity.ok("Task accepted successfully");
+    }
+
+    // Эндпоинт для редактирования задачи (только если она "активная")
+    @PutMapping("/{taskId}")
+    public ResponseEntity<String> updateTask(@PathVariable Long taskId, @RequestBody MyTaskDTO taskDTO) {
+        taskService.updateTask(taskId, taskDTO);
+        return ResponseEntity.ok("Task updated successfully");
+    }
+
+    // Эндпоинт для удаления задачи (только если она "активная")
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTask(taskId);
+        return ResponseEntity.ok("Task deleted successfully");
     }
 }
