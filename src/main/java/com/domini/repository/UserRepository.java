@@ -16,6 +16,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findByUsername(String username);
+    User getByUsername(String username);
     List<User> findByPrivateInformation_CategoriesContains(Category category);
     @Query("SELECT u FROM User u " +
             "JOIN u.privateInformation pi " +
