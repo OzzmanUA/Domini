@@ -74,30 +74,29 @@ public class MessageService {
 
         return messageRepository.findUsersWithConversations(currentUser)
                 .stream()
-                .map(user -> new UserToMessageDTO(user.getId(), user.getPrivateInformation().getFirstName(), user.getPrivateInformation().getLastName())) // Добавьте аватар, если нужно
+                .map(user -> new UserToMessageDTO(
+                        user.getId(),
+                        user.getPrivateInformation().getFirstName(),
+                        user.getPrivateInformation().getLastName()
+                ))
                 .collect(Collectors.toList());
     }
 
     // Получение всей переписки между двумя пользователями
-    public List<Message> getConversation(String authorizationHeader, Long otherUserId) {
-        User currentUser = extractUserFromToken(authorizationHeader);
-        User otherUser = userService.getUserById(otherUserId);
-
-        return messageRepository.findBySenderAndRecipientOrRecipientAndSenderOrderByTimestampAsc(currentUser, otherUser, otherUser, currentUser);
-    }
-
     public List<MessageDTO> getConversationByUserIds(Long currentUserId, Long otherUserId) {
         User currentUser = userService.getUserById(currentUserId);
         User otherUser = userService.getUserById(otherUserId);
 
-        List<Message> messages = messageRepository.findBySenderAndRecipientOrRecipientAndSenderOrderByTimestampAsc(currentUser, otherUser, otherUser, currentUser);
+        List<Message> messages = messageRepository.findConversationBetweenUsers(currentUser, otherUser);
 
         return messages.stream().map(message -> new MessageDTO(
                 message.getId(),
                 message.getContent(),
                 message.getTimestamp(),
                 message.getSender().getPrivateInformation().getFirstName() + " " + message.getSender().getPrivateInformation().getLastName(),
-                message.getRecipient().getPrivateInformation().getFirstName() + " " + message.getRecipient().getPrivateInformation().getLastName()
+                message.getSender().getId(),
+                message.getRecipient().getPrivateInformation().getFirstName() + " " + message.getRecipient().getPrivateInformation().getLastName(),
+                message.getRecipient().getId()
                 //message.getPhotoUrl()
         )).collect(Collectors.toList());
     }
