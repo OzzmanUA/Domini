@@ -27,8 +27,8 @@ public class MessageService {
     private PhotoUploadService photoUploadService;
 
     // Отправка сообщения с возможностью прикрепления фотографии
-    public Message sendMessageById(Long senderId, Long recipientId, String content, MultipartFile file) throws IOException {
-        User sender = userService.getUserById(senderId);
+    public Message sendMessage(Long recipientId, String content, MultipartFile file) throws IOException {
+        User sender = userService.getCurrentUser();
         User recipient = userService.getUserById(recipientId);
 
         Message message = new Message();
@@ -46,30 +46,30 @@ public class MessageService {
     }
 
     // Получение сообщений по ID отправителя
-    public List<Message> getMessagesBySenderId(Long senderId) {
-        User sender = userService.getUserById(senderId);
+    public List<Message> getSentMessages() {
+        User sender = userService.getCurrentUser();
         return messageRepository.findBySenderOrderByTimestampAsc(sender);
     }
 
     // Получение сообщений по ID получателя
-    public List<Message> getMessagesByRecipientId(Long recipientId) {
-        User recipient = userService.getUserById(recipientId);
+    public List<Message> getReceivedMessages() {
+        User recipient = userService.getCurrentUser();
         return messageRepository.findByRecipientOrderByTimestampAsc(recipient);
     }
 
-    // Получение списка пользователей, с которыми велись разговоры
-    public List<UserToMessageDTO> getUsersWithConversationsById(Long userId) {
-        User currentUser = userService.getCurrentUser();
-
-        return messageRepository.findUsersWithConversations(currentUser)
-                .stream()
-                .map(user -> new UserToMessageDTO(user.getId(), user.getPrivateInformation().getFirstName(), user.getPrivateInformation().getLastName())) // Добавьте аватар, если нужно
-                .collect(Collectors.toList());
-    }
+//    // Получение списка пользователей, с которыми велись разговоры
+//    public List<UserToMessageDTO> getUsersWithConversationsById(Long userId) {
+//        User currentUser = userService.getCurrentUser();
+//
+//        return messageRepository.findUsersWithConversations(currentUser)
+//                .stream()
+//                .map(user -> new UserToMessageDTO(user.getId(), user.getPrivateInformation().getFirstName(), user.getPrivateInformation().getLastName())) // Добавьте аватар, если нужно
+//                .collect(Collectors.toList());
+//    }
 
     // Получение всей переписки между двумя пользователями
-    public List<Message> getConversationByUserIds(Long currentUserId, Long otherUserId) {
-        User currentUser = userService.getUserById(currentUserId);
+    public List<Message> getConversation(Long otherUserId) {
+        User currentUser = userService.getCurrentUser();
         User otherUser = userService.getUserById(otherUserId);
 
         return messageRepository.findBySenderAndRecipientOrRecipientAndSenderOrderByTimestampAsc(currentUser, otherUser, otherUser, currentUser);

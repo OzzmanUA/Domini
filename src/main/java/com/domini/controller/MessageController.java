@@ -20,32 +20,29 @@ public class MessageController {
 
     @PostMapping("/send")
     public Message sendMessage(
-            @RequestParam Long senderId,
             @RequestParam Long recipientId,
             @RequestParam String content,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-        return messageService.sendMessageById(senderId, recipientId, content, file);
+        return messageService.sendMessage(recipientId, content, file);
     }
 
     @GetMapping("/sent")
-    public List<Message> getSentMessages(@RequestParam Long senderId) {
-        return messageService.getMessagesBySenderId(senderId);
+    public List<Message> getSentMessages() {
+        return messageService.getSentMessages();
     }
 
     @GetMapping("/received")
-    public List<Message> getReceivedMessages(@RequestParam Long recipientId) {
-        return messageService.getMessagesByRecipientId(recipientId);
+    public List<Message> getReceivedMessages() {
+        return messageService.getReceivedMessages();
     }
 
-    @GetMapping("/conversations")
-    public List<UserToMessageDTO> getConversations(@RequestParam Long userId) {
-        return messageService.getUsersWithConversationsById(userId);
-    }
+//    @GetMapping("/conversations")
+//    public List<UserToMessageDTO> getConversations(@RequestParam Long userId) {
+//        return messageService.getUsersWithConversationsById(userId);
+//    }
 
     @GetMapping("/conversation")
-    public List<Message> getConversation(
-            @RequestParam Long currentUserId,
-            @RequestParam Long otherUserId) {
-        return messageService.getConversationByUserIds(currentUserId, otherUserId);
+    public List<Message> getConversation(@RequestParam Long otherUserId) {
+        return messageService.getConversation(otherUserId);
     }
 }
