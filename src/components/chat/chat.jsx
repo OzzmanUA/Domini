@@ -5,6 +5,8 @@ import avatar1 from './images/demo_user_1.png';
 import file_logo from './images/file_logo.png';
 import emoji_logo from './images/emoji_logo.png';
 import send_logo from './images/send_logo.png';
+import question_logo from './images/question_logo.png';
+import support_logo from './images/support_logo.png';
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
@@ -143,14 +145,29 @@ const Chat = () => {
 
             {messages[selectedChat] && (
                 <div className="order-info">
-                    <h3>Про {messages[selectedChat].name}</h3>
-                    <p>{messages[selectedChat].about}</p>
-                    <div className="deadline">
-                        <p>Крайній термін:</p>
-                        <p>
-                            {messages[selectedChat].deadline.day} / {messages[selectedChat].deadline.month} / {messages[selectedChat].deadline.year} о{' '}
-                            {messages[selectedChat].deadline.time}
-                        </p>
+                    <h3>Про <h3 className="order-info_user-name">{messages[selectedChat].name}</h3></h3>
+                    <p className="order-num">{messages[selectedChat].orderNumber}</p>
+                    <div className="user-locat-join">
+                        <h4>Місцезнаходження</h4>
+                        <p>{messages[selectedChat].userLocation}</p>
+                    </div>
+                    <div className="user-locat-join" id="user-join-date">
+                        <h4>Долучився</h4>
+                        <p>{messages[selectedChat].joinedData}</p>
+                    </div>
+                    <p className="user-info-about">{messages[selectedChat].about}</p>
+                    <div className="button-make-order-block">
+                        <button className="make-order">Зробити замовлення</button>
+                    </div>
+                    <div className="support-block">
+                        <div className="support-block-item">
+                            <img src={question_logo}/>
+                            <a href="#"><p>Питання та відповіді</p></a>
+                        </div>
+                        <div className="support-block-item">
+                            <img src={support_logo}/>
+                            <a href="#"><p>Центр підтримки</p></a>
+                        </div>
                     </div>
                 </div>
             )}

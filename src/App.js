@@ -65,6 +65,8 @@ import ExtendPerfProfile from "./pages/ExtendPerfProfile";
 
 import PChat from "./pages/PChat";
 
+import ErrorPage from "./pages/ErrorPage";
+
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
 	const token = localStorage.getItem('token');
@@ -116,6 +118,8 @@ function App() {
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
 					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
 					<Route path="/pChat" element={<PChat />} />
+					<Route path="/errorPage" element={<ErrorPage />} />
+					
 					
 
 

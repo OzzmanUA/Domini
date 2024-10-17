@@ -37,13 +37,13 @@
 }
 
 /* Стили для списка пользователей */
-ul {
+.sidebar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-li {
+.sidebar ul li {
     display: flex;
     align-items: center;
     width: 280px;
@@ -54,7 +54,7 @@ li {
     border-bottom: 1px solid #CFCFCF;
 }
 
-li:hover {
+.sidebar ul li:hover {
     background-color: #f0f0f0;
     border-radius: 10px;
 }
@@ -227,15 +227,83 @@ li:hover {
     padding: 10px;
     border-left: 1px solid #ccc;
     background-color: #f9f9f9;
+    position: relative;
+}
+.order-info h3 {
+    font-size: 18px;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+.order-info_user-name{
+    font-weight: 600;
+    margin-bottom: 0 !important;
+}
+.order-num{
+   font-size: 14px; 
+   color: #727272;
+}
+.user-locat-join{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user-locat-join h4{
+    font-size: 14px;
+    font-weight: 600;
+    color: #0E142B;
+    margin-bottom: 0;
+}
+.user-locat-join p{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 0;
+}
+#user-join-date{
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #CFCFCF;
+}
+.user-info-about{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 24px;
+}
+.button-make-order-block{
+    display: flex;
+    justify-content: center;
+}
+.make-order{
+    width: 185;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 11px 16px;
+    background-color: #1CC41C;
+    border-radius: 10px;
+}
+.support-block{
+    position:absolute;
+    bottom:15px;
+    gap: 16px;
+}
+.support-block-item{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.support-block-item img{
+    width: 24px;
+    height: 24px;
+}
+.support-block-item p{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 0;
+}
+.support-block-item a{
+    text-decoration: none;
 }
 
-/* Оформление информации о крайнем сроке */
-.deadline {
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-}
 /* Стили для эмодзи-пикера */
 .emoji-picker {
     position: absolute;
