@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./categories.css";
 import { api } from "../../utils/ApiFunctions";
 import { getAllCategories } from "../../utils/ApiFunctions"; // Import API functions
-
+import { useNavigate } from "react-router-dom";
 // Замените на любое изображение по умолчанию
 const defaultImage = "https://via.placeholder.com/320";
 
@@ -30,6 +30,12 @@ const Category = ({ image, name, subcategories }) => {
 const Categories = () => {
   const [categories, setCategories] = useState([]); // Состояние для хранения категорий
   const [loading, setLoading] = useState(true); // Состояние загрузки
+  const navigate = useNavigate();  // Hook to navigate programmatically
+
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/pcatalog/${categoryId}`);  // Navigate to the ProfilesCatalog page with the categoryId
+  };
+
 
   // Хук для получения данных с сервера при монтировании компонента
   useEffect(() => {
@@ -58,14 +64,30 @@ const Categories = () => {
   }
 
   return (
+    // <div className="categories-container">
+    //   {categories.map((category) => (
+    //     <Category
+    //       key={category.id}
+    //       image={category.imageUrl ? `${api.defaults.baseURL}${category.imageUrl}` : defaultImage}  // Use API baseURL from axios config or fallback to default
+    //       name={category.name}  // Display category name
+    //       subcategories={category.subcategories}  // Pass subcategories to the Category component
+    //     />
+    //   ))}
+    // </div>
     <div className="categories-container">
       {categories.map((category) => (
-        <Category
-          key={category.id}
-          image={category.imageUrl ? `${api.defaults.baseURL}${category.imageUrl}` : defaultImage}  // Use API baseURL from axios config or fallback to default
-          name={category.name}  // Display category name
-          subcategories={category.subcategories}  // Pass subcategories to the Category component
-        />
+        <div 
+          key={category.id} 
+          onClick={() => handleCategoryClick(category.id)}  // Make category clickable
+          className="category-item"  // Add class for styling if needed
+          style={{ cursor: 'pointer' }}  // Add pointer cursor for better UX
+        >
+          <Category
+            image={category.imageUrl ? `${api.defaults.baseURL}${category.imageUrl}` : defaultImage}
+            name={category.name}
+            subcategories={category.subcategories}
+          />
+        </div>
       ))}
     </div>
   );
