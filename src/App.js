@@ -40,8 +40,7 @@ import Admin_UserList from './components/admin/admin_part'
 import users from './components/admin/users_demo'
 import CategoryForm from './components/admin/categories_admin_form'
 
-import PerformerProfilePay from './components/profiles/performer-profile-pay/performer-profile-pay'
-import HomeReg from "./pages/HomeReg";
+import PerformerProfilePay from './components/profiles/performer-profile-pay/performer-profile-pay';
 import Login2 from "./components/reg_step1/registration_step1";
 import Profile from "./pages/Profile";
 
@@ -61,8 +60,9 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
 import FavouriteOffersPage from "./pages/FavouriteOffersPage";
-
+import ChatPg from "./pages/ChatPg";
 import ExtendPerfProfile from "./pages/ExtendPerfProfile";
+import ConversationsList from "./components/chat/ConversationsList";
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -105,18 +105,20 @@ function App() {
 					{/* <Route path="/pCatalog" element={<PCatalog />} /> */}
 
 					<Route path="/pcatalog/:categoryId" element={<PCatalog />} />
+					<Route path="/chat/:userId" element={<ChatPg />} />
+					<Route path="/chat" element={<ConversationsList />} />
 
 					<Route path="/oCatalog" element={<OCatalog />} />
-					<Route path="/perfProfile" element={<PerfProfile />} />
+					<Route path="/perfProfile/:userId" element={<PerfProfile />} />
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
-					<Route path="/orderP" element={<OrderP />} />
+					<Route path="/orderP/:userId" element={<OrderP />} />
 					<Route path="/customProfile" element={<CustomProfile />} />
 					<Route path="/favouriteOffersPage" element={<FavouriteOffersPage />} />
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
 					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
 
 					{/* <Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/" />} /> */}
-					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/private-information" />} />
+					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/" />} />
 					
 										
 					

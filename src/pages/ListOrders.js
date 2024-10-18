@@ -41,27 +41,40 @@ import PerformerProfile from '../components/profiles/performer-profile/performer
 import Order from '../components/order/order'
 import UserOrdersList from '../components/user-order-list/user-order-list'
 import AddCategory from '../components/admin/AddCategory';
+import { useEffect, useState } from 'react';
 
 function ListOrders() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	useEffect(() => {
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); 
+	if (isAuthenticated === null) {
+	  return <div>Loading...</div>;
+	}
 
   return (
     <main>
+		<div className="ListOrders">
+		{isAuthenticated ? (
 			<AuthProvider>
-					{/* <NavBfar /> */}
-					{/* <Routes>
-					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Registration />} />	
-					</Routes> */}
-
-					<div className="ListOrders">
-						<Header_auth />
-						<UserOrdersList/>
-						<Footer/>
-					</div>
-
-
-			</AuthProvider>			
-		</main>
+				<Header_auth />
+				<UserOrdersList/>
+				<Footer/>
+			</AuthProvider>
+		) : (
+			<AuthProvider>
+				<Header />
+				<UserOrdersList/>
+				<Footer/>
+			</AuthProvider>
+		)};
+		</div>			
+	</main>
   );
 }
 

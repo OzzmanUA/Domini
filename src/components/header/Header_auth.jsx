@@ -11,9 +11,13 @@ import ukr_lang_auth from './images/ukr_lang_auth.png';
 import user_demo from './images/user_demo.png';
 import NavMenu from '../main_parts_auth/categories/navmenu';
 import UserProfileLink from '../common/UserProfileLink';
-
+import { useNavigate } from 'react-router-dom';
 
 const Header_auth = () => {
+  const navigate = useNavigate();
+  const handleChatClick = () => {
+    navigate(`/chat`);  // Navigate to create-task-for-worker page with workerId
+  };
   return (
     <div className='all_header'>
     <div className="navbar">
@@ -32,7 +36,7 @@ const Header_auth = () => {
           <img src={favourite} alt="favourite" />
         </a>
         <a href="#">
-          <img src={messages} alt="messages" />
+          <img src={messages} onClick={handleChatClick} alt="messages" />
         </a>
         <a href="#">
           <img src={notification} alt="notification" />

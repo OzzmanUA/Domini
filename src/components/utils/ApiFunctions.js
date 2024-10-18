@@ -327,6 +327,24 @@ export const removePhoto = async (photoId, token) => {
 	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
+
+  export const createTaskForWorker = async (taskCreateDTO, workerId) => {
+	try {
+	  // Make the POST request to the backend API
+	  const response = await api.post(
+		`/task/create-for-worker`, 
+		taskCreateDTO, 
+		{ params: { workerId } }  // Pass the workerId as a query parameter
+	  );
+	  
+	  // Return the response or success message
+	  return response.data;
+	} catch (error) {
+	  // Handle errors and return the error message
+	  console.error('Error creating task for worker:', error.response || error);
+	  return error.response ? error.response.data : 'An error occurred';
+	}
+  };
 //   export const getWorkersByCategory = async (categoryId, filters = {}) => {
 // 	try {
 // 	  const { minPrice, maxPrice, skillLevel, country, city } = filters;
@@ -346,5 +364,72 @@ export const removePhoto = async (photoId, token) => {
 	} catch (error) {
 	  console.error("Error fetching workers:", error);
 	  return [];
+	}
+  };
+
+  export const fetchWorkerDetailedInfo = async (userId) => {
+	try {
+	  const response = await api.get(`/category/workers/${userId}`);
+	  return response.data;
+	} catch (error) {
+	  console.error("Error fetching worker data:", error);
+	  throw error;
+	}
+  };
+
+
+  export const sendMessage = async (recipientId, content, token) => {
+	try {
+	  const response = await api.post(
+		'/messages/send',
+		new FormData(), // You can append files to this form data if needed
+		{
+		  headers: {
+			'Authorization': `Bearer ${token}`,
+		  },
+		  params: {
+			recipientId,
+			content,
+		  },
+		}
+	  );
+	  return response.data; // Message object returned
+	} catch (error) {
+	  console.error('Error sending message:', error);
+	  throw error;
+	}
+  };
+  
+  // Fetch the conversation between the current user and another user
+  export const getConversation = async (otherUserId, token) => {
+	try {
+	  const response = await api.get(
+		`/messages/conversation`,
+		{
+		  headers: {
+			'Authorization': `Bearer ${token}`,
+		  },
+		  params: { otherUserId },
+		}
+	  );
+	  return response.data; // List of messages in the conversation
+	} catch (error) {
+	  console.error('Error fetching conversation:', error);
+	  throw error;
+	}
+  };
+  
+  // Fetch the list of conversations for the current user
+  export const getConversations = async (token) => {
+	try {
+	  const response = await api.get('/messages/conversations', {
+		headers: {
+		  'Authorization': `Bearer ${token}`,
+		},
+	  });
+	  return response.data; // List of conversations
+	} catch (error) {
+	  console.error('Error fetching conversations:', error);
+	  throw error;
 	}
   };

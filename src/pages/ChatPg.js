@@ -36,14 +36,20 @@ import { getAllCategories } from '../components/utils/ApiFunctions';
 
 import ProfilesCatalog from '../components/catalog/profilesCatalog'
 
-import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
+import CustomerProfile from '../components/profiles/customer-profile/customer-profile'
+import CustomerProfileForThePerformer from '../components/profiles/customer-profile-for-the-performer/customer-profile-for-the-performer'
 
+import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
+import { useAuth } from '../components/auth/AuthProvider';
 import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
+import ProfileCard from '../components/catalog/profileCard';
+import ProfilePage from '../components/catalog/ProfilePage';
+import { useEffect, useState } from 'react';
+import ChatPage from '../components/chat/ChatPage';
 
-import { useState, useEffect } from 'react';
 
-function PerfProfile() {
+function ChatPg() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
 	const token = localStorage.getItem('token');
 	useEffect(() => {
@@ -57,25 +63,33 @@ function PerfProfile() {
 	  return <div>Loading...</div>;
 	}
 
+
   return (
     <main>
-		<div className="PerfProfile">
+		<div className="chatPg">
 		{isAuthenticated ? (
 			<AuthProvider>
-				<Header_auth />
-				<PerformerProfile/>
-				<Footer/>
-			</AuthProvider>		
+				<div>
+					<Header_auth />
+					<ChatPage/>				
+					<Footer/>
+				</div>
+			</AuthProvider>
 		) : (
 			<AuthProvider>
-				<Header />
-				<PerformerProfile/>
-				<Footer/>
-			</AuthProvider>		
-		)};
+				<div>
+					<Header />
+					<ChatPage/>					
+					<Footer/>
+				</div>
+			</AuthProvider>
+
+
+		)}
+
 		</div>			
 	</main>
   );
 }
 
-export default PerfProfile;
+export default ChatPg;

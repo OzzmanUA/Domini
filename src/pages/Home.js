@@ -41,7 +41,6 @@ import CustomerProfile from '../components/profiles/customer-profile/customer-pr
 import CustomerProfileForThePerformer from '../components/profiles/customer-profile-for-the-performer/customer-profile-for-the-performer'
 
 import PerformerProfilePay from './../components/profiles/performer-profile-pay/performer-profile-pay'
-import HomeReg from './HomeReg';
 import { getAllParentCategories } from '../components/utils/ApiFunctions';
 
 import UserOrdersList from '../components/user-order-list/user-order-list'
