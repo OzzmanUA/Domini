@@ -1,10 +1,14 @@
+.all-chat{
+    background-color: #ECECEC;
+    padding-bottom: 40px;
+}
+
 /* Основной контейнер чата */
 .chat-container {
     display: flex;
     width: 1520px;
     height: 792px;
     margin: 0 auto;
-    border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -20,29 +24,39 @@
 /* Строка поиска */
 .search-input {
     width: 100%;
+    height: 32px;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 15px;
+    background-color: #ECECEC;
+    border: none;
+    color: #727272;
+}
+.search-input::placeholder{
+    color: #727272;
 }
 
 /* Стили для списка пользователей */
-ul {
+.sidebar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-li {
+.sidebar ul li {
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    width: 280px;
+    padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #CFCFCF;
 }
 
-li:hover {
+.sidebar ul li:hover {
     background-color: #f0f0f0;
+    border-radius: 10px;
 }
 
 /* Аватар пользователя */
@@ -55,18 +69,32 @@ li:hover {
 
 /* Информация о пользователе */
 .user-info {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
+.user-info-top{
+    display: flex;
+    justify-content: space-between;
+}
+.user-last-time-message{
+    color: #CFCFCF;
+    font-size: 12px;
+    margin-bottom: 0;
+}
 
 .user-name {
-    font-weight: bold;
+    color: #0E142B;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0;
 }
 
 .user-last-message {
-    color: #999;
-    font-size: 14px;
-    margin-top: 5px;
+    color: #CFCFCF;
+    font-size: 12px;
+    margin-top: 6px;
+    margin-bottom: 0;
 }
 
 /* Окно чата */
@@ -76,8 +104,19 @@ li:hover {
     flex-direction: column;
     padding: 10px;
     background-color: #fff;
+    position:relative;
 }
 
+.user-status p{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 0;
+}
+.user-status h2{
+    font-size: 20px;
+    font-weight: 600;
+    color: #0E142B;
+}
 /* Заголовок чата */
 .chat-header {
     display: flex;
@@ -103,6 +142,7 @@ li:hover {
     padding: 10px;
     background-color: #fafafa;
     border-radius: 5px;
+
 }
 
 /* Сообщения */
@@ -115,22 +155,34 @@ li:hover {
 }
 
 .user-message {
-    align-self: flex-start;
-    background-color: #e0ffe0;
+    display: inline-block;
+    background-color: #1CC41C;
+    color: #ffffff;
     padding: 10px;
     border-radius: 10px;
+    margin-bottom: 10px; /* Отступ снизу для разделения сообщений */
+    float: right;
+    clear: both; /* Сброс обтекания, чтобы начинать с новой строки */
+    max-width: 60%; /* Ограничение по ширине для лучшего отображения */
 }
-
+.user-message p, .contact-message p{
+    margin-bottom: 0;
+}
 .contact-message {
-    align-self: flex-end;
-    background-color: #f0f0f0;
+    display: inline-block;
+    background-color: #ECECEC;
+    color: #0E142B;
     padding: 10px;
     border-radius: 10px;
+    margin-bottom: 10px; /* Отступ снизу для разделения сообщений */
+    clear: both; /* Сброс обтекания, чтобы начинать с новой строки */
+    max-width: 60%; /* Ограничение по ширине для лучшего отображения */
+    float: left; /* Прижатие к правой стороне */
 }
 
 .message-time {
     font-size: 12px;
-    color: #666;
+    color: #727272;
     text-align: right;
     margin-top: 5px;
 }
@@ -138,6 +190,7 @@ li:hover {
 /* Ввод сообщения и кнопки */
 .chat-input {
     display: flex;
+    align-items: center;
     border-top: 1px solid #ccc;
     padding: 10px;
     background-color: #fff;
@@ -148,42 +201,25 @@ li:hover {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 /* Кнопки отправки сообщений, файлов и смайликов */
 .chat-input button {
     padding: 10px;
-    background-color: #4caf50;
+    background-color: none;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    margin-left: 10px;
+    margin-bottom: 0;
 }
 
 .chat-input button:hover {
-    background-color: #45a049;
+    background-color: #1CC41C;
 }
 
-/* Кнопка для файлов */
-.chat-input .file-button {
-    background-color: #007bff;
-    margin-right: 10px;
-}
-
-.chat-input .file-button:hover {
-    background-color: #0056b3;
-}
-
-/* Кнопка для смайликов */
-.chat-input .emoji-button {
-    background-color: #ffc107;
-}
-
-.chat-input .emoji-button:hover {
-    background-color: #e0a800;
-}
 
 /* Информация о заказе */
 .order-info {
@@ -191,15 +227,83 @@ li:hover {
     padding: 10px;
     border-left: 1px solid #ccc;
     background-color: #f9f9f9;
+    position: relative;
+}
+.order-info h3 {
+    font-size: 18px;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+.order-info_user-name{
+    font-weight: 600;
+    margin-bottom: 0 !important;
+}
+.order-num{
+   font-size: 14px; 
+   color: #727272;
+}
+.user-locat-join{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user-locat-join h4{
+    font-size: 14px;
+    font-weight: 600;
+    color: #0E142B;
+    margin-bottom: 0;
+}
+.user-locat-join p{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 0;
+}
+#user-join-date{
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #CFCFCF;
+}
+.user-info-about{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 24px;
+}
+.button-make-order-block{
+    display: flex;
+    justify-content: center;
+}
+.make-order{
+    width: 185;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 11px 16px;
+    background-color: #1CC41C;
+    border-radius: 10px;
+}
+.support-block{
+    position:absolute;
+    bottom:15px;
+    gap: 16px;
+}
+.support-block-item{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.support-block-item img{
+    width: 24px;
+    height: 24px;
+}
+.support-block-item p{
+    font-size: 14px;
+    color: #727272;
+    margin-bottom: 0;
+}
+.support-block-item a{
+    text-decoration: none;
 }
 
-/* Оформление информации о крайнем сроке */
-.deadline {
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-}
 /* Стили для эмодзи-пикера */
 .emoji-picker {
     position: absolute;
@@ -212,5 +316,38 @@ li:hover {
     gap: 10px;
     flex-wrap: wrap;
     width: 200px; /* Ширина меню */
+}
+/* Стили для эмодзи-пикера */
+.emoji-picker {
+    position: absolute;
+    bottom: 80px; /* Теперь она будет над полем ввода */
+    right: 0px; /* Позиционирование справа от окна ввода */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 200px;
+    z-index: 1;
+}
+
+.emoji {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.emoji:hover {
+    transform: scale(1.2);
+}
+.all-messages{
+    width: 1520px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-top:  30px;
 }
 

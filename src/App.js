@@ -58,11 +58,14 @@ import CustomProfileForPerf from "./pages/CustomProfileForPerf";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
-
 import FavouriteOffersPage from "./pages/FavouriteOffersPage";
 import ChatPg from "./pages/ChatPg";
 import ExtendPerfProfile from "./pages/ExtendPerfProfile";
 import ConversationsList from "./components/chat/ConversationsList";
+
+import PChat from "./pages/PChat";
+
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -116,6 +119,12 @@ function App() {
 					<Route path="/favouriteOffersPage" element={<FavouriteOffersPage />} />
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />
 					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
+					<Route path="/pChat" element={<PChat />} />
+					<Route path="/errorPage" element={<ErrorPage />} />
+					
+					
+
+
 
 					{/* <Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/" />} /> */}
 					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/" />} />
