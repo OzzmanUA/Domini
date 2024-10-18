@@ -72,7 +72,7 @@ const PerformerProfile = () => {
       await sendMessage(userId, content, token);
 
       // Redirect to the chat with the worker
-      navigate(`/chat/${userId}`);
+      navigate(`/chat`);
     } catch (error) {
       console.error('Error sending message:', error);
     }

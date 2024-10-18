@@ -14,7 +14,7 @@ import {
 import { useState, useEffect } from "react";
 import { Fragment } from "react";
 import { redirect } from "react-router-dom";
-import Login from "./components/auth/Login"
+import Login from "./components/reg_step1/registration_step1";
 import { AuthProvider } from "./components/auth/AuthProvider"
 import RequireAuth from './components/auth/RequireAuth';
 
@@ -66,6 +66,7 @@ import ConversationsList from "./components/chat/ConversationsList";
 import PChat from "./pages/PChat";
 
 import ErrorPage from "./pages/ErrorPage";
+import Chat from "./components/chat/chat";
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -108,8 +109,10 @@ function App() {
 					{/* <Route path="/pCatalog" element={<PCatalog />} /> */}
 
 					<Route path="/pcatalog/:categoryId" element={<PCatalog />} />
-					<Route path="/chat/:userId" element={<ChatPg />} />
-					<Route path="/chat" element={<ConversationsList />} />
+					{/* <Route path="/chat/:userId" element={<ChatPg />} /> */}
+					{/* <Route path="/chat" element={<Chat />} /> */}
+					<Route path="/chat" element={<ChatPg />} />
+					
 
 					<Route path="/oCatalog" element={<OCatalog />} />
 					<Route path="/perfProfile/:userId" element={<PerfProfile />} />
