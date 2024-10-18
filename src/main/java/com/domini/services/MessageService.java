@@ -77,7 +77,8 @@ public class MessageService {
                 .map(user -> new UserToMessageDTO(
                         user.getId(),
                         user.getPrivateInformation().getFirstName(),
-                        user.getPrivateInformation().getLastName()
+                        user.getPrivateInformation().getLastName(),
+                        user.getPrivateInformation().getAvatarUrl()
                 ))
                 .collect(Collectors.toList());
     }

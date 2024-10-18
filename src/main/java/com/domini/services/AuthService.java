@@ -47,6 +47,7 @@ public class AuthService {
             // Создание пустой личной информации
             PrivateInformation privateInformation = new PrivateInformation();
             user.setPrivateInformation(privateInformation);
+            user.getPrivateInformation().setAvatarUrl("/uploads/images/avatar.png");
 
             User savedUser = userRepository.save(user);
 

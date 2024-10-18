@@ -9,5 +9,5 @@ public class UserToMessageDTO {
     private Long id;
     private String firstName;
     private String lastName;
-//    private String avatarUrl;
+    private String avatarUrl;
 }

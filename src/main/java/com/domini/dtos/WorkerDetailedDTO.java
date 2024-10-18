@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class WorkerDetailedDTO {
     private Long userId;                                        // Идентификатор пользователя
+    private String avatarUrl;                                   // Аватар
     private String firstName;                                   // Имя
     private String lastName;                                    // Фамилия
     private String country;                                     // Страна

@@ -154,13 +154,14 @@ public class CategoryService{
 
         return new WorkerDetailedDTO(
                 worker.getId(),
+                privateInfo.getAvatarUrl(),
                 privateInfo.getFirstName(),
                 privateInfo.getLastName(),
                 location.getCountry(),
                 location.getCity(),
-                calculateEarnings(worker),  // Рассчитываем общие заработки
-                worker.getTasksAsExecutor().size(),  // Количество выполненных заданий
-                categoriesWithPrices,  // Категории с ценами
+                calculateEarnings(worker),              // Рассчитываем общие заработки
+                worker.getTasksAsExecutor().size(),     // Количество выполненных заданий
+                categoriesWithPrices,                   // Категории с ценами
                 privateInfo.getAbout(),
                 portfolioImages,
                 reviews,
@@ -168,7 +169,7 @@ public class CategoryService{
                 privateInfo.getLanguage(),
                 privateInfo.getSkills(),
                 privateInfo.getEducation(),
-                privateInfo.getSkillLevel()  // Уровень навыков
+                privateInfo.getSkillLevel()             // Уровень навыков
         );
     }
 
@@ -226,6 +227,7 @@ public class CategoryService{
 
             workerInfoList.add(new WorkerInfoDTO(
                     worker.getId(),
+                    worker.getPrivateInformation().getAvatarUrl(),
                     privateInfo.getFirstName(),
                     privateInfo.getLastName(),
                     categoryNames,                  // Здесь заменяем на список названий категорий
@@ -246,7 +248,7 @@ public class CategoryService{
                 .filter(task -> task.getStatus() == TaskStatus.ACTIVE)
                 .map(task -> new TaskDTO(
                         task.getId(),
-//                        task.getUser().getAvatar(),           //раскоментировать после добавления аватара
+                        task.getClient().getPrivateInformation().getAvatarUrl(),
                         task.getClient().getPrivateInformation().getFirstName(),
                         task.getClient().getPrivateInformation().getLastName(),
                         task.getCategory().getName(),

@@ -35,7 +35,10 @@ public class PrivateInformation {
     @OneToMany(mappedBy = "privateInformation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WorkerCategoryPrice> workerCategoryPrices;  // Список категорий с ценами
 
-    private int experienceYears;  // Количество лет опыта работы
+    private int experienceYears;
+
+    @Column(name = "avatar_url")
+    private String avatarUrl;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -18,4 +18,5 @@ public class PrivateInformationDTO {
     private List<Long> categoryIds;
     private String country;
     private String city;
+    private String avatarUrl;
 }

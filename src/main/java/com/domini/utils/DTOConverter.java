@@ -24,6 +24,7 @@ public class DTOConverter {
 
         return new WorkerInfoDTO(
                 user.getId(),
+                user.getPrivateInformation().getAvatarUrl(),
                 privateInfo.getFirstName(),
                 privateInfo.getLastName(),
                 categoryNames,

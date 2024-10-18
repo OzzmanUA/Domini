@@ -9,6 +9,7 @@ import com.domini.repository.PrivateInformationRepository;
 import com.domini.repository.UserRepository;
 import com.domini.services.CategoryService;
 import com.domini.services.LocationService;
+import com.domini.services.PhotoUploadService;
 import com.domini.services.PrivateInformationService;
 import com.domini.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class PrivateInformationController {
     private PrivateInformationService privateInformationService;
 
     @Autowired
-    private JwtTokenUtils jwtTokenUtils;
+    private PhotoUploadService photoUploadService;
 
     public PrivateInformationController(UserRepository userRepository, PrivateInformationRepository privateInformationRepository) {
         this.userRepository = userRepository;
@@ -76,6 +77,7 @@ public class PrivateInformationController {
                     privateInfo.getEducation(),
                     privateInfo.getExperienceYears(),
                     privateInfo.getCategories().stream().map(Category::getId).toList(),
+                    privateInfo.getAvatarUrl(),
                     country, // Страна из локации
                     city     // Город из локации
             );
@@ -101,6 +103,7 @@ public class PrivateInformationController {
             privateInfo.setSkills(privateInfoDTO.getSkills());
             privateInfo.setEducation(privateInfoDTO.getEducation());
             privateInfo.setExperienceYears(privateInfoDTO.getExperienceYears());
+            privateInfo.setAvatarUrl(privateInfoDTO.getAvatarUrl());
 
             // Обновляем категории
             if (privateInfoDTO.getCategoryIds() != null && !privateInfoDTO.getCategoryIds().isEmpty()) {
@@ -160,6 +163,32 @@ public class PrivateInformationController {
             return ResponseEntity.ok("Photo removed successfully");
         } else {
             return ResponseEntity.status(403).body("User not found or not authorized");
+        }
+    }
+
+    // Эндпоинт для загрузки аватара
+    @PostMapping("/avatar")
+    public ResponseEntity<Void> uploadAvatar(@RequestParam("file") MultipartFile file, @RequestHeader("Authorization") String authorizationHeader) {
+        Optional<User> userOpt = getCurrentUser();
+        if (userOpt.isPresent()) {
+            try {
+                // Загружаем фото и получаем URL
+                String avatarUrl = photoUploadService.uploadPhoto(file);
+
+                // Обновляем аватар пользователя
+                PrivateInformation privateInfo = userOpt.get().getPrivateInformation();
+                privateInfo.setAvatarUrl(avatarUrl);
+
+                // Сохраняем изменения
+                privateInformationRepository.save(privateInfo);
+
+                return ResponseEntity.noContent().build();
+            } catch (IOException e) {
+                // Если произошла ошибка при загрузке
+                return ResponseEntity.status(500).build();
+            }
+        } else {
+            return ResponseEntity.status(403).build(); // Если пользователь не найден
         }
     }
 }

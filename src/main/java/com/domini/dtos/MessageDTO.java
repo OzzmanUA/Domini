@@ -1,5 +1,7 @@
 package com.domini.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +14,10 @@ public class MessageDTO {
     private String content;
     private LocalDateTime timestamp;
     private String senderName;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long senderId;
     private String recipientName;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long receiverId;
 //    private String photoUrl;
 
