@@ -288,6 +288,26 @@ export const removePhoto = async (photoId, token) => {
 	}
   };
 
+  export const uploadAvatar = async (file, token) => {
+	const formData = new FormData();
+	formData.append('file', file); // Attach the selected file
+  
+	try {
+	  const response = await api.post('/avatar', formData, {
+		headers: {
+		  'Content-Type': 'multipart/form-data',
+		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
+		},
+	  });
+	  if (response.status === 204) {
+		return 'Avatar updated successfully'; // Success response
+	  }
+	} catch (error) {
+	  console.error('Error uploading avatar:', error.message || error);
+	  throw error;
+	}
+  };
+
 
 
   export const createTask = async (taskData, token) => {
