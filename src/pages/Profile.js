@@ -45,6 +45,7 @@ import ProfilePage from '../components/catalog/ProfilePage';
 import UserProfile from '../components/catalog/UserProfile';
 import CreateTask from '../components/catalog/CreateTask';
 import Logout from "../components/auth/Logout"
+import AvatarUploadPage from '../components/catalog/AvatarUpload';
 
 function Profile() {
 // const { username, token } = useAuth(); // Get userId and token from context
@@ -66,7 +67,9 @@ function Profile() {
 
                         {/* <ProfilePage/> */}
 						<UserProfile />
+						<AvatarUploadPage />
 						<CreateTask />
+						<AddCategory />
 						<Logout />
 						{/* <AddCategory /> */}
 						{/* <Categories /> */}

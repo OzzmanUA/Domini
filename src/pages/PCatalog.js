@@ -41,26 +41,40 @@ import PerformerProfile from '../components/profiles/performer-profile/performer
 import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
 
+import { useState, useEffect } from 'react';
+
 function PCatalog() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	useEffect(() => {
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); 
+	if (isAuthenticated === null) {
+	  return <div>Loading...</div>;
+	}
 
   return (
     <main>
+		<div className="PCatalog">
+		{isAuthenticated ? (
 			<AuthProvider>
-					{/* <NavBfar /> */}
-					{/* <Routes>
-					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Registration />} />	
-					</Routes> */}
-
-					<div className="PCatalog">
-						<Header_auth />
-						<ProfilesCatalog/>
-      					<Footer/>
-					</div>
-
-
-			</AuthProvider>			
-		</main>
+				<Header_auth />
+				<ProfilesCatalog/>
+      			<Footer/>			
+			</AuthProvider>
+		) : (
+			<AuthProvider>
+				<Header />
+				<ProfilesCatalog/>
+			  	<Footer/>			
+			</AuthProvider>
+		)};
+		</div>		
+	</main>
   );
 }
 

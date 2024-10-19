@@ -288,6 +288,26 @@ export const removePhoto = async (photoId, token) => {
 	}
   };
 
+  export const uploadAvatar = async (file, token) => {
+	const formData = new FormData();
+	formData.append('file', file); // Attach the selected file
+  
+	try {
+	  const response = await api.post('/avatar', formData, {
+		headers: {
+		  'Content-Type': 'multipart/form-data',
+		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
+		},
+	  });
+	  if (response.status === 204) {
+		return 'Avatar updated successfully'; // Success response
+	  }
+	} catch (error) {
+	  console.error('Error uploading avatar:', error.message || error);
+	  throw error;
+	}
+  };
+
 
 
   export const createTask = async (taskData, token) => {
@@ -327,6 +347,24 @@ export const removePhoto = async (photoId, token) => {
 	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
+
+  export const createTaskForWorker = async (taskCreateDTO, workerId) => {
+	try {
+	  // Make the POST request to the backend API
+	  const response = await api.post(
+		`/task/create-for-worker`, 
+		taskCreateDTO, 
+		{ params: { workerId } }  // Pass the workerId as a query parameter
+	  );
+	  
+	  // Return the response or success message
+	  return response.data;
+	} catch (error) {
+	  // Handle errors and return the error message
+	  console.error('Error creating task for worker:', error.response || error);
+	  return error.response ? error.response.data : 'An error occurred';
+	}
+  };
 //   export const getWorkersByCategory = async (categoryId, filters = {}) => {
 // 	try {
 // 	  const { minPrice, maxPrice, skillLevel, country, city } = filters;
@@ -339,12 +377,111 @@ export const removePhoto = async (photoId, token) => {
 // 	  return [];
 // 	}
 //   };
-	export const getWorkersByCategory = async (categoryId) => {
-	try {	  
-	  const response = await api.get(`/category/${categoryId}/workers`);
-	  return response.data; // Assuming the API returns a list of WorkerInfoDTO
+// 	export const getWorkersByCategory = async (categoryId) => {
+// 	try {	  
+// 	  const response = await api.get(`/category/${categoryId}/workers`);
+// 	  return response.data; // Assuming the API returns a list of WorkerInfoDTO
+// 	} catch (error) {
+// 	  console.error("Error fetching workers:", error);
+// 	  return [];
+// 	}
+//   };
+export const getWorkersByCategory = async (categoryId, filters = {}) => {
+    try {
+        let query = `/category/${categoryId}/workers`;
+        const queryParams = [];
+
+        // Construct the query parameters based on the provided filters
+        if (filters.minPrice) {
+            queryParams.push(`minPrice=${filters.minPrice}`);
+        }
+        if (filters.maxPrice) {
+            queryParams.push(`maxPrice=${filters.maxPrice}`);
+        }
+        if (filters.skillLevel) {
+            queryParams.push(`skillLevel=${filters.skillLevel}`);
+        }
+        if (filters.city) {
+            queryParams.push(`city=${filters.city}`);
+        }
+
+        // If there are any query parameters, append them to the query
+        if (queryParams.length > 0) {
+            query += `/filter?${queryParams.join('&')}`;
+        }
+		console.log(filters)
+
+        const response = await api.get(query);
+        return response.data; // Assuming the API returns a list of WorkerInfoDTO
+    } catch (error) {
+        console.error("Error fetching workers:", error);
+        return [];
+    }
+};
+
+  export const fetchWorkerDetailedInfo = async (userId) => {
+	try {
+	  const response = await api.get(`/category/workers/${userId}`);
+	  return response.data;
 	} catch (error) {
-	  console.error("Error fetching workers:", error);
-	  return [];
+	  console.error("Error fetching worker data:", error);
+	  throw error;
+	}
+  };
+
+
+  export const sendMessage = async (recipientId, content, token) => {
+	try {
+	  const response = await api.post(
+		'/messages/send',
+		new FormData(), // You can append files to this form data if needed
+		{
+		  headers: {
+			'Authorization': `Bearer ${token}`,
+		  },
+		  params: {
+			recipientId,
+			content,
+		  },
+		}
+	  );
+	  return response.data; // Message object returned
+	} catch (error) {
+	  console.error('Error sending message:', error);
+	  throw error;
+	}
+  };
+  
+  // Fetch the conversation between the current user and another user
+  export const getConversation = async (otherUserId, token) => {
+	try {
+	  const response = await api.get(
+		`/messages/conversation`,
+		{
+		  headers: {
+			'Authorization': `Bearer ${token}`,
+		  },
+		  params: { otherUserId },
+		}
+	  );
+	  return response.data; // List of messages in the conversation
+	} catch (error) {
+	  console.error('Error fetching conversation:', error);
+	  throw error;
+	}
+  };
+  
+  // Fetch the list of conversations for the current user
+  export const getConversations = async (token) => {
+	try {
+	  const response = await api.get('/messages/conversations', {
+		headers: {
+		  'Authorization': `Bearer ${token}`,
+		},
+	  });
+	  return response.data; // List of conversations
+	} catch (error) {
+	  console.error('Error fetching conversations:', error);
+	  throw error;
 	}
   };

@@ -125,7 +125,7 @@ const ProfileCard = ({ profile }) => {
         </div>
         <div className="profile-action">
           <img src={favouriteIcon} alt="Favourite" />
-          <Link to={`/perfprofile/${profile.id}`}> {/* Pass the profile ID for dynamic routing */}
+          <Link to={`/perfprofile/${profile.userId}`}> {/* Pass the profile ID for dynamic routing */}
             <button className="view-profile-btn">Переглянути профіль</button>
           </Link>
         </div>
@@ -159,7 +159,7 @@ const ProfileCard = ({ profile }) => {
       </div>
 
       <div className="profile-description">
-        <p>{profile.description || 'No description provided'}</p>
+        <p>{profile.about || 'No description provided'}</p>
       </div>
     </div>
   );
