@@ -13,7 +13,7 @@ import { loginUser } from "../utils/ApiFunctions"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from '../auth/AuthProvider';
 import HomeButton from '../common/Homebutton';
-
+import BackLink from '../common/Goback';
 
 const Login = () => {
 	// const [errorMessage, setErrorMessage] = useState("")
@@ -100,7 +100,8 @@ const Login = () => {
         </ul>
       </div>
       <div className="right-section">
-        <h2>Увійдіть у ваш аккаутн</h2>
+      <BackLink />
+        <h2>Увійдіть у ваш аккаунт</h2>
 
         <form className="auth_form" onSubmit={handleSubmit}>
       <div>
@@ -159,6 +160,7 @@ const Login = () => {
           </button>
         </div>
         <div className="reg-if-no-acc">
+          
           <p className='reg_step1_p'>Уже маєте аккаунт? <a><Link to="/register">
           <button className="regist-btn">Реєстрація</button></Link></a></p>
         </div>

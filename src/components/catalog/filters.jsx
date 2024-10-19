@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import './filters.css'; // CSS для фильтров
 
+import './filters.css'; // CSS для фильтров
+import React, { useState, useEffect } from 'react';
 // Import images
 import arrowIcon from './images/show_container.png';
 import findLogo from './images/find_logo.png';
 
-const FilterComponent = () => {
+const FilterComponent = ({ onApplyFilters }) => {
     const [openSections, setOpenSections] = useState({
         rating: false,
         price: false,
@@ -13,9 +13,11 @@ const FilterComponent = () => {
         location: false
     });
 
-    const [priceRange, setPriceRange] = useState({
-        minPrice: 0,
-        maxPrice: 10000
+    const [filters, setFilters] = useState({
+        minPrice: null,
+        maxPrice: null,
+        skillLevel: '',
+        city: ''
     });
 
     const toggleSection = (section) => {
@@ -27,10 +29,36 @@ const FilterComponent = () => {
 
     const handlePriceChange = (e) => {
         const { name, value } = e.target;
-        setPriceRange((prevState) => ({
+        setFilters((prevState) => ({
             ...prevState,
-            [name]: Number(value)
+            [name]: value !== '' ? Number(value) : null // Reset to null if empty
         }));
+    };
+
+    const handleSkillLevelChange = (e) => {
+        setFilters((prevState) => ({
+            ...prevState,
+            skillLevel: e.target.value,
+        }));
+    };
+
+    const handleCityChange = (e) => {
+        setFilters((prevState) => ({
+            ...prevState,
+            city: e.target.value,
+        }));
+    };
+
+    const applyFilters = () => {
+        // Create a new object with only the filters that are not null or empty
+        const activeFilters = {};
+        if (filters.minPrice !== null) activeFilters.minPrice = filters.minPrice;
+        if (filters.maxPrice !== null) activeFilters.maxPrice = filters.maxPrice;
+        if (filters.skillLevel) activeFilters.skillLevel = filters.skillLevel; // Only add if skillLevel is not empty
+        if (filters.city) activeFilters.city = filters.city; // Only add if city is not empty
+
+        // Pass the filtered parameters to the parent component
+        onApplyFilters(activeFilters);
     };
 
     return (
@@ -44,15 +72,33 @@ const FilterComponent = () => {
                 {openSections.rating && (
                     <div className="content">
                         <div className="checkbox">
-                            <input type="checkbox" id="beginner" name="rating" value="beginner" />
+                            <input
+                                type="radio"
+                                id="beginner"
+                                name="skillLevel"
+                                value="beginner"
+                                onChange={handleSkillLevelChange}
+                            />
                             <label htmlFor="beginner">Початковий рівень (11,749)</label>
                         </div>
                         <div className="checkbox">
-                            <input type="checkbox" id="intermediate" name="rating" value="intermediate" />
+                            <input
+                                type="radio"
+                                id="intermediate"
+                                name="skillLevel"
+                                value="intermediate"
+                                onChange={handleSkillLevelChange}
+                            />
                             <label htmlFor="intermediate">Середній рівень (8,125)</label>
                         </div>
                         <div className="checkbox">
-                            <input type="checkbox" id="expert" name="rating" value="expert" />
+                            <input
+                                type="radio"
+                                id="expert"
+                                name="skillLevel"
+                                value="expert"
+                                onChange={handleSkillLevelChange}
+                            />
                             <label htmlFor="expert">Експерт (43,509)</label>
                         </div>
                     </div>
@@ -68,65 +114,22 @@ const FilterComponent = () => {
                 {openSections.price && (
                     <div className="content">
                         <div className="price-range">
-                            <input 
-                                type="range" 
-                                id="minPrice" 
-                                name="minPrice" 
-                                min="0" 
-                                max="10000" 
-                                value={priceRange.minPrice} 
+                            <label htmlFor="minPrice">Min Price:</label>
+                            <input
+                                type="number"
+                                id="minPrice"
+                                name="minPrice"
+                                value={filters.minPrice || ''}
                                 onChange={handlePriceChange}
                             />
-                            <input 
-                                type="range" 
-                                id="maxPrice" 
-                                name="maxPrice" 
-                                min="0" 
-                                max="10000" 
-                                value={priceRange.maxPrice} 
+                            <label htmlFor="maxPrice">Max Price:</label>
+                            <input
+                                type="number"
+                                id="maxPrice"
+                                name="maxPrice"
+                                value={filters.maxPrice || ''}
                                 onChange={handlePriceChange}
                             />
-                        </div>
-                        <div className="price-values">
-                            <input 
-                                type="number" 
-                                id="minValue" 
-                                name="minPrice" 
-                                value={priceRange.minPrice} 
-                                onChange={handlePriceChange} 
-                            />
-                            <span></span>
-                            <input 
-                                type="number" 
-                                id="maxValue" 
-                                name="maxPrice" 
-                                value={priceRange.maxPrice} 
-                                onChange={handlePriceChange} 
-                            />
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {/* Experience Section */}
-            <div className="filter-section">
-                <button className="collapsible" onClick={() => toggleSection('experience')}>
-                    Історія клієнта
-                    <img src={arrowIcon} className={`arrow-icon ${openSections.experience ? 'rotate' : ''}`} alt="Toggle" />
-                </button>
-                {openSections.experience && (
-                    <div className="content">
-                        <div className="checkbox">
-                            <input type="checkbox" id="noExperience" name="experience" value="noExperience" />
-                            <label htmlFor="noExperience">Без досвіду (11,749)</label>
-                        </div>
-                        <div className="checkbox">
-                            <input type="checkbox" id="someExperience" name="experience" value="someExperience" />
-                            <label htmlFor="someExperience">1-9 виконаних замовлень (8,125)</label>
-                        </div>
-                        <div className="checkbox">
-                            <input type="checkbox" id="moreExperience" name="experience" value="moreExperience" />
-                            <label htmlFor="moreExperience">10+ виконаних замовлень (43,509)</label>
                         </div>
                     </div>
                 )}
@@ -140,26 +143,21 @@ const FilterComponent = () => {
                 </button>
                 {openSections.location && (
                     <div className="content">
-                        <select id="location">
+                        <select id="city" value={filters.city} onChange={handleCityChange}>
                             <option value="">Оберіть місто</option>
-                            <option value="Kyiv">Київ</option>
-                            <option value="Lviv">Львів</option>
-                            <option value="Odessa">Одеса</option>
-                            <option value="Kharkiv">Харків</option>
+                            <option value="Київ">Київ</option>
+                            <option value="Львів">Львів</option>
+                            <option value="Одеса">Одеса</option>
+                            <option value="Харків">Харків</option>
+                            <option value="Полтава">Полтава</option>
                         </select>
                     </div>
                 )}
             </div>
 
-            {/* Popular Requests Section */}
-            <div className="popular-requests">
-                <h4>Популярні запити в цій категорії</h4>
-                <ul>
-                    <li><a href="#"><img src={findLogo} alt="find" />виготовлення меблів</a></li>
-                    <li><a href="#"><img src={findLogo} alt="find" />ремонт меблів</a></li>
-                    <li><a href="#"><img src={findLogo} alt="find" />збирання меблів</a></li>
-                    <li><a href="#"><img src={findLogo} alt="find" />перетяжка меблів</a></li>
-                </ul>
+            {/* Apply Filters Button */}
+            <div className="filter-apply-button">
+                <button onClick={applyFilters}>Apply Filters</button>
             </div>
         </div>
     );

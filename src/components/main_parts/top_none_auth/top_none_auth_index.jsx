@@ -11,8 +11,14 @@ import mebleRob from './images/meble_rob.png';
 import klonPosl from './images/klon_posl.png';
 import transpSkladPosl from './images/transpSklad_posl.png';
 import pobPosl from './images/pob_posl.png';
+import { useNavigate } from 'react-router-dom';
+
 
 const TopNoneAuth = () => {
+  const navigate = useNavigate();
+  const handleLoginClick = () => {
+    navigate("/login"); // This will navigate to the previous page in history
+  };
   const headerStyle = {
     backgroundImage: `url(${bgHeaderMain})`,
   };
@@ -24,8 +30,8 @@ const TopNoneAuth = () => {
           <div className="left_part_header">
             <h1>Онлайн-сервіс пошуку майстрів для дому</h1>
             <div className="buttons">
-              <button className="order-btn">Створити замовлення</button>
-              <button className="freelancer-btn">Стати фрілансером</button>
+              <button onClick={handleLoginClick} href="/login" className="order-btn">Створити замовлення</button>
+              <button onClick={handleLoginClick} href="/login" className="freelancer-btn">Стати фрілансером</button>
             </div>
           </div>
           <div className="header-image">

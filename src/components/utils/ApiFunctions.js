@@ -357,15 +357,47 @@ export const removePhoto = async (photoId, token) => {
 // 	  return [];
 // 	}
 //   };
-	export const getWorkersByCategory = async (categoryId) => {
-	try {	  
-	  const response = await api.get(`/category/${categoryId}/workers`);
-	  return response.data; // Assuming the API returns a list of WorkerInfoDTO
-	} catch (error) {
-	  console.error("Error fetching workers:", error);
-	  return [];
-	}
-  };
+// 	export const getWorkersByCategory = async (categoryId) => {
+// 	try {	  
+// 	  const response = await api.get(`/category/${categoryId}/workers`);
+// 	  return response.data; // Assuming the API returns a list of WorkerInfoDTO
+// 	} catch (error) {
+// 	  console.error("Error fetching workers:", error);
+// 	  return [];
+// 	}
+//   };
+export const getWorkersByCategory = async (categoryId, filters = {}) => {
+    try {
+        let query = `/category/${categoryId}/workers`;
+        const queryParams = [];
+
+        // Construct the query parameters based on the provided filters
+        if (filters.minPrice) {
+            queryParams.push(`minPrice=${filters.minPrice}`);
+        }
+        if (filters.maxPrice) {
+            queryParams.push(`maxPrice=${filters.maxPrice}`);
+        }
+        if (filters.skillLevel) {
+            queryParams.push(`skillLevel=${filters.skillLevel}`);
+        }
+        if (filters.city) {
+            queryParams.push(`city=${filters.city}`);
+        }
+
+        // If there are any query parameters, append them to the query
+        if (queryParams.length > 0) {
+            query += `/filter?${queryParams.join('&')}`;
+        }
+		console.log(filters)
+
+        const response = await api.get(query);
+        return response.data; // Assuming the API returns a list of WorkerInfoDTO
+    } catch (error) {
+        console.error("Error fetching workers:", error);
+        return [];
+    }
+};
 
   export const fetchWorkerDetailedInfo = async (userId) => {
 	try {
