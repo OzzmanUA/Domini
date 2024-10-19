@@ -16,7 +16,7 @@ const ProfilePage = ({ userId }) => {
         setProfile({
           image: "http://localhost:8080/path-to-image", // Change to the actual image path
           name: `${profileData.firstName} ${profileData.lastName}`,
-          category: profileData.skills.join(', '), // Assuming category could be derived from skills
+          short_dedcriptions: profileData.skills.join(', '), //!!!!!!!! Краткое описание !!!!!!!!Assuming category could be derived from skills
           location: "Sample Location", // Add location if it's available in the DTO
           price: "500 грн/год", // Hardcoded for now, update based on actual data
           feedback: "4.5/5", // Placeholder, can be added dynamically

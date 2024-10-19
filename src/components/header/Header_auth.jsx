@@ -5,7 +5,7 @@ import ukrLang from './images/ukr_lang.png';
 import entry from './images/entry.png';
 import favourite from './images/favourite.png';
 import messages from './images/messages.png';
-import notification from './images/notification.png';
+import my_orders from './images/my_orders_logo.png';
 import new_task from './images/new_task.png';
 import ukr_lang_auth from './images/ukr_lang_auth.png';
 import user_demo from './images/user_demo.png';
@@ -35,7 +35,7 @@ const Header_auth = () => {
           <img src={messages} alt="messages" />
         </a>
         <a href="#">
-          <img src={notification} alt="notification" />
+          <img src={my_orders} alt="my_orders" />
         </a>
         <a href="#">
           <img src={new_task} alt="new_task" />

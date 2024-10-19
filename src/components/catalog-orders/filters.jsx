@@ -150,6 +150,9 @@ const FilterComponent = () => {
                     </div>
                 )}
             </div>
+            <div className="update-filters-btn">
+                <button>Застосувати фільтри</button>
+            </div>
 
             {/* Popular Requests Section */}
             <div className="popular-requests">

@@ -4,8 +4,6 @@ body, html {
     font-family: "Rubik", sans-serif;
 }
 
-
-
 .navbar {
     width: 100%;
     max-width: 1920px;
@@ -114,7 +112,64 @@ body, html {
 .header_menu{
     margin-left: 10px;
 }
+
 .demo_user{
     margin-right: 200px;
     margin-left: 36px;
+}
+
+/* Медиазапрос для экранов с максимальной шириной 1473px */
+@media (max-width: 1919px) {
+    .logo img {
+        margin-left: 50px; /* Уменьшение отступа */
+    }
+
+    .search-bar input {
+        width: 600px; /* Уменьшаем ширину строки поиска */
+    }
+
+    .regist-btn {
+        margin-right: 50px; /* Уменьшаем правый отступ */
+    }
+
+    .demo_user {
+        margin-right: 50px; /* Тоже уменьшаем отступ */
+    }
+}
+
+/* Дополнительные медиазапросы для ещё меньших экранов */
+@media (max-width: 1024px) {
+    .search-bar input {
+        width: 400px; /* Ещё меньше на планшетах */
+    }
+
+    .regist-btn {
+        padding: 8px 15px; /* Уменьшаем размер кнопки регистрации */
+        font-size: 14px;   /* Меньше шрифт */
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto; /* Сжимаем высоту */
+    }
+
+    .logo img {
+        margin: 0; /* Убираем отступы */
+    }
+
+    .search-bar input {
+        width: 100%; /* Полная ширина строки поиска */
+    }
+
+    .regist-btn {
+        margin-right: 0;
+        margin-left: 0;
+        margin-top: 10px; /* Добавляем отступ сверху */
+    }
+
+    .demo_user {
+        margin: 0;
+    }
 }

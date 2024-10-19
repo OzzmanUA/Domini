@@ -40,6 +40,10 @@ const EditableSection = ({ title, initialContent }) => {
     const handleToggle = () => {
         setIsOpen(!isOpen); // Переключение открытой/закрытой секции
       };
+
+
+
+
   
     return (
         <div className="section-ext-perf">
@@ -73,38 +77,119 @@ const EditableSection = ({ title, initialContent }) => {
 
 
 const ExtendedpPerformerProfile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    avatar: avatarImage,
+    name: 'Анастасія О.',
+    username: '@Nastya_lis',
+    location: 'Київ, Україна',
+    joinDate: 'Липень, 2022'
+  });
 
+  // Обработчик изменения формы
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Обработчик редактирования
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  // Обработчик сохранения
+  const handleSave = () => {
+    setIsEditing(false);
+    // Логика для сохранения данных (например, отправка на сервер)
+    console.log('Сохраненные данные:', formData);
+  };
   return (
 <div className="customer-all">
 <div className="customer-profile-container" id="customer-profile-container">
     <div className="customer-profile-left">
-          <div className="customer-profile-card">
-          <div className="avatar">
-            <img 
-              src={avatarImage}
-              alt="Avatar" 
+    <div className="customer-profile-card-extend">
+      <div className="prof-up-btn">
+      <div className="avatar-extend">
+        {isEditing ? (
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              setFormData({ ...formData, avatar: URL.createObjectURL(e.target.files[0]) })
+            }
+          />
+        ) : (
+          <img className="avatar-img-extend" src={formData.avatar} alt="Avatar" />
+        )}
+      </div>
+
+      <div className="cust-pof-top-extend">
+        {isEditing ? (
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Имя"
+          />
+        ) : (
+          <h2>{formData.name}</h2>
+        )}
+
+        {isEditing ? (
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="Username"
+          />
+        ) : (
+          <p>{formData.username}</p>
+        )}
+      </div>
+
+      {isEditing ? (
+        <button className="save-button-extend" onClick={handleSave}>
+          Зберегти
+        </button>
+      ) : (
+        <button className="edit-button-extend" onClick={handleEdit}>
+          Редагувати
+        </button>
+      )}
+      </div>
+
+      <div className="info-extend">
+        <div className="info-item-extend">
+          <div className="location-user-info-extend">
+            <img src={locationIcon} alt="Location" className="icon-extend" />
+            <p>Місцезнаходження</p>
+          </div>
+          {isEditing ? (
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              placeholder="Місцезнаходження"
             />
-          </div>
-          <h2 className="username">Анастасія О.</h2>
-          <p className="handle">@Nastya_lis</p>
-          <button className="edit-button">Редагувати</button>
-          <div className="info">
-            <div className="info-item">
-              <div className="location-user-info">
-                <img src={locationIcon} alt="Location" className="icon"/>
-                <p>Місцезнаходження</p>
-              </div>
-              <p>Київ, Україна</p>
-            </div>
-            <div className="info-item">
-              <div className="location-user-info">
-                <img src={joinDateIcon} alt="Join date" className="icon"/>
-                <p>Долучилися</p>
-              </div>
-              <p>Липень, 2022</p>
-            </div>
-          </div>
+          ) : (
+            <p>{formData.location}</p>
+          )}
         </div>
+
+        <div className="info-item-extend">
+          <div className="location-user-info-extend">
+            <img src={joinDateIcon} alt="Join date" className="icon-extend" />
+            <p>Долучилися</p>
+          </div>
+          <p>{formData.joinDate}</p>
+        </div>
+      </div>
+
+
+    </div>
 
 
       </div>

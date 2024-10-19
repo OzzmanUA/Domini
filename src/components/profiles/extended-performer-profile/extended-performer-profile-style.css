@@ -16,6 +16,8 @@
     border-radius: 8px;
     display: flex;
     flex-direction: column;
+    height: auto;
+    overflow: visible; /* Убедитесь, что overflow не скрывает содержимое */
 }
 .section-header-ext-perf {
     display: flex;
@@ -92,3 +94,133 @@ textarea.edit-area-ext-perf {
 .edit-button-ext-perf:hover {
     background-color: #218838;
 }
+.cust-pof-top {
+    display: grid;
+    grid-template-rows: auto auto auto; /* Три строки: для аватара, имени и имени пользователя */
+    justify-items: center; /* Центрируем элементы по горизонтали */
+    row-gap: 10px; /* Задаем расстояние между строками */
+    padding: 20px; /* Добавляем внутренние отступы */
+    min-height: auto; /* Автоматическая минимальная высота */
+    height: auto; /* Высота по содержимому */
+    overflow: visible; /* Убираем любые ограничения по переполнению */
+    margin-left: 30px;
+    padding-bottom: 30px;
+  }
+  
+  
+  .cust-pof-top p {
+    font-size: 14px; /* Можно уменьшить размер для @ имени */
+    color: gray; /* Пример цвета для никнейма */
+    margin-left: 0;
+  }
+  .cust-pof-top h2 {
+    font-size: 24px; /* Можно уменьшить размер для @ имени */
+    font-weight: 600;
+    color: #0E142B; /* Пример цвета для никнейма */
+    margin-bottom: 0;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  .customer-profile-card-extend {
+    width: 560px;
+    padding: 48px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar-img-extend {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .cust-pof-top-extend input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  .cust-pof-top-extend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+  }
+  
+  .info-item-extend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    gap: 16px;
+  }
+  .info-item-extend p{
+    margin-bottom: 0;
+  }
+  .location-user-info-extend{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .location-user-info-extend p{
+    font-size: 18px;
+    color: #727272;
+    margin-bottom: 0;
+  }
+  .location-user-info-extend img{
+    width: 24px;
+    height: 24px;
+  }
+  
+  .edit-button-extend, .save-button-extend {
+    width: 464px;
+    background-color: #ffffff;
+    color: #1CC41C;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 2px solid #1CC41C;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-top: 27px;
+    margin-bottom: 50px;
+  }
+  
+  .edit-button-extend:hover, .save-button-extend:hover {
+    background-color: #218838;
+  }
+  .prof-up-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .prof-up-btn h2{
+    font-size: 24px;
+    font-weight: 600;
+    color: #0E142B;
+  }
+  .prof-up-btn p{
+    font-size: 18px;
+    color: #727272;
+    margin-bottom: 0;
+  }
+  .prof-up-btn img{
+    width: 140px;
+    height: 140px;
+  }
+  
+

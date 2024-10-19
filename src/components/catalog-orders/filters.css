@@ -146,3 +146,18 @@
 .popular-requests ul li a img {
     margin-right: 8px;
  }
+
+ .update-filters-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+ }
+ .update-filters-btn button{
+    background-color: #1CC41C;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+ }
