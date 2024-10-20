@@ -16,7 +16,9 @@ export const getHeader = () => {
 /* This function registers a new user */
 export async function registerUser(registration) {
 	try {
+		console.log(registration)
 		const response = await api.post("/auth/signup", registration)
+		
 		return response.data
 	} catch (error) {
 		if (error.reeponse && error.response.data) {
@@ -310,41 +312,21 @@ export const removePhoto = async (photoId, token) => {
 
 
 
+
   export const createTask = async (taskData, token) => {
 	try {
-	  // Prepare the data to match the backend's expected structure
-	  const requestData = {
-		description: taskData.description,
-		details: taskData.details,
-		price: parseFloat(taskData.price), // Ensure price is a number
-		completionDate: taskData.completionDate,
-		categoryId: taskData.categoryId,
-		clientId: taskData.clientId,
-		status: taskData.status || 'ACTIVE', // Default task status if not provided
-		country: taskData.country,   // Location fields
-		city: taskData.city,         // Location fields
-		district: taskData.district, // Location fields
-		street: taskData.street,     // Location fields
-		house: taskData.house        // Location fields
-	  };
-  
-	  // Send a POST request to create the task with the modified request data
-	  const response = await api.post('/task/create', requestData, {
+	  const response = await api.post(`/task/create`, taskData, {
 		headers: {
-		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
+		  Authorization: `Bearer ${token}`, // Add the token in the header
 		},
 	  });
-  
-	  // Check if the task was created successfully
-	  if (response.status >= 200 && response.status < 300) {
-		return response.data; // Return the response data if successful
-	  } else {
-		throw new Error('Task creation failed.'); // Handle unsuccessful creation
-	  }
+	  return response.data;  // Success response
 	} catch (error) {
-	  // Log and throw the error for the calling function to handle
-	  console.error('Error creating task:', error.response?.data?.message || error.message || error);
-	  throw error; // Rethrow error to handle it in the calling function
+	  if (error.response) {
+		throw new Error(error.response.data);  // Throw backend error
+	  } else {
+		throw new Error('Failed to create task. Please try again.');
+	  }
 	}
   };
 
@@ -363,6 +345,59 @@ export const removePhoto = async (photoId, token) => {
 	  // Handle errors and return the error message
 	  console.error('Error creating task for worker:', error.response || error);
 	  return error.response ? error.response.data : 'An error occurred';
+	}
+  };
+
+  export const acceptTask = async (taskId, workerId, token) => {
+	try {
+	  const response = await api.post(`/task/${taskId}/accept`, null, {
+		params: { workerId }, // Add workerId as a query parameter
+		headers: {
+		  Authorization: `Bearer ${token}`,
+		},
+	  });
+	  return response.data;  // Success response
+	} catch (error) {
+	  if (error.response) {
+		throw new Error(error.response.data);  // Throw backend error
+	  } else {
+		throw new Error('Failed to accept task. Please try again.');
+	  }
+	}
+  };
+
+  
+export const updateTask = async (taskId, updatedTaskData, token) => {
+	try {
+	  const response = await api.put(`/task/${taskId}`, updatedTaskData, {
+		headers: {
+		  Authorization: `Bearer ${token}`,
+		},
+	  });
+	  return response.data;  // Success response
+	} catch (error) {
+	  if (error.response) {
+		throw new Error(error.response.data);  // Throw backend error
+	  } else {
+		throw new Error('Failed to update task. Please try again.');
+	  }
+	}
+  };
+
+  export const deleteTask = async (taskId, token) => {
+	try {
+	  const response = await api.delete(`/task/${taskId}`, {
+		headers: {
+		  Authorization: `Bearer ${token}`,
+		},
+	  });
+	  return response.data;  // Success response
+	} catch (error) {
+	  if (error.response) {
+		throw new Error(error.response.data);  // Throw backend error
+	  } else {
+		throw new Error('Failed to delete task. Please try again.');
+	  }
 	}
   };
 //   export const getWorkersByCategory = async (categoryId, filters = {}) => {
@@ -418,6 +453,26 @@ export const getWorkersByCategory = async (categoryId, filters = {}) => {
         return [];
     }
 };
+
+export const getTasksByCategory = async (categoryId, filters = {}) => {
+	try {
+	  // Construct query parameters based on provided filters
+	  const params = {};
+	  if (filters.minPrice) params.minPrice = filters.minPrice;
+	  if (filters.maxPrice) params.maxPrice = filters.maxPrice;
+	  if (filters.country) params.country = filters.country;
+	  if (filters.city) params.city = filters.city;
+  
+	  // Make the API request to fetch tasks in the given category
+	  const response = await api.get(`/category/${categoryId}/tasks`, { params });
+  
+	  // Return the list of tasks
+	  return response.data;
+	} catch (error) {
+	  console.error('Error fetching tasks:', error);
+	  throw error;
+	}
+  };
 
   export const fetchWorkerDetailedInfo = async (userId) => {
 	try {

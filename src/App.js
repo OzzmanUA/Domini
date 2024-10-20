@@ -114,7 +114,7 @@ function App() {
 					<Route path="/chat" element={<ChatPg />} />
 					
 
-					<Route path="/oCatalog" element={<OCatalog />} />
+					<Route path="/oCatalog/:categoryId/tasks" element={<OCatalog />} />
 					<Route path="/perfProfile/:userId" element={<PerfProfile />} />
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
 					<Route path="/orderP/:userId" element={<OrderP />} />

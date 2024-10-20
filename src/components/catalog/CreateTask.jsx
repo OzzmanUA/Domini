@@ -9,7 +9,6 @@ const CreateTask = () => {
     price: '',
     completionDate: '',
     categoryId: '',
-    clientId: '', // Client will be from the logged-in user
     country: '',
     city: '',
     district: '',
@@ -70,7 +69,6 @@ const CreateTask = () => {
         price: '',
         completionDate: '',
         categoryId: '',
-        clientId: '',
         country: '',
         city: '',
         district: '',
