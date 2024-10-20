@@ -1,17 +1,13 @@
 package com.domini.controller;
 
+import com.domini.dtos.CategoryWithPriceDTO;
 import com.domini.dtos.PrivateInformationDTO;
-import com.domini.model.Category;
-import com.domini.model.Location;
-import com.domini.model.PrivateInformation;
-import com.domini.model.User;
+import com.domini.enums.UserStatus;
+import com.domini.model.*;
 import com.domini.repository.PrivateInformationRepository;
 import com.domini.repository.UserRepository;
-import com.domini.services.CategoryService;
-import com.domini.services.LocationService;
-import com.domini.services.PhotoUploadService;
-import com.domini.services.PrivateInformationService;
-import com.domini.utils.JwtTokenUtils;
+import com.domini.repository.WorkerCategoryPriceRepository;
+import com.domini.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,6 +25,12 @@ public class PrivateInformationController {
 
     private final UserRepository userRepository;
     private final PrivateInformationRepository privateInformationRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private WorkerCategoryPriceRepository workerCategoryPriceRepository;
 
     @Autowired
     private LocationService locationService;
@@ -56,17 +58,29 @@ public class PrivateInformationController {
 
     // Эндпоинт для получения личной информации текущего пользователя
     @GetMapping
-    public ResponseEntity<PrivateInformationDTO> getPrivateInformation(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<?> getPrivateInformation(@RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("Authorization Header: " + authorizationHeader);
         Optional<User> userOpt = getCurrentUser();
+
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             PrivateInformation privateInfo = user.getPrivateInformation();
-            Location location = user.getLocation(); // Получаем локацию пользователя
 
-            // Добавляем данные о локации в DTO
+            // Проверка, если личная информация отсутствует
+            if (privateInfo == null || (privateInfo.getFirstName() == null && privateInfo.getLastName() == null)) {
+                return ResponseEntity.status(204).body("Личная информация не заполнена. Пожалуйста, заполните данные.");
+            }
+
+            Location location = user.getLocation();
+
             String country = (location != null) ? location.getCountry() : null;
             String city = (location != null) ? location.getCity() : null;
+
+            List<CategoryWithPriceDTO> categoryPrices = privateInfo.getWorkerCategoryPrices().stream()
+                    .map(workerCategoryPrice -> new CategoryWithPriceDTO(
+                            workerCategoryPrice.getCategory().getId(),  // Используем ID категории
+                            workerCategoryPrice.getServicePrice()       // Цена услуги
+                    )).toList();
 
             PrivateInformationDTO dto = new PrivateInformationDTO(
                     privateInfo.getFirstName(),
@@ -76,14 +90,15 @@ public class PrivateInformationController {
                     privateInfo.getSkills(),
                     privateInfo.getEducation(),
                     privateInfo.getExperienceYears(),
-                    privateInfo.getCategories().stream().map(Category::getId).toList(),
-                    privateInfo.getAvatarUrl(),
-                    country, // Страна из локации
-                    city     // Город из локации
+                    privateInfo.getCategories() != null ? privateInfo.getCategories().stream().map(Category::getId).toList() : null,
+                    country,
+                    city,
+                    privateInfo.getAvatarUrl() != null ? privateInfo.getAvatarUrl() : "/uploads/images/avatar.png",
+                    categoryPrices
             );
             return ResponseEntity.ok(dto);
         } else {
-            return ResponseEntity.status(403).body(null); // Если пользователь не найден, возвращаем ошибку авторизации
+            return ResponseEntity.status(403).body(null); // Если пользователь не найден
         }
     }
 
@@ -91,6 +106,7 @@ public class PrivateInformationController {
     @PutMapping
     public ResponseEntity<Void> updatePrivateInformation(@RequestBody PrivateInformationDTO privateInfoDTO) {
         Optional<User> userOpt = getCurrentUser();
+
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             PrivateInformation privateInfo = user.getPrivateInformation();
@@ -113,24 +129,42 @@ public class PrivateInformationController {
                 privateInfo.getCategories().clear(); // Очищаем категории, если список пуст
             }
 
-            // Обновляем или создаем новую локацию
+            // Обновляем локацию
             if (privateInfoDTO.getCountry() != null && privateInfoDTO.getCity() != null) {
                 Location location = user.getLocation();
                 if (location != null) {
-                    // Обновляем существующую локацию
                     location.setCountry(privateInfoDTO.getCountry());
                     location.setCity(privateInfoDTO.getCity());
                 } else {
-                    // Создаем новую локацию, если её нет
                     location = new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
                     Location savedLocation = locationService.addLocation(location);
-                    user.setLocation(savedLocation); // Связываем новую локацию с пользователем
+                    user.setLocation(savedLocation);
+                }
+            }
+
+            // Обновляем или добавляем записи WorkerCategoryPrice
+            if (privateInfoDTO.getCategoryPrices() != null) {
+                // Очищаем старые записи перед обновлением
+                workerCategoryPriceRepository.deleteAll(privateInfo.getWorkerCategoryPrices());
+                privateInfo.getWorkerCategoryPrices().clear();
+
+                // Обрабатываем новые цены
+                for (CategoryWithPriceDTO categoryWithPrice : privateInfoDTO.getCategoryPrices()) {
+                    Category category = categoryService.findById(categoryWithPrice.getCategoryId());
+
+                    WorkerCategoryPrice workerCategoryPrice = new WorkerCategoryPrice();
+                    workerCategoryPrice.setPrivateInformation(privateInfo);
+                    workerCategoryPrice.setCategory(category);
+                    workerCategoryPrice.setServicePrice(categoryWithPrice.getServicePrice());
+
+                    // Добавляем новую запись в список PrivateInformation
+                    privateInfo.getWorkerCategoryPrices().add(workerCategoryPrice);
                 }
             }
 
             // Сохраняем изменения
             privateInformationRepository.save(privateInfo);
-            userRepository.save(user); // Сохраняем изменения пользователя с новой или обновленной локацией
+            userRepository.save(user);
 
             return ResponseEntity.noContent().build();
         } else {
@@ -172,23 +206,37 @@ public class PrivateInformationController {
         Optional<User> userOpt = getCurrentUser();
         if (userOpt.isPresent()) {
             try {
-                // Загружаем фото и получаем URL
+
                 String avatarUrl = photoUploadService.uploadPhoto(file);
 
-                // Обновляем аватар пользователя
                 PrivateInformation privateInfo = userOpt.get().getPrivateInformation();
                 privateInfo.setAvatarUrl(avatarUrl);
 
-                // Сохраняем изменения
                 privateInformationRepository.save(privateInfo);
 
                 return ResponseEntity.noContent().build();
             } catch (IOException e) {
-                // Если произошла ошибка при загрузке
-                return ResponseEntity.status(500).build();
+                return ResponseEntity.status(500).build();  // Если произошла ошибка при загрузке
             }
         } else {
-            return ResponseEntity.status(403).build(); // Если пользователь не найден
+            return ResponseEntity.status(403).build();      // Если пользователь не найден
         }
+    }
+
+    @PostMapping("/become-worker")
+    public ResponseEntity<String> becomeWorker() {
+        User currentUser = userService.getCurrentUser(); // Получаем текущего пользователя
+
+        if (currentUser.isWorker()) {
+            return ResponseEntity.badRequest().body("Вы уже являетесь работником.");
+        }
+
+        // Обновляем статус и флаг
+        currentUser.setStatus(UserStatus.VERIFIED);
+        currentUser.setWorker(true);
+
+        userRepository.save(currentUser); // Сохраняем изменения
+
+        return ResponseEntity.ok("Теперь вы работник!");
     }
 }

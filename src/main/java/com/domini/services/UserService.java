@@ -57,8 +57,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        System.out.println("Loading user with roles: " + user.getAuthorities());
+        return user;
     }
 
     //Получение информации от текущем пользователе

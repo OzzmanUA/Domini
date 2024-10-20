@@ -19,4 +19,5 @@ public class PrivateInformationDTO {
     private String country;
     private String city;
     private String avatarUrl;
+    private List<CategoryWithPriceDTO> categoryPrices;
 }

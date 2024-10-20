@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Data
@@ -80,6 +81,34 @@ public class PrivateInformation {
             return "Средний уровень";
         } else {
             return "Эксперт";
+        }
+    }
+
+    // Метод для добавления или обновления стоимости услуг для категории
+    public void setServicePriceForCategory(Category category, Double price) {
+        // Проверяем, существует ли уже запись для данной категории
+        WorkerCategoryPrice existingPrice = workerCategoryPrices.stream()
+                .filter(workerCategoryPrice -> workerCategoryPrice.getCategory().equals(category))
+                .findFirst()
+                .orElse(null);
+
+        if (existingPrice != null) {
+            // Если запись найдена, обновляем цену
+            existingPrice.setServicePrice(price);
+        } else {
+            // Если записи нет, создаем новую запись
+            WorkerCategoryPrice newPrice = new WorkerCategoryPrice();
+            newPrice.setCategory(category);
+            newPrice.setPrivateInformation(this); // Устанавливаем связь с PrivateInformation
+            newPrice.setServicePrice(price);
+            workerCategoryPrices.add(newPrice); // Добавляем запись в список
+        }
+    }
+
+    // Метод для массового обновления цен для нескольких категорий
+    public void setServicePricesForCategories(Map<Category, Double> categoryPrices) {
+        for (Map.Entry<Category, Double> entry : categoryPrices.entrySet()) {
+            setServicePriceForCategory(entry.getKey(), entry.getValue());
         }
     }
 }

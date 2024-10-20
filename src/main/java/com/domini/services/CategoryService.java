@@ -135,7 +135,7 @@ public class CategoryService{
         // Список категорий с ценами
         List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
                 .map(workerCategoryPrice -> new CategoryWithPriceDTO(
-                        workerCategoryPrice.getCategory().getName(),
+                        workerCategoryPrice.getCategory().getId(),
                         workerCategoryPrice.getServicePrice()))
                 .collect(Collectors.toList());
 
@@ -217,7 +217,7 @@ public class CategoryService{
 
             List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
                     .filter(price -> price.getCategory().getId().equals(categoryId))
-                    .map(price -> new CategoryWithPriceDTO(price.getCategory().getName(), price.getServicePrice()))
+                    .map(price -> new CategoryWithPriceDTO(price.getCategory().getId(), price.getServicePrice()))
                     .collect(Collectors.toList());
 
             // Получаем названия категорий

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryWithPriceDTO {
-    private String categoryName;  // Название категории
-    private Double servicePrice;  // Цена за услуги в этой категории
+    private Long categoryId;      // ID категории
+    private Double servicePrice;    // Цена за услуги в этой категории
 }
