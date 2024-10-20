@@ -312,23 +312,44 @@ export const removePhoto = async (photoId, token) => {
 
 
 
-
   export const createTask = async (taskData, token) => {
 	try {
-	  const response = await api.post(`/task/create`, taskData, {
+	  // Prepare the data to match the backend's expected structure
+	  const requestData = {
+		description: taskData.description,
+		details: taskData.details,
+		price: parseFloat(taskData.price), // Ensure price is a number
+		completionDate: taskData.completionDate,
+		categoryId: taskData.categoryId,
+		clientId: taskData.clientId,
+		status: taskData.status || 'ACTIVE', // Default task status if not provided
+		country: taskData.country,   // Location fields
+		city: taskData.city,         // Location fields
+		district: taskData.district, // Location fields
+		street: taskData.street,     // Location fields
+		house: taskData.house        // Location fields
+	  };
+  
+	  // Send a POST request to create the task with the modified request data
+	  const response = await api.post('/task/create', requestData, {
 		headers: {
-		  Authorization: `Bearer ${token}`, // Add the token in the header
+		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
 		},
 	  });
-	  return response.data;  // Success response
-	} catch (error) {
-	  if (error.response) {
-		throw new Error(error.response.data);  // Throw backend error
+  
+	  // Check if the task was created successfully
+	  if (response.status >= 200 && response.status < 300) {
+		return response.data; // Return the response data if successful
 	  } else {
-		throw new Error('Failed to create task. Please try again.');
+		throw new Error('Task creation failed.'); // Handle unsuccessful creation
 	  }
+	} catch (error) {
+	  // Log and throw the error for the calling function to handle
+	  console.error('Error creating task:', error.response?.data?.message || error.message || error);
+	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
+
 
   export const createTaskForWorker = async (taskCreateDTO, workerId) => {
 	try {
@@ -424,27 +445,12 @@ export const updateTask = async (taskId, updatedTaskData, token) => {
 export const getWorkersByCategory = async (categoryId, filters = {}) => {
     try {
         let query = `/category/${categoryId}/workers`;
-        const queryParams = [];
-
-        // Construct the query parameters based on the provided filters
-        if (filters.minPrice) {
-            queryParams.push(`minPrice=${filters.minPrice}`);
-        }
-        if (filters.maxPrice) {
-            queryParams.push(`maxPrice=${filters.maxPrice}`);
-        }
-        if (filters.skillLevel) {
-            queryParams.push(`skillLevel=${filters.skillLevel}`);
-        }
-        if (filters.city) {
-            queryParams.push(`city=${filters.city}`);
-        }
+        const queryParams = new URLSearchParams(filters);
 
         // If there are any query parameters, append them to the query
-        if (queryParams.length > 0) {
-            query += `/filter?${queryParams.join('&')}`;
+        if (queryParams.toString()) {
+            query += `/filter?${queryParams.toString()}`;
         }
-		console.log(filters)
 
         const response = await api.get(query);
         return response.data; // Assuming the API returns a list of WorkerInfoDTO
@@ -455,24 +461,22 @@ export const getWorkersByCategory = async (categoryId, filters = {}) => {
 };
 
 export const getTasksByCategory = async (categoryId, filters = {}) => {
-	try {
-	  // Construct query parameters based on provided filters
-	  const params = {};
-	  if (filters.minPrice) params.minPrice = filters.minPrice;
-	  if (filters.maxPrice) params.maxPrice = filters.maxPrice;
-	  if (filters.country) params.country = filters.country;
-	  if (filters.city) params.city = filters.city;
-  
-	  // Make the API request to fetch tasks in the given category
-	  const response = await api.get(`/category/${categoryId}/tasks`, { params });
-  
-	  // Return the list of tasks
-	  return response.data;
-	} catch (error) {
-	  console.error('Error fetching tasks:', error);
-	  throw error;
-	}
-  };
+    try {
+        let query = `/category/${categoryId}/tasks`;
+        const queryParams = new URLSearchParams(filters);
+
+        // If there are any filters, append them as query parameters
+        if (queryParams.toString()) {
+            query += `/filter?${queryParams.toString()}`;
+        }
+
+        const response = await api.get(query);
+        return response.data; // Assuming the API returns a list of TaskDTO
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        throw error;
+    }
+};
 
   export const fetchWorkerDetailedInfo = async (userId) => {
 	try {

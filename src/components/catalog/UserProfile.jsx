@@ -204,6 +204,7 @@ const UserProfile = () => {
     categories: [], // Array for selected category IDs
     country: '', // New field for country
     city: '',    // New field for city
+    categoryPrices: [] // Array for category prices
   }); // Form state
   const [file, setFile] = useState(null); // File input state
 
@@ -226,6 +227,10 @@ const UserProfile = () => {
           categories: data.categoryIds || [], // Initialize categories with existing category IDs
           country: data.location?.country || '', // Set country from existing location
           city: data.location?.city || '',       // Set city from existing location
+          categoryPrices: data.workerCategoryPrices?.map(priceObj => ({
+            categoryId: priceObj.category.id,
+            servicePrice: priceObj.servicePrice
+          })) || [] // Initialize workerCategoryPrices from data
         });
       } catch (error) {
         console.error('Error fetching private information:', error);
@@ -266,6 +271,18 @@ const UserProfile = () => {
         categories: [...prevFormValues.categories, selectedCategoryId], // Add selected category ID to the list
       }));
     }
+  };
+
+  // Handle category price updates
+  const handleCategoryPriceChange = (categoryId, servicePrice) => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      categoryPrices: prevFormValues.categoryPrices.map((priceObj) =>
+        priceObj.categoryId === categoryId
+          ? { ...priceObj, servicePrice }
+          : priceObj
+      ),
+    }));
   };
 
   // Handle form submission to update private information
@@ -433,6 +450,22 @@ const UserProfile = () => {
             </li>
           ))}
         </ul>
+
+        {/* Category price input fields */}
+        <h2>Set Category Prices</h2>
+        {formValues.categoryPrices.map((priceObj) => (
+          <div key={priceObj.categoryId}>
+            <label>
+              {categories.find(cat => cat.id === priceObj.categoryId)?.name} Price:
+              <input
+                type="number"
+                value={priceObj.servicePrice}
+                onChange={(e) => handleCategoryPriceChange(priceObj.categoryId, e.target.value)}
+              />
+            </label>
+          </div>
+        ))}
+
         <button type="submit">Update Information</button>
       </form>
 

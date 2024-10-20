@@ -5,80 +5,110 @@ import Filters from './filters';
 import './profilesCatalog.css'; // CSS для каталога
 import profile_image01 from './images/demo_user_4.png';
 import middleBg from './images/middle_bg.png';
-import { getTasksByCategory } from '../utils/ApiFunctions';  // Import the function to fetch tasks
+import { getTasksByCategory, acceptTask } from '../utils/ApiFunctions';  // Import the function to fetch tasks
 
 const TasksCatalog = () => {
-    const { categoryId } = useParams();  // Get categoryId from the URL
-    const [tasks, setTasks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [filters, setFilters] = useState({});  // Store filters in state
-  
-    // Helper function to check if filters are empty
-    const isEmptyFilters = (filters) => {
-      return Object.keys(filters).length === 0 ||
-             Object.values(filters).every(value => value === null || value === '' || value === undefined);
-    };
-  
-    // Fetch tasks with or without filters
-    const fetchTasks = async (appliedFilters = {}) => {
-      setLoading(true);
-      try {
-        if (isEmptyFilters(appliedFilters)) {
-          const taskData = await getTasksByCategory(categoryId);
-          setTasks(taskData);
-        } else {
-          const taskData = await getTasksByCategory(categoryId, appliedFilters);
-          setTasks(taskData);
-        }
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      } finally {
-        setLoading(false);
+  const { categoryId } = useParams();  // Get categoryId from the URL
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({});  // Store filters in state
+  const [acceptingTaskId, setAcceptingTaskId] = useState(null); // Track the task being accepted
+  const [token] = useState(localStorage.getItem('token')); // Get the token from localStorage
+  const [workerId] = useState(localStorage.getItem('userId')); // Replace this with actual workerId if stored elsewhere
+
+  // Helper function to check if filters are empty
+  const isEmptyFilters = (filters) => {
+    return Object.keys(filters).length === 0 ||
+           Object.values(filters).every(value => value === null || value === '' || value === undefined);
+  };
+
+  // Fetch tasks with or without filters
+  const fetchTasks = async (appliedFilters = {}) => {
+    setLoading(true);
+    try {
+      // If no filters are applied, just fetch tasks by category
+      if (isEmptyFilters(appliedFilters)) {
+        
+        const taskData = await getTasksByCategory(categoryId);
+        console.log(taskData)
+        setTasks(taskData);
+      } else {
+        // If filters are applied, fetch tasks with the applied filters
+        const taskData = await getTasksByCategory(categoryId, appliedFilters);
+        setTasks(taskData);
       }
-    };
-  
-    // Fetch tasks when categoryId or filters change
-    useEffect(() => {
-      fetchTasks(filters);
-    }, [categoryId, filters]);
-  
-    // Update filters when the user applies them
-    const handleApplyFilters = (newFilters) => {
-      setFilters(newFilters);
-    };
-  
-    if (loading) {
-      return <div>Loading tasks...</div>;
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    } finally {
+      setLoading(false);
     }
-  
-    return (
-      <div className="catalog-container">
-        <h2 className="catalog-h2-top">Каталог завдань</h2>
-        <div className="catalog-content">
-          <Filters onApplyFilters={handleApplyFilters} /> {/* Pass handleApplyFilters to Filters */}
-          <div className="catalog-right">
-            <div id="catalog-top-right-id_01">
-              {tasks.length > 0 ? (
-                tasks.map((task, index) => (
-                  <div className="task-card" key={index}>
-                    <h3>{task.title}</h3>
-                    <p>Опис: {task.description}</p>
-                    <p>Вартість: {task.price} грн</p>
-                    <p>Замовник: {task.user.firstName} {task.user.lastName}</p>
-                    <button>Прийняти завдання</button>  {/* Option to accept the task */}
-                  </div>
-                ))
-              ) : (
-                <div>No tasks found for this category</div>
-              )}
-            </div>
+  };
+
+  // Fetch tasks when categoryId or filters change
+  useEffect(() => {
+    fetchTasks(filters);
+  }, [categoryId, filters]);
+
+  // Update filters when the user applies them
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters); // Update the filters state
+  };
+
+  // Handle task acceptance
+  const handleAcceptTask = async (taskId) => {
+    setAcceptingTaskId(taskId); // Track the task being accepted (to disable button or show loading state)
+    try {
+      console.log(taskId)
+      console.log(workerId)
+      const response = await acceptTask(taskId, workerId, token); // Call acceptTask API
+      alert('Task accepted successfully!'); // Show success message
+      // Optionally, refetch tasks or update the UI after task acceptance
+      fetchTasks(filters); 
+    } catch (error) {
+      console.error('Error accepting task:', error);
+      alert(`Failed to accept task: ${error.message}`); // Show error message
+    } finally {
+      setAcceptingTaskId(null); // Reset accepting state
+    }
+  };
+
+  if (loading) {
+    return <div>Loading tasks...</div>;
+  }
+
+  return (
+    <div className="catalog-container">
+      <h2 className="catalog-h2-top">Каталог завдань</h2>
+      <div className="catalog-content">
+        <Filters onApplyFilters={handleApplyFilters} /> {/* Pass handleApplyFilters to Filters */}
+        <div className="catalog-right">
+          <div id="catalog-top-right-id_01">
+            {tasks.length > 0 ? (
+              tasks.map((task, index) => (
+                <div className="task-card" key={index}>
+                  <h3>{task.title}</h3>
+                  <p>Опис: {task.description}</p>
+                  <p>Вартість: {task.price} грн</p>
+                  <p>Замовник: {task.firstName} {task.lastName}</p>
+                  <button
+                    onClick={() => handleAcceptTask(task.taskId)} // task.id is passed here
+                    disabled={acceptingTaskId === task.taskId}  // Button disabled while accepting
+                  >
+                  {acceptingTaskId === task.taskId ? 'Приймається...' : 'Прийняти завдання'}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div>No tasks found for this category</div>
+            )}
           </div>
         </div>
       </div>
-    );
-  };
-  
-  export default TasksCatalog;
+    </div>
+  );
+};
+
+export default TasksCatalog;
 
 // const profiles = [
 //     {
