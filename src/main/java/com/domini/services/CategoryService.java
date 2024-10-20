@@ -258,4 +258,20 @@ public class CategoryService{
                 ))
                 .toList();
     }
+
+    public List<TaskDTO> getTasksByCategory(Long categoryId) {
+        List<Task> tasks = taskRepository.findTasksByCategory(categoryId);
+
+        // Преобразование списка Task в TaskDTO
+        return tasks.stream().map(task -> new TaskDTO(
+                task.getId(),
+                task.getClient().getPrivateInformation().getAvatarUrl(),        // Аватар пользователя, создавшего задачу
+                task.getClient().getPrivateInformation().getFirstName(),        // Имя
+                task.getClient().getPrivateInformation().getLastName(),         // Фамилия
+                task.getCategory().getName(),                                   // Название категории
+                task.getPrice(),                                                // Цена
+                task.getCompletionDate(),                                       // Дата завершения
+                task.getDescription()                                           // Описание
+        )).collect(Collectors.toList());
+    }
 }

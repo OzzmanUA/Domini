@@ -54,18 +54,19 @@ public class CategoryController {
         return categoryService.getWorkersByCategory(categoryId, minPrice, maxPrice, experienceYears, country, city);
     }
 
-    // Получение задач в категории, с фильтрацией по цене и локации
     @GetMapping("/{categoryId}/tasks")
+    public ResponseEntity<List<TaskDTO>> getTasksByCategory(@PathVariable Long categoryId) {
+        List<TaskDTO> tasks = categoryService.getTasksByCategory(categoryId);
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Получение задач в категории, с фильтрацией по цене и локации
+    @GetMapping("/{categoryId}/tasks/filter")
     public ResponseEntity<List<TaskDTO>> getTasksInCategory(@PathVariable Long categoryId,
                                             @RequestParam(required = false) Double minPrice,
                                             @RequestParam(required = false) Double maxPrice,
                                             @RequestParam(required = false) String country,
                                             @RequestParam(required = false) String city) {
-
-        User currentUser = userService.getCurrentUser();
-        if (!currentUser.isWorker()) {
-            return ResponseEntity.status(403).body(null);  // 403 Forbidden - если это не работник
-        }
 
         List<TaskDTO> tasks = categoryService.getTasksInCategory(categoryId, minPrice, maxPrice, country, city);
         return ResponseEntity.ok(tasks);

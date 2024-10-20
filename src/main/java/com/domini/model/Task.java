@@ -39,6 +39,10 @@ public class Task {
     @Column(nullable = false)
     private TaskStatus status;
 
+    private boolean clientCompletion = false;
+
+    private boolean workerCompletion = false;
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne
@@ -71,4 +75,6 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
+
+
 }

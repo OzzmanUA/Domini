@@ -1,5 +1,6 @@
 package com.domini.controller;
 
+import com.domini.dtos.ReviewDTO;
 import com.domini.dtos.userTasksDTO.MyTaskDTO;
 import com.domini.dtos.TaskCreateDTO;
 import com.domini.dtos.userTasksDTO.UserTasksDTO;
@@ -169,5 +170,37 @@ public class TaskController {
     public ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
         return ResponseEntity.ok("Task deleted successfully");
+    }
+
+    // Завершение задачи
+    @PostMapping("/{taskId}/complete")
+    public ResponseEntity<String> completeTask(@PathVariable Long taskId) {
+        User currentUser = userService.getCurrentUser();
+        taskService.completeTask(taskId, currentUser);
+        return ResponseEntity.ok("Completion request recorded");
+    }
+
+    // Отмена задачи
+    @PostMapping("/{taskId}/cancel")
+    public ResponseEntity<String> cancelTask(@PathVariable Long taskId) {
+        User currentUser = userService.getCurrentUser();
+        taskService.cancelTask(taskId, currentUser);
+        return ResponseEntity.ok("Task canceled");
+    }
+
+    // Пожаловаться на задачу
+    @PostMapping("/{taskId}/report")
+    public ResponseEntity<String> reportTask(@PathVariable Long taskId) {
+        User currentUser = userService.getCurrentUser();
+        taskService.reportTask(taskId, currentUser);
+        return ResponseEntity.ok("Task reported");
+    }
+
+    // Оставить отзыв после завершения задачи
+    @PostMapping("/{taskId}/review")
+    public ResponseEntity<String> leaveReview(@PathVariable Long taskId, @RequestBody ReviewDTO reviewDTO) {
+        User currentUser = userService.getCurrentUser();
+        taskService.leaveReview(taskId, currentUser, reviewDTO);
+        return ResponseEntity.ok("Review submitted");
     }
 }

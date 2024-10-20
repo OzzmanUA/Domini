@@ -26,4 +26,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
                                               @Param("maxPrice") Double maxPrice,
                                               @Param("country") String country,
                                               @Param("city") String city);
+    @Query("SELECT t FROM Task t WHERE t.category.id = :categoryId")
+    List<Task> findTasksByCategory(@Param("categoryId") Long categoryId);
 }

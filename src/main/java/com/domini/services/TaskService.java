@@ -1,5 +1,6 @@
 package com.domini.services;
 
+import com.domini.dtos.ReviewDTO;
 import com.domini.dtos.userTasksDTO.MyTaskDTO;
 import com.domini.dtos.userTasksDTO.UserTasksDTO;
 import com.domini.enums.TaskStatus;
@@ -24,6 +25,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final ReviewService reviewService;
 
     @Transactional(readOnly = true)
     public List<Task> getAllTasks() {
@@ -74,6 +76,7 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Worker not found"));
         task.setWorker(worker);
         task.setStatus(TaskStatus.IN_PROCESS);
+        task.setConfirmed(true);
         taskRepository.save(task);
     }
 
@@ -156,5 +159,69 @@ public class TaskService {
             taskDTO.setClientName(task.getClient().getPrivateInformation().getFirstName() + " " + task.getClient().getPrivateInformation().getLastName());
         }
         return taskDTO;
+    }
+
+    // Завершение задачи (добавление отметки о завершении)
+    public void completeTask(Long taskId, User currentUser) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (task.getClient().equals(currentUser)) {
+            task.setClientCompletion(true);
+        } else if (task.getWorker().equals(currentUser)) {
+            task.setWorkerCompletion(true);
+        }
+
+        // Проверка: если оба завершили задачу
+        if (task.isClientCompletion() && task.isWorkerCompletion()) {
+            task.setStatus(TaskStatus.COMPLETED);
+            taskRepository.save(task);
+        }
+    }
+
+    // Отмена задачи
+    public void cancelTask(Long taskId, User currentUser) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (task.getClient().equals(currentUser) || task.getWorker().equals(currentUser)) {
+            task.setStatus(TaskStatus.CANCELED);
+            taskRepository.save(task);
+        } else {
+            throw new RuntimeException("You do not have permission to cancel this task.");
+        }
+    }
+
+    // Жалоба на задачу
+    public void reportTask(Long taskId, User currentUser) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (task.getClient().equals(currentUser) || task.getWorker().equals(currentUser)) {
+            task.setStatus(TaskStatus.PROBLEM);
+            taskRepository.save(task);
+        } else {
+            throw new RuntimeException("You do not have permission to report this task.");
+        }
+    }
+
+    // Оставление отзыва после завершения задачи
+    public void leaveReview(Long taskId, User currentUser, ReviewDTO reviewDTO) {
+        // Получаем задачу
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        // Проверяем, что задача завершена
+        if (task.getStatus() != TaskStatus.COMPLETED) {
+            throw new IllegalStateException("Cannot leave a review for an incomplete task.");
+        }
+
+        // Проверяем, является ли текущий пользователь клиентом задачи
+        if (!task.getClient().equals(currentUser)) {
+            throw new RuntimeException("Only the client can leave a review.");
+        }
+
+        // Добавляем отзыв
+        reviewService.addReview(reviewDTO, task, currentUser, task.getWorker());
     }
 }

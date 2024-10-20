@@ -2,6 +2,7 @@ package com.domini.controller;
 
 import com.domini.dtos.CategoryWithPriceDTO;
 import com.domini.dtos.PrivateInformationDTO;
+import com.domini.dtos.ReviewDTO;
 import com.domini.enums.UserStatus;
 import com.domini.model.*;
 import com.domini.repository.PrivateInformationRepository;
@@ -44,6 +45,9 @@ public class PrivateInformationController {
 
     @Autowired
     private PhotoUploadService photoUploadService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     public PrivateInformationController(UserRepository userRepository, PrivateInformationRepository privateInformationRepository) {
         this.userRepository = userRepository;
@@ -246,5 +250,11 @@ public class PrivateInformationController {
         userRepository.save(currentUser); // Сохраняем изменения
 
         return ResponseEntity.ok("Теперь вы работник!");
+    }
+
+    @GetMapping("/reviews/{workerId}")
+    public ResponseEntity<List<ReviewDTO>> getUserReviews(@PathVariable Long workerId) {
+        List<ReviewDTO> reviews = reviewService.getReviewsByWorkerId(workerId);
+        return ResponseEntity.ok(reviews);
     }
 }

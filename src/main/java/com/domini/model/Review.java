@@ -52,4 +52,7 @@ public class Review {
     private User worker;
 
 
+    public Long getTaskId() {
+        return task.getId();
+    }
 }
