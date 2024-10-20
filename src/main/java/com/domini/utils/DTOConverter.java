@@ -18,7 +18,7 @@ public class DTOConverter {
 
         List<CategoryWithPriceDTO> categoriesWithPrices = privateInfo.getWorkerCategoryPrices().stream()
                 .map(workerCategoryPrice -> new CategoryWithPriceDTO(
-                        workerCategoryPrice.getCategory().getName(),
+                        workerCategoryPrice.getCategory().getId(),
                         workerCategoryPrice.getServicePrice()))
                 .collect(Collectors.toList());
 

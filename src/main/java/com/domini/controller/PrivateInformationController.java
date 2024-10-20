@@ -8,6 +8,7 @@ import com.domini.repository.PrivateInformationRepository;
 import com.domini.repository.UserRepository;
 import com.domini.repository.WorkerCategoryPriceRepository;
 import com.domini.services.*;
+import com.domini.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -68,11 +69,13 @@ public class PrivateInformationController {
 
             // Проверка, если личная информация отсутствует
             if (privateInfo == null || (privateInfo.getFirstName() == null && privateInfo.getLastName() == null)) {
+                // Возвращаем сообщение с предложением заполнить информацию
                 return ResponseEntity.status(204).body("Личная информация не заполнена. Пожалуйста, заполните данные.");
             }
 
-            Location location = user.getLocation();
+            Location location = user.getLocation(); // Получаем локацию пользователя
 
+            // Добавляем данные о локации в DTO
             String country = (location != null) ? location.getCountry() : null;
             String city = (location != null) ? location.getCity() : null;
 
@@ -129,13 +132,15 @@ public class PrivateInformationController {
                 privateInfo.getCategories().clear(); // Очищаем категории, если список пуст
             }
 
-            // Обновляем локацию
+            // Обновляем или создаем новую локацию
             if (privateInfoDTO.getCountry() != null && privateInfoDTO.getCity() != null) {
                 Location location = user.getLocation();
                 if (location != null) {
+                    // Обновляем существующую локацию
                     location.setCountry(privateInfoDTO.getCountry());
                     location.setCity(privateInfoDTO.getCity());
                 } else {
+                    // Создаем новую локацию, если её нет
                     location = new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
                     Location savedLocation = locationService.addLocation(location);
                     user.setLocation(savedLocation);
@@ -164,7 +169,7 @@ public class PrivateInformationController {
 
             // Сохраняем изменения
             privateInformationRepository.save(privateInfo);
-            userRepository.save(user);
+            userRepository.save(user); // Сохраняем изменения пользователя с новой или обновленной локацией
 
             return ResponseEntity.noContent().build();
         } else {
@@ -206,20 +211,23 @@ public class PrivateInformationController {
         Optional<User> userOpt = getCurrentUser();
         if (userOpt.isPresent()) {
             try {
-
+                // Загружаем фото и получаем URL
                 String avatarUrl = photoUploadService.uploadPhoto(file);
 
+                // Обновляем аватар пользователя
                 PrivateInformation privateInfo = userOpt.get().getPrivateInformation();
                 privateInfo.setAvatarUrl(avatarUrl);
 
+                // Сохраняем изменения
                 privateInformationRepository.save(privateInfo);
 
                 return ResponseEntity.noContent().build();
             } catch (IOException e) {
-                return ResponseEntity.status(500).build();  // Если произошла ошибка при загрузке
+                // Если произошла ошибка при загрузке
+                return ResponseEntity.status(500).build();
             }
         } else {
-            return ResponseEntity.status(403).build();      // Если пользователь не найден
+            return ResponseEntity.status(403).build(); // Если пользователь не найден
         }
     }
 

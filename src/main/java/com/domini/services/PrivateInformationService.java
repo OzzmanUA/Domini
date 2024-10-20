@@ -1,9 +1,7 @@
 package com.domini.services;
 
-import com.domini.model.Category;
 import com.domini.model.Photo;
 import com.domini.model.PrivateInformation;
-import com.domini.model.WorkerCategoryPrice;
 import com.domini.repository.PrivateInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,4 +53,6 @@ public class PrivateInformationService {
         privateInfo.removePhoto(photo);
         privateInformationRepository.save(privateInfo);
     }
+
+
 }

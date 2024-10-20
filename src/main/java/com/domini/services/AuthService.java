@@ -4,13 +4,12 @@ import com.domini.dtos.JwtRequestResponse;
 import com.domini.enums.UserStatus;
 import com.domini.model.PrivateInformation;
 import com.domini.model.User;
+import com.domini.repository.PrivateInformationRepository;
 import com.domini.repository.UserRepository;
 import com.domini.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private PrivateInformationService privateInformationService;
+    private PrivateInformationRepository privateInformationRepository;
 
     public JwtRequestResponse signUp(JwtRequestResponse jwtRequestResponse) {
         JwtRequestResponse response = new JwtRequestResponse();
@@ -46,8 +45,10 @@ public class AuthService {
 
             // Создание пустой личной информации
             PrivateInformation privateInformation = new PrivateInformation();
-            user.setPrivateInformation(privateInformation);
-            user.getPrivateInformation().setAvatarUrl("/uploads/images/avatar.png");
+            privateInformation.setAvatarUrl("/uploads/images/avatar.png");
+
+            PrivateInformation savedPI = privateInformationRepository.save(privateInformation);
+            user.setPrivateInformation(savedPI);
 
             User savedUser = userRepository.save(user);
 

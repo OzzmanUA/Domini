@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Data
@@ -102,13 +101,6 @@ public class PrivateInformation {
             newPrice.setPrivateInformation(this); // Устанавливаем связь с PrivateInformation
             newPrice.setServicePrice(price);
             workerCategoryPrices.add(newPrice); // Добавляем запись в список
-        }
-    }
-
-    // Метод для массового обновления цен для нескольких категорий
-    public void setServicePricesForCategories(Map<Category, Double> categoryPrices) {
-        for (Map.Entry<Category, Double> entry : categoryPrices.entrySet()) {
-            setServicePriceForCategory(entry.getKey(), entry.getValue());
         }
     }
 }
