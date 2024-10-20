@@ -1,9 +1,22 @@
+import React, { useState } from 'react';
+// Импорт изображений
+import closeIcon from './images/closeIcon.png';
+import cardIcon from './images/cardIcon.png';
 import './performer_profile_pay_style.css';
 import demoUserImg from './images/demo_user.png';
 import mapImg from './images/map.png';
 import checkSmallImg from './images/checksmall.png';
 
 const PerformerProfilePay = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   return (
     <div>
       <div className="userParts">
@@ -119,9 +132,48 @@ const PerformerProfilePay = () => {
         </div>
       </div>
 
-      <div className="confirmAndPay">
+      <div className="confirmAndPay"  onClick={handleOpenModal}>
         <button>Підтвердити і оплатити</button>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            {/* Кнопка закрытия с картинкой крестика */}
+            <button className="close-btn" onClick={handleCloseModal}>
+              <img src={closeIcon} alt="Close" className="icon" />
+            </button>
+
+            <h2 className="new-paysend-h2">Новий платіж</h2>
+            <p className="new-paysend-p">До сплати 2700 грн</p>
+            <p className="new-paysend-p2">З картки</p>
+
+            <form className="payment-form">
+              <label>Номер карти</label>
+              <div className="input-with-icon">
+                {/* Картинка карты рядом с полем для ввода номера карты */}
+                <img src={cardIcon} alt="Card" className="card-icon" />
+                <input type="text" placeholder="0000 0000 0000 0000" />
+              </div>
+
+              <div className="form-row">
+                <div>
+                  <label>Термін дії</label>
+                  <input type="text" placeholder="MM/YY" />
+                </div>
+                <div>
+                  <label>CVV-код</label>
+                  <input type="text" placeholder="•••" />
+                </div>
+              </div>
+            </form>
+            <button type="submit" className="submit-btn">Сплатити</button>
+          </div>
+        </div>
+      )}
+
+
+
     </div>
   );
 };
