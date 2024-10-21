@@ -25,6 +25,7 @@ const ProfilesCatalog = () => {
         setLoading(true);
         try {
             console.log(appliedFilters);
+            console.log(categoryId);
             // Check if filters are empty, and only send categoryId if no filters are applied
             const workerData = await getWorkersByCategory(categoryId, appliedFilters);
             console.log(workerData)

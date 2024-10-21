@@ -116,7 +116,16 @@ export async function loginUser(login) {
 // }
 
 //------------------------------------------------------------------
-
+export const fetchCategoryById = async (categoryId) => {
+	try {
+	  const response = await api.get(`/category/${categoryId}`);
+	  return response.data;  // Assuming the response data contains the category object
+	} catch (error) {
+	  console.error('Error fetching category:', error);
+	  return null;
+	}
+  };
+  
 export async function getAllCategories() {
 	try {
 	  const response = await api.get("/category/all-categories");
@@ -222,7 +231,6 @@ export const getPrivateInformation = async (token) => {
   
 	  // Check if the response has valid data
 	  if (response && response.data) {
-		console.log (response.data);
 		return response.data; // Return the private information DTO from the response
 		
 	  } else {
@@ -368,6 +376,26 @@ export const removePhoto = async (photoId, token) => {
 	  return error.response ? error.response.data : 'An error occurred';
 	}
   };
+  export const getUserTasks = async (userId, token) => {
+	try {
+	  const params = {};  // Query parameters object
+  
+	  const response = await api.get(`/task/user/${userId}`, {
+		params,  // Add query parameters
+		headers: {
+		  Authorization: `Bearer ${token}`  // Add authorization header
+		}
+	  });
+  
+	  return response.data;  // Return the user tasks data (UserTasksDTO)
+	} catch (error) {
+	  if (error.response) {
+		throw new Error(error.response.data.message || 'Error fetching user tasks');
+	  } else {
+		throw new Error('Failed to fetch user tasks. Please try again.');
+	  }
+	}
+};
 
   export const acceptTask = async (taskId, workerId, token) => {
 	try {
@@ -419,6 +447,64 @@ export const updateTask = async (taskId, updatedTaskData, token) => {
 	  } else {
 		throw new Error('Failed to delete task. Please try again.');
 	  }
+	}
+  };
+  export const completeTask = async (taskId, token) => {
+	try {
+	  const response = await api.post(`/task/${taskId}/complete`, {}, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		  },
+	  });
+	  return response.data; // Return success message
+	} catch (error) {
+	  console.error('Error completing task:', error.response?.data?.message || error.message);
+	  throw error; // Rethrow error for handling in calling function
+	}
+  };
+  
+  // Cancel a task
+  export const cancelTask = async (taskId, token) => {
+	try {
+	  const response = await api.post(`/task/${taskId}/cancel`, {}, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		  },
+	  });
+	  return response.data; // Return success message
+	} catch (error) {
+	  console.error('Error canceling task:', error.response?.data?.message || error.message);
+	  throw error; // Rethrow error for handling in calling function
+	}
+  };
+  
+  // Report a task
+  export const reportTask = async (taskId, token) => {
+	try {
+	  const response = await api.post(`/task/${taskId}/report`, {}, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		  },
+	  });
+	  return response.data; // Return success message
+	} catch (error) {
+	  console.error('Error reporting task:', error.response?.data?.message || error.message);
+	  throw error; // Rethrow error for handling in calling function
+	}
+  };
+  
+  // Leave a review for a task
+  export const leaveReview = async (taskId, reviewDTO, token) => {
+	try {
+	  const response = await api.post(`/task/${taskId}/review`, reviewDTO, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		  },
+	  });
+	  return response.data; // Return success message
+	} catch (error) {
+	  console.error('Error leaving review:', error.response?.data?.message || error.message);
+	  throw error; // Rethrow error for handling in calling function
 	}
   };
 //   export const getWorkersByCategory = async (categoryId, filters = {}) => {

@@ -124,6 +124,7 @@ function App() {
 					<Route path="/extendPerfProfile" element={<ExtendPerfProfile />} />
 					<Route path="/pChat" element={<PChat />} />
 					<Route path="/errorPage" element={<ErrorPage />} />
+					<Route path="/listOrders" element={<ListOrders />}/>
 					
 					
 

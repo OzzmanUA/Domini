@@ -206,6 +206,8 @@ const UserProfile = () => {
     city: '',    // New field for city
     categoryPrices: [] // Array for category prices
   }); // Form state
+  const [selectedCategoryForPrice, setSelectedCategoryForPrice] = useState(''); // Track selected category for price assignment
+  const [servicePrice, setServicePrice] = useState(''); // Track service price for the selected category
   const [file, setFile] = useState(null); // File input state
 
   const token = localStorage.getItem('token'); // Get the JWT token from localStorage
@@ -272,17 +274,33 @@ const UserProfile = () => {
       }));
     }
   };
+  const handlePriceCategorySelect = (e) => {
+    setSelectedCategoryForPrice(parseInt(e.target.value)); // Store selected category ID for price assignment
+  };
+
+  // Handle service price change
+  const handleServicePriceChange = (e) => {
+    setServicePrice(e.target.value); // Store price for selected category
+  };
 
   // Handle category price updates
-  const handleCategoryPriceChange = (categoryId, servicePrice) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      categoryPrices: prevFormValues.categoryPrices.map((priceObj) =>
-        priceObj.categoryId === categoryId
-          ? { ...priceObj, servicePrice }
-          : priceObj
-      ),
-    }));
+  const handleAddCategoryPrice = () => {
+    if (selectedCategoryForPrice && servicePrice) {
+      // Prevent adding the same category more than once
+      if (!formValues.categoryPrices.some(priceObj => priceObj.categoryId === selectedCategoryForPrice)) {
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          categoryPrices: [...prevFormValues.categoryPrices, {
+            categoryId: selectedCategoryForPrice,
+            servicePrice: parseFloat(servicePrice)
+          }],
+        }));
+
+        // Reset the selected category and price
+        setSelectedCategoryForPrice('');
+        setServicePrice('');
+      }
+    }
   };
 
   // Handle form submission to update private information
@@ -453,18 +471,31 @@ const UserProfile = () => {
 
         {/* Category price input fields */}
         <h2>Set Category Prices</h2>
-        {formValues.categoryPrices.map((priceObj) => (
-          <div key={priceObj.categoryId}>
-            <label>
-              {categories.find(cat => cat.id === priceObj.categoryId)?.name} Price:
-              <input
-                type="number"
-                value={priceObj.servicePrice}
-                onChange={(e) => handleCategoryPriceChange(priceObj.categoryId, e.target.value)}
-              />
-            </label>
-          </div>
-        ))}
+        <label>
+          Select Category for Price:
+          <select value={selectedCategoryForPrice} onChange={handlePriceCategorySelect}>
+            <option value="">Choose a category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+        <label>
+          Set Price:
+          <input
+            type="number"
+            value={servicePrice}
+            onChange={handleServicePriceChange}
+            placeholder="Enter price"
+          />
+        </label>
+        <button type="button" onClick={handleAddCategoryPrice}>
+          Add Price
+        </button>
+
 
         <button type="submit">Update Information</button>
       </form>
