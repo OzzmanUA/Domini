@@ -37,21 +37,12 @@ import { getAllCategories } from '../components/utils/ApiFunctions';
 import ProfilesCatalog from '../components/catalog/profilesCatalog'
 
 import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
-import { useAuth } from '../components/auth/AuthProvider';
+
 import Order from '../components/order/order'
+import OrderFormNonSpecific from '../components/order/order1';
 import AddCategory from '../components/admin/AddCategory';
-import ProfileCard from '../components/catalog/profileCard';
-import ProfilePage from '../components/catalog/ProfilePage';
-import UserProfile from '../components/catalog/UserProfile';
-import CreateTask from '../components/catalog/CreateTask';
-import Logout from "../components/auth/Logout"
-import AvatarUploadPage from '../components/catalog/AvatarUpload';
-import UserTasks from '../components/catalog/UserTasks';
 
-function Profile() {
-// const { username, token } = useAuth(); // Get userId and token from context
-// console.log(useAuth());
-
+function OrderG() {
 
   return (
     <main>
@@ -62,21 +53,9 @@ function Profile() {
 					<Route path="/register" element={<Registration />} />	
 					</Routes> */}
 
-					<div className="profile">
+					<div className="OrderG">
 						<Header_auth />
-						<MiddleMainAuth />
-
-                        {/* <ProfilePage/> */}
-						<UserProfile />
-						<AvatarUploadPage />
-						{/* <CreateTask /> */}
-						{/* <UserTasks /> */}
-						<Logout />
-						{/* <AddCategory /> */}
-						{/* <Categories /> */}
-						{/* <PerformerProfile/> */}
-						{/* <Order/> */}
-						
+						<OrderFormNonSpecific/>
       					<Footer/>
 					</div>
 
@@ -86,4 +65,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default OrderG;

@@ -67,7 +67,7 @@ import PChat from "./pages/PChat";
 
 import ErrorPage from "./pages/ErrorPage";
 import Chat from "./components/chat/chat";
-
+import OrderG from "./pages/OrderG";
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
 	const token = localStorage.getItem('token');
@@ -117,7 +117,11 @@ function App() {
 					<Route path="/oCatalog/:categoryId/tasks" element={<OCatalog />} />
 					<Route path="/perfProfile/:userId" element={<PerfProfile />} />
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
+
 					<Route path="/orderP/:userId" element={<OrderP />} />
+					<Route path="/order" element={<OrderG />} />
+
+
 					<Route path="/customProfile" element={<CustomProfile />} />
 					<Route path="/favouriteOffersPage" element={<FavouriteOffersPage />} />
 					<Route path="/customProfileForPerf" element={<CustomProfileForPerf />} />

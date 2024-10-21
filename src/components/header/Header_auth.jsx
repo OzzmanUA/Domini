@@ -18,6 +18,12 @@ const Header_auth = () => {
   const handleChatClick = () => {
     navigate(`/chat`);  // Navigate to create-task-for-worker page with workerId
   };
+  const handleTasksClick = () => {
+    navigate(`/listOrders`);  // Navigate to create-task-for-worker page with workerId
+  };
+  const handleOrderClick = () => {
+    navigate(`/order`);  // Navigate to create-task-for-worker page with workerId
+  };
   return (
     <div className='all_header'>
     <div className="navbar">
@@ -39,10 +45,10 @@ const Header_auth = () => {
           <img src={messages} onClick={handleChatClick} alt="messages" />
         </a>
         <a href="#">
-          <img src={my_orders} alt="my_orders" />
+          <img src={my_orders} onClick={handleTasksClick} alt="my_orders" />
         </a>
         <a href="#">
-          <img src={new_task} alt="new_task" />
+          <img src={new_task} onClick={handleOrderClick} alt="new_task" />
         </a>
         </div>
         {/* <a href="#" className="demo_user">
