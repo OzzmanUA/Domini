@@ -49,6 +49,8 @@ import FavoriteOffers from '../components/user-suggestions/favorite-offers/favor
 
 import ExtendedpPerformerProfile from '../components/profiles/extended-performer-profile/extended-performer-profile'
 
+import PerformerProfile from '../components/profiles/performer-profile/performer-profile'
+
 import Chat from '../components/chat/chat';
 
 import { getAllCategories } from '../components/utils/ApiFunctions';
