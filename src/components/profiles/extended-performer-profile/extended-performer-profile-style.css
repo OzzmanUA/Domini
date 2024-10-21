@@ -11,7 +11,7 @@
 
 
 .container-accordions-ext-perf {
-    max-width: 1520px;
+    width: 1520px;
     margin: 60px auto;
     border-radius: 8px;
     display: flex;
@@ -120,6 +120,61 @@ textarea.edit-area-ext-perf {
     margin-bottom: 0;
   }
 
+  .customer-profile-bottom{
+    width: 1520px;
+    display: flex;
+    margin: 0 auto;
+  }
+  
+
+
+
+  .location-join-info {
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение элементов */
+    margin-top: 20px; /* Отступ сверху */
+    margin-bottom: 30px;
+  }
+  
+  .location-info,
+  .join-date-info {
+    display: flex;
+    align-items: center; /* Выравнивание по центру по вертикали */
+    justify-content: space-between;
+    margin-bottom: 5px; /* Отступ между строками */
+  }
+  .location-info span,
+  .join-date-info span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #727272;
+  }
+  
+  .info-icon {
+    width: 24px !important; /* Размер иконки */
+    height: 24px !important;
+    margin-right: 8px; /* Отступ между иконкой и текстом */
+  }
+  
+  .location-info input,
+  .join-date-info input {
+    width: 120px;
+    margin-left: 8px; /* Отступ между текстом/иконкой и полем ввода */
+    padding: 5px; /* Внутренний отступ в полях ввода */
+    font-size: 14px; /* Размер текста в полях ввода */
+  }
+  
+
+  .location-join-info-start{
+    display: flex;
+    align-items: center;
+  }
+  .location-join-info-start p{
+    font-size: 18px;
+    color: #727272;
+  }
+  
+
 
 
 
@@ -140,11 +195,13 @@ textarea.edit-area-ext-perf {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .avatar-img-extend {
-    width: 100px;
-    height: 100px;
+  .avatar-extend {
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
+    background-color: #0E142B;
+    margin-left: 162px;
   }
   
   .cust-pof-top-extend input {
@@ -197,7 +254,7 @@ textarea.edit-area-ext-perf {
     cursor: pointer;
     display: block;
     margin-top: 27px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
   }
   
   .edit-button-extend:hover, .save-button-extend:hover {
@@ -206,7 +263,6 @@ textarea.edit-area-ext-perf {
   .prof-up-btn{
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
   .prof-up-btn h2{
     font-size: 24px;
