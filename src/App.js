@@ -68,6 +68,7 @@ import PChat from "./pages/PChat";
 import ErrorPage from "./pages/ErrorPage";
 import Chat from "./components/chat/chat";
 import OrderG from "./pages/OrderG";
+import Adminpg from "./pages/Adminpg";
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
 	const token = localStorage.getItem('token');
@@ -112,6 +113,7 @@ function App() {
 					{/* <Route path="/chat/:userId" element={<ChatPg />} /> */}
 					{/* <Route path="/chat" element={<Chat />} /> */}
 					<Route path="/chat" element={<ChatPg />} />
+					<Route path="/admin" element={<Adminpg />} />
 					
 
 					<Route path="/oCatalog/:categoryId/tasks" element={<OCatalog />} />

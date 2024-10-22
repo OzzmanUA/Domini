@@ -48,7 +48,7 @@ import Logout from "../components/auth/Logout"
 import AvatarUploadPage from '../components/catalog/AvatarUpload';
 import UserTasks from '../components/catalog/UserTasks';
 import ExtendedPerformerProfile from '../components/profiles/extended-performer-profile/extended-performer-profile';
-function Profile() {
+function Adminpg() {
 // const { username, token } = useAuth(); // Get userId and token from context
 // console.log(useAuth());
 
@@ -62,19 +62,20 @@ function Profile() {
 					<Route path="/register" element={<Registration />} />	
 					</Routes> */}
 
-					<div className="profile">
+					<div className="Adminpg">
 						<Header_auth />
-						<ExtendedPerformerProfile/>
-                        {/* <ProfilePage/> */}
+
+                        <UserProfile/>
 
 
 						{/* <UserProfile /> */}
 						
 
 
-						{/* <AvatarUploadPage /> */}
-						{/* <CreateTask /> */}
-						{/* <UserTasks /> */}
+						<AvatarUploadPage />
+                        <AddCategory />
+						{/* <CreateTask />
+						<UserTasks /> */}
 						{/* <Logout /> */}
 						{/* <Categories /> */}
 						{/* <PerformerProfile/> */}
@@ -89,4 +90,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Adminpg;

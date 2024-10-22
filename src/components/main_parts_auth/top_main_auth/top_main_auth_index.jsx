@@ -80,7 +80,7 @@ const TopMainAuth = () => {
               </div>
             </div>
           </div>
-          <Link to="/orderP"><button className="order-button">Створити замовлення</button></Link>
+          <Link to="/order"><button className="order-button">Створити замовлення</button></Link>
         </div>
       </div>
 

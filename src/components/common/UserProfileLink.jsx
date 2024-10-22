@@ -30,7 +30,7 @@ const UserProfileLink = () => {
   return (
     <Link to="/private-information" className="demo_user">
       {/* Show the user profile picture or a placeholder */}
-      <img src={avatarUrl || user_demo} alt="User Avatar" className="user-avatar" />
+      <img src={user_demo} alt="User Avatar" className="user-avatar" />
     </Link>
   );
 };

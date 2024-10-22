@@ -155,12 +155,7 @@ const FilterComponent = ({ onApplyFilters }) => {
                 )}
             </div>
             <div className="update-filters-btn">
-                <button>Застосувати фільтри</button>
-            </div>
-
-            {/* Apply Filters Button */}
-            <div className="filter-apply-button">
-                <button onClick={applyFilters}>Apply Filters</button>
+                <button onClick={applyFilters}>Застосувати фільтри</button>
             </div>
         </div>
     );
