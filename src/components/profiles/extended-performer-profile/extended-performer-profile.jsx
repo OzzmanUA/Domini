@@ -4,7 +4,7 @@ import avatarImage from '../customer-profile/images/demo_user.png';
 import countryImage from '../customer-profile/images/country.png'
 import locationIcon from '../customer-profile/images/location_logo.png';
 import joinDateIcon from '../customer-profile/images/user_logo.png';
-import { getPrivateInformation, updatePrivateInformation, getAllCategories, addPhoto, removePhoto } from '../../utils/ApiFunctions';
+import { getPrivateInformation, updatePrivateInformation, getAllCategories, addPhoto, removePhoto, uploadAvatar } from '../../utils/ApiFunctions';
 import './extended-performer-profile-style.css';
 
 
@@ -623,7 +623,7 @@ const ExtendedPerformerProfile = () => {
   const handlePhotoUpload = async () => {
     if (avatar) {
       try {
-        const response = await addPhoto(avatar, token); // Upload the selected photo
+        const response = await uploadAvatar(avatar, token); // Upload the selected photo
         alert(response); // Show success message
       } catch (error) {
         console.error('Error uploading photo:', error);

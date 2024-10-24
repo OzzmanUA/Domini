@@ -303,7 +303,7 @@ export const removePhoto = async (photoId, token) => {
 	formData.append('file', file); // Attach the selected file
   
 	try {
-	  const response = await api.post('/avatar', formData, {
+	  const response = await api.post('/private-information/avatar', formData, {
 		headers: {
 		  'Content-Type': 'multipart/form-data',
 		  Authorization: `Bearer ${token}`, // Include JWT token in the Authorization header
