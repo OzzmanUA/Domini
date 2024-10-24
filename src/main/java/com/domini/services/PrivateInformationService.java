@@ -35,6 +35,7 @@ public class PrivateInformationService {
         photo.setSize(file.getSize());
         photo.setContentType(file.getContentType());
         photo.setPreviewImage(false); // Установите флаг, если это предварительное изображение
+        //photoUploadService.save(photo);
 
         privateInfo.addPhoto(photo);
         privateInformationRepository.save(privateInfo);

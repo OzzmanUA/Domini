@@ -218,6 +218,12 @@ public class PrivateInformationController {
                 // Загружаем фото и получаем URL
                 String avatarUrl = photoUploadService.uploadPhoto(file);
 
+                System.out.println("Uploaded image URL: " + avatarUrl);
+
+                Photo photo = new Photo();
+                photo.setUrl(avatarUrl);
+                photo = photoUploadService.save(photo);
+
                 // Обновляем аватар пользователя
                 PrivateInformation privateInfo = userOpt.get().getPrivateInformation();
                 privateInfo.setAvatarUrl(avatarUrl);

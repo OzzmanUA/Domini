@@ -2,6 +2,7 @@ package com.domini.services;
 
 import com.domini.dtos.JwtRequestResponse;
 import com.domini.enums.UserStatus;
+import com.domini.model.Photo;
 import com.domini.model.PrivateInformation;
 import com.domini.model.User;
 import com.domini.repository.PrivateInformationRepository;
@@ -28,6 +29,8 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private PrivateInformationRepository privateInformationRepository;
+    @Autowired
+    private PhotoUploadService photoUploadService;
 
     public JwtRequestResponse signUp(JwtRequestResponse jwtRequestResponse) {
         JwtRequestResponse response = new JwtRequestResponse();
@@ -45,7 +48,11 @@ public class AuthService {
 
             // Создание пустой личной информации
             PrivateInformation privateInformation = new PrivateInformation();
-            privateInformation.setAvatarUrl("/uploads/images/avatar.png");
+
+//            Photo photo = new Photo();
+//            photo.setUrl("/uploads/images/avatar.png");
+//            photo = photoUploadService.save(photo);
+//            privateInformation.setAvatarUrl(photo.getUrl());
 
             PrivateInformation savedPI = privateInformationRepository.save(privateInformation);
             user.setPrivateInformation(savedPI);

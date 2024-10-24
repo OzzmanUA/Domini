@@ -6,6 +6,7 @@ import com.domini.model.User;
 import com.domini.services.CategoryService;
 import com.domini.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,18 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
     private final UserService userService;
+
+    // Метод для поиска категории по id
+    @GetMapping("/{id}")
+    public ResponseEntity<String> getCategoryById(@PathVariable Long id) {
+        Category category = categoryService.findById(id);
+        if (category != null) {
+            return ResponseEntity.ok(category.getName());  // Возвращаем категорию, если она найдена
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);  // Возвращаем 404, если категория не найдена
+        }
+    }
 
     // Вывод только имен родительских категорий
     @GetMapping("/categories")

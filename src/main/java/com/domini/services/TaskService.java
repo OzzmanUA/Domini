@@ -4,6 +4,8 @@ import com.domini.dtos.ReviewDTO;
 import com.domini.dtos.userTasksDTO.MyTaskDTO;
 import com.domini.dtos.userTasksDTO.UserTasksDTO;
 import com.domini.enums.TaskStatus;
+import com.domini.exceptions.TaskNotFoundException;
+import com.domini.exceptions.TaskPermissionException;
 import com.domini.model.Category;
 import com.domini.model.Task;
 import com.domini.model.User;
@@ -182,26 +184,26 @@ public class TaskService {
     // Отмена задачи
     public void cancelTask(Long taskId, User currentUser) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new TaskNotFoundException("Task with ID " + taskId + " not found"));
 
         if (task.getClient().equals(currentUser) || task.getWorker().equals(currentUser)) {
             task.setStatus(TaskStatus.CANCELED);
             taskRepository.save(task);
         } else {
-            throw new RuntimeException("You do not have permission to cancel this task.");
+            throw new TaskPermissionException("You do not have permission to cancel this task.");
         }
     }
 
     // Жалоба на задачу
     public void reportTask(Long taskId, User currentUser) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new TaskNotFoundException("Task with ID " + taskId + " not found"));
 
         if (task.getClient().equals(currentUser) || task.getWorker().equals(currentUser)) {
             task.setStatus(TaskStatus.PROBLEM);
             taskRepository.save(task);
         } else {
-            throw new RuntimeException("You do not have permission to report this task.");
+            throw new TaskPermissionException("You do not have permission to report this task.");
         }
     }
 
