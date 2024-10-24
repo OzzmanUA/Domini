@@ -35,4 +35,19 @@ public class LocationService {
     public void deleteLocation(Long id) {
         locationRepository.deleteById(id);
     }
+
+    public Location getOrCreateLocation(String country, String city, String district, String street, String house) {
+        // Пытаемся найти существующую локацию по ключевым полям
+        Location existingLocation = locationRepository.findByCountryAndCityAndDistrictAndStreetAndHouse(country, city, district, street, house)
+                .orElse(null);
+
+        // Если локация существует, возвращаем её
+        if (existingLocation != null) {
+            return existingLocation;
+        }
+
+        // Если локация не найдена, создаем новую
+        Location newLocation = new Location(country, city, district, street, house);
+        return locationRepository.save(newLocation);
+    }
 }

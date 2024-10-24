@@ -52,8 +52,8 @@ public class TaskController {
             return ResponseEntity.badRequest().body("Invalid client ID");
         }
 
-        // Создаем локацию
-        Location location = new Location(
+        // Используем сервис для создания или поиска существующей локации
+        Location location = locationService.getOrCreateLocation(
                 taskCreateDTO.getCountry(),
                 taskCreateDTO.getCity(),
                 taskCreateDTO.getDistrict(),
@@ -61,14 +61,12 @@ public class TaskController {
                 taskCreateDTO.getHouse()
         );
 
-        Location savedLocation = locationService.addLocation(location);
-
         // Создаем задачу
         Task task = new Task();
         task.setDescription(taskCreateDTO.getDescription());
         task.setDetails(taskCreateDTO.getDetails());
         task.setCategory(category);
-        task.setLocation(savedLocation);
+        task.setLocation(location);
         task.setPrice(taskCreateDTO.getPrice());
         task.setCompletionDate(taskCreateDTO.getCompletionDate());
         task.setStatus(taskCreateDTO.getStatus() != null ? taskCreateDTO.getStatus() : TaskStatus.ACTIVE);
@@ -112,8 +110,8 @@ public class TaskController {
             return ResponseEntity.badRequest().body("Invalid worker ID");
         }
 
-        // Создаем локацию
-        Location location = new Location(
+        // Используем сервис для создания или поиска существующей локации
+        Location location = locationService.getOrCreateLocation(
                 taskCreateDTO.getCountry(),
                 taskCreateDTO.getCity(),
                 taskCreateDTO.getDistrict(),
@@ -121,14 +119,12 @@ public class TaskController {
                 taskCreateDTO.getHouse()
         );
 
-        Location savedLocation = locationService.addLocation(location);
-
         // Создаем задачу
         Task task = new Task();
         task.setDescription(taskCreateDTO.getDescription());
         task.setDetails(taskCreateDTO.getDetails());
         task.setCategory(category);
-        task.setLocation(savedLocation);
+        task.setLocation(location);
         task.setPrice(taskCreateDTO.getPrice());
         task.setCompletionDate(taskCreateDTO.getCompletionDate());
         task.setStatus(taskCreateDTO.getStatus() != null ? taskCreateDTO.getStatus() : TaskStatus.ACTIVE);
