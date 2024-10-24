@@ -16,6 +16,7 @@ const UserProfileLink = () => {
       try {
         const data = await getPrivateInformation(token); // Fetch the user's private information
         if (data && data.avatarUrl) {
+          console.log(data)
           // Prepend the base URL of the API to the avatarUrl
           setAvatarUrl(`${api.defaults.baseURL}${data.avatarUrl}`);
         }
