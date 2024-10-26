@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -49,5 +50,12 @@ public class LocationService {
         // Если локация не найдена, создаем новую
         Location newLocation = new Location(country, city, district, street, house);
         return locationRepository.save(newLocation);
+    }
+
+    public List<String> getAllCities() {
+        return locationRepository.findAll().stream()
+                .map(Location::getCity)
+                .distinct()  // Уникальные города
+                .collect(Collectors.toList());
     }
 }

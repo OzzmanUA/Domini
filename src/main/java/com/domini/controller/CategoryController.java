@@ -4,8 +4,10 @@ import com.domini.dtos.*;
 import com.domini.model.Category;
 import com.domini.model.User;
 import com.domini.services.CategoryService;
+import com.domini.services.LocationService;
 import com.domini.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
     private final UserService userService;
+    @Autowired
+    private LocationService locationService;
 
     // Метод для поиска категории по id
     @GetMapping("/{id}")
@@ -101,5 +105,12 @@ public class CategoryController {
             case "senior" -> 5;
             default -> null; // Если уровень навыков не распознан
         };
+    }
+
+    // Получение списка всех городов
+    @GetMapping("/cities")
+    public ResponseEntity<List<String>> getAllCities() {
+        List<String> cities = locationService.getAllCities();
+        return ResponseEntity.ok(cities);
     }
 }

@@ -127,7 +127,7 @@ public class TaskController {
         task.setLocation(location);
         task.setPrice(taskCreateDTO.getPrice());
         task.setCompletionDate(taskCreateDTO.getCompletionDate());
-        task.setStatus(taskCreateDTO.getStatus() != null ? taskCreateDTO.getStatus() : TaskStatus.ACTIVE);
+        task.setStatus(TaskStatus.NEGOTIATE);
         task.setClient(client);
         task.setWorker(worker);  // Устанавливаем выбранного работника
         task.setConfirmed(false);

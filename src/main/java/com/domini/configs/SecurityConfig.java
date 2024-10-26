@@ -32,7 +32,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/auth/**", "/registration", "/main/**","/category/**","/uploads/**","/private-information/avatar").permitAll()
+                        .requestMatchers("/auth/**", "/registration", "/main/**","/category/**","/uploads/**","/private-information/avatar","/task/create-for-worker").permitAll()
                         .requestMatchers("/user/**", "/private-information/**", "/messages/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()                                              //вернуть authenticated()

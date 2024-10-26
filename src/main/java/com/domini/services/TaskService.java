@@ -55,7 +55,7 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
         // Проверяем, что статус задачи "ACTIVE"
-        if (!task.getStatus().equals(TaskStatus.ACTIVE)) {
+        if (!task.getStatus().equals(TaskStatus.ACTIVE)&&!task.getStatus().equals(TaskStatus.NEGOTIATE)) {
             throw new IllegalArgumentException("Task cannot be deleted, it is not in active status");
         }
 
@@ -69,7 +69,7 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
         // Проверяем, что задача активная
-        if (!task.getStatus().equals(TaskStatus.ACTIVE)) {
+        if (!task.getStatus().equals(TaskStatus.ACTIVE)&&!task.getStatus().equals(TaskStatus.NEGOTIATE)) {
             throw new IllegalArgumentException("Task cannot be accepted, it is not in active status");
         }
 
