@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 
 import avatarImage from '../customer-profile/images/demo_user.png';
 import countryImage from '../customer-profile/images/country.png'
@@ -6,6 +6,8 @@ import locationIcon from '../customer-profile/images/location_logo.png';
 import joinDateIcon from '../customer-profile/images/user_logo.png';
 import { getPrivateInformation, updatePrivateInformation, getAllCategories, addPhoto, removePhoto, uploadAvatar } from '../../utils/ApiFunctions';
 import './extended-performer-profile-style.css';
+import { AuthContext } from "../../auth/AuthProvider"
+import { Link, useNavigate } from "react-router-dom"
 
 
 // const reviews = [
@@ -546,6 +548,29 @@ const ExtendedPerformerProfile = () => {
     education: false
   }); // Track editing state for each section
 
+  const [images, setImages] = useState([]);         // Текущие выбранные изображения
+  const [savedImages, setSavedImages] = useState([]); // Массив для сохранённых изображений
+  const handleSaveImages = () => {
+    // Добавляем только уникальные URL, чтобы избежать дублирования
+    const newSavedImages = [...savedImages, ...images].filter(
+      (src, index, array) => array.indexOf(src) === index
+    );
+    setSavedImages(newSavedImages); // Сохраняем объединённый массив
+    setImages([]); // Очищаем текущие выбранные изображения
+  };
+
+
+
+	const auth = useContext(AuthContext)
+	const navigate = useNavigate()
+
+	const handleLogout = () => {
+
+		auth.handleLogout()
+		navigate("/", { state: { message: " You have been logged out!" } })
+	}
+
+
   useEffect(() => {
     const fetchPrivateInfo = async () => {
       try {
@@ -647,6 +672,62 @@ const ExtendedPerformerProfile = () => {
       [section]: !isEditingSections[section]
     });
   };
+
+
+  // Render a section with photo upload
+  const renderPhotoSection = () => (
+    <div className="section-ext-perf">
+      <div
+        className="section-header-ext-perf"
+        onClick={() => handleToggle('photos')}
+        style={{ cursor: 'pointer' }}
+      >
+        <h2>Портфоліо</h2>
+        <span>{isOpenSections.photos ? 'Згорнути' : 'Змінити'}</span>
+      </div>
+      {isOpenSections.photos && (
+        <>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              images.forEach((src) => URL.revokeObjectURL(src));
+              const files = Array.from(e.target.files).slice(0, 5);
+              const urls = files.map((file) => URL.createObjectURL(file));
+              setImages(urls); // Сохраняем выбранные изображения
+            }}
+          />
+          <div className="image-preview-container">
+            {images.map((src, index) => (
+              <img
+                key={index}
+                src={src}
+                alt={`Фото ${index + 1}`}
+                className="image-preview"
+              />
+            ))}
+          </div>
+          <button className="upload-foto" onClick={handleSaveImages}>Зберегти фото</button> {/* Кнопка сохранить */}
+          <div className="saved-images-container">
+            <h3>Збережені фото:</h3>
+            <div className="image-preview-container">
+              {savedImages.map((src, index) => (
+                <img
+                  key={index}
+                  src={src}
+                  alt={`Сохраненное фото ${index + 1}`}
+                  className="image-preview"
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+  
+
 
   // Render editable sections directly within the profile component
   const renderSection = (sectionName, label, content) => (
@@ -828,10 +909,12 @@ const ExtendedPerformerProfile = () => {
 
       <div className="customer-profile-bottom">
           <div className="container-accordions-ext-perf">
+            {renderPhotoSection()}
             {renderSection('about', 'Загальна інформація', formValues.about)}
             {renderSection('language', 'Мова', formValues.language)}
             {renderSection('skills', 'Навички', formValues.skills)}
             {renderSection('education', 'Освіта', formValues.education)}
+            <button className="logout-user-btn"  onClick={handleLogout}>Вийти</button>
           </div>
         </div>
 

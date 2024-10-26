@@ -278,5 +278,62 @@ textarea.edit-area-ext-perf {
     width: 140px;
     height: 140px;
   }
+
+
+  .image-preview-container {
+    display: flex;               /* Flexbox для горизонтального расположения */
+    flex-wrap: nowrap;           /* Запрещаем перенос строк */
+    overflow-x: auto;            /* Добавляем горизонтальную прокрутку, если изображений больше 5 */
+    width: 1480px;
+    gap: 4px;
+  }
   
+  .image-preview {
+    object-fit: cover;           /* Обрезаем изображение, чтобы оно заполнило квадрат */
+  }
+  .image-preview img{
+    width: 294px;
+    height: 228px;
+  }
+  .saved-images-container h3{
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  
+  .upload-foto{
+    background-color: #1CC41C;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 650px;
+  }
+  .section-ext-perf input{
+    margin-left: 560px;
+    width: 340px;
+    background-color: #ffffff;
+    color: #1CC41C;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 2px solid #1CC41C;
+    border-radius: 10px;
+  }
+  .logout-user-btn{
+    width: 300px;
+    background-color: #ffffff;
+    color: #1CC41C;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 2px solid #1CC41C;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-top: 27px;
+    margin-left: 650px;
+  }
 
