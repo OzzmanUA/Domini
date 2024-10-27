@@ -518,7 +518,7 @@ const reviews = [
 const ExtendedPerformerProfile = () => {
   const [isEditing, setIsEditing] = useState(false); // Track if editing general profile info
   const [isLoading, setIsLoading] = useState(true); // Loading state
-  const [categories, setCategories] = useState([]); // Store all available categories
+  // const [categories, setCategories] = useState([]); // Store all available categories
   const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
@@ -531,8 +531,8 @@ const ExtendedPerformerProfile = () => {
     city: '',    // New field for city
   }); // Form state
   const [avatar, setAvatar] = useState(null); // Avatar file
-  const [selectedCategoryForPrice, setSelectedCategoryForPrice] = useState(''); // Track selected category for price assignment
-  const [servicePrice, setServicePrice] = useState(''); // Track service price for the selected category
+  // const [selectedCategoryForPrice, setSelectedCategoryForPrice] = useState(''); // Track selected category for price assignment
+  // const [servicePrice, setServicePrice] = useState(''); // Track service price for the selected category
   const token = localStorage.getItem('token'); // Get the JWT token from localStorage
 
   const [isOpenSections, setIsOpenSections] = useState({
@@ -585,6 +585,8 @@ const ExtendedPerformerProfile = () => {
           experienceYears: data.experienceYears || 0,
           country: data.country || '', // Set country from existing location
           city: data.city || '',       // Set city from existing location
+          categories: [],
+          categoryPrices: []
         });
         setAvatar(data.avatar || null); // Initialize avatar
       } catch (error) {
@@ -769,6 +771,163 @@ const ExtendedPerformerProfile = () => {
     </div>
   );
 
+
+
+
+
+  const [categories, setCategories] = useState([]); // Все доступные категории
+  // const [formValues, setFormValues] = useState({
+  //   categories: [],
+  //   categoryPrices: []
+  // });
+  const [selectedCategoryForPrice, setSelectedCategoryForPrice] = useState(''); 
+  const [servicePrice, setServicePrice] = useState(''); 
+
+
+  // Загрузка категорий
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categoryList = await getAllCategories();
+        setCategories(categoryList);
+      } catch (error) {
+        console.error('Ошибка при загрузке категорий:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  // Функция для отображения раздела с категориями и установкой цены
+  const renderCategorySection = (sectionName, label) => (
+    <div className="section-ext-perf">
+      <div className="section-header-ext-perf" onClick={() => toggleSection(sectionName)}>
+        <h2>{label}</h2>
+        <span>{isOpenSections[sectionName] ? 'Зберегти' : 'Змінити'}</span>
+      </div>
+      {isOpenSections[sectionName] && (
+        <>
+          <div>
+            <label>
+              Виберіть категорію
+              <select onChange={handleCategorySelect}>
+                <option value="">Виберіть категорію</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <p className="user-categ-p">Вибрані категорії:</p>
+            <ul>
+              {formValues.categories.map((categoryId) => (
+                <li key={categoryId}>
+                  {categories.find((cat) => cat.id === categoryId)?.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3>Встановити ціну для категорії:</h3>
+            <label>
+              Категорія для встановлення ціни:
+              <select value={selectedCategoryForPrice} onChange={handlePriceCategorySelect}>
+                <option value="">Виберіть категорію</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <br />
+            <label>
+              Ціна:
+            </label>
+            <div className="categ-price-block">
+              <input
+                type="number"
+                value={servicePrice}
+                onChange={handleServicePriceChange}
+                placeholder="Введіть ціну"
+                className="categ-price-input"
+              />
+            <button type="button" onClick={handleAddCategoryPrice}>
+              Додати ціну
+            </button>
+            </div>
+          </div>
+
+          <p className="user-categ-p">Ціни по категоріям:</p>
+          <ul>
+            {formValues.categoryPrices.map((priceObj) => {
+              const categoryName = categories.find((cat) => cat.id === priceObj.categoryId)?.name;
+              return (
+                <li key={priceObj.categoryId}>
+                  {categoryName}: {priceObj.servicePrice} ₴
+                </li>
+              );
+            })}
+          </ul>
+          <button class="edit-button-ext-perf" id="btn-categ">Зберегти</button>
+        </>
+      )}
+    </div>
+  );
+
+  // Обработчики для открытия/закрытия разделов и редактирования
+  const toggleSection = (sectionName) => {
+    setIsOpenSections((prevState) => ({
+      ...prevState,
+      [sectionName]: !prevState[sectionName],
+    }));
+  };
+
+  // Обработчики для управления категориями и ценами
+  const handleCategorySelect = (e) => {
+    const selectedCategoryId = parseInt(e.target.value);
+    if (!formValues.categories.includes(selectedCategoryId)) {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        categories: [...prevFormValues.categories, selectedCategoryId],
+      }));
+    }
+  };
+
+  const handlePriceCategorySelect = (e) => {
+    setSelectedCategoryForPrice(parseInt(e.target.value));
+  };
+
+  const handleServicePriceChange = (e) => {
+    setServicePrice(e.target.value);
+  };
+
+  const handleAddCategoryPrice = () => {
+    if (selectedCategoryForPrice && servicePrice) {
+      if (!formValues.categoryPrices.some(priceObj => priceObj.categoryId === selectedCategoryForPrice)) {
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          categoryPrices: [
+            ...prevFormValues.categoryPrices,
+            {
+              categoryId: selectedCategoryForPrice,
+              servicePrice: parseFloat(servicePrice),
+            },
+          ],
+        }));
+        setSelectedCategoryForPrice('');
+        setServicePrice('');
+      }
+    }
+  };
+
+
+
+
+
+
+
   return (
     <div className="customer-all">
       <div className="customer-profile-container" id="customer-profile-container">
@@ -914,6 +1073,7 @@ const ExtendedPerformerProfile = () => {
             {renderSection('language', 'Мова', formValues.language)}
             {renderSection('skills', 'Навички', formValues.skills)}
             {renderSection('education', 'Освіта', formValues.education)}
+            {renderCategorySection('categorySection', 'Категорії та ціни')}
             <button className="logout-user-btn"  onClick={handleLogout}>Вийти</button>
           </div>
         </div>
