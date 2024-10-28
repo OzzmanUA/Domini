@@ -65,7 +65,7 @@ function Profile() {
 					<div className="profile">
 						<Header_auth />
 						<ExtendedPerformerProfile/>
-						<Logout/>
+
                         {/* <ProfilePage/> */}
 
 

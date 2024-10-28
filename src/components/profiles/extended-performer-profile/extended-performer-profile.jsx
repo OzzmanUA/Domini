@@ -527,8 +527,10 @@ const ExtendedPerformerProfile = () => {
     skills: '',
     education: '',
     experienceYears: 0,
+    categories: [],
     country: '', // New field for country
-    city: '',    // New field for city
+    city: '',
+    categoryPrices: []    // New field for city
   }); // Form state
   const [avatar, setAvatar] = useState(null); // Avatar file
   // const [selectedCategoryForPrice, setSelectedCategoryForPrice] = useState(''); // Track selected category for price assignment
@@ -585,8 +587,11 @@ const ExtendedPerformerProfile = () => {
           experienceYears: data.experienceYears || 0,
           country: data.country || '', // Set country from existing location
           city: data.city || '',       // Set city from existing location
-          categories: [],
-          categoryPrices: []
+          categories: data.categoryIds || [], 
+          categoryPrices: data.workerCategoryPrices?.map(priceObj => ({
+            categoryId: priceObj.category.id,
+            servicePrice: priceObj.servicePrice
+          })) || []
         });
         setAvatar(data.avatar || null); // Initialize avatar
       } catch (error) {
@@ -658,6 +663,17 @@ const ExtendedPerformerProfile = () => {
       }
     }
   };
+  const handlePortfolioUpload = async () => {
+    if (avatar) {
+      try {
+        const response = await addPhoto(avatar, token); // Upload the selected photo
+        alert(response); // Show success message
+      } catch (error) {
+        console.error('Error uploading photo:', error);
+        alert('Failed to upload photo.');
+      }
+    }
+  };
 
   // Toggle the open state for a section
   const handleToggle = (section) => {
@@ -710,7 +726,7 @@ const ExtendedPerformerProfile = () => {
               />
             ))}
           </div>
-          <button className="upload-foto" onClick={handleSaveImages}>Зберегти фото</button> {/* Кнопка сохранить */}
+          <button className="upload-foto" onClick={handlePortfolioUpload}>Зберегти фото</button> {/* Кнопка сохранить */}
           <div className="saved-images-container">
             <h3>Збережені фото:</h3>
             <div className="image-preview-container">
@@ -798,6 +814,7 @@ const ExtendedPerformerProfile = () => {
   }, []);
 
   // Функция для отображения раздела с категориями и установкой цены
+  
   const renderCategorySection = (sectionName, label) => (
     <div className="section-ext-perf">
       <div className="section-header-ext-perf" onClick={() => toggleSection(sectionName)}>
@@ -821,7 +838,7 @@ const ExtendedPerformerProfile = () => {
             <p className="user-categ-p">Вибрані категорії:</p>
             <ul>
               {formValues.categories.map((categoryId) => (
-                <li key={categoryId}>
+                <li key={categoryId}>               
                   {categories.find((cat) => cat.id === categoryId)?.name}
                 </li>
               ))}
