@@ -24,7 +24,6 @@ const OrderForm = () => {
   const [street, setStreet] = useState("");
   const [house, setHouse] = useState("");
   const [price, setPrice] = useState("");
-  const [isPriceNegotiable, setIsPriceNegotiable] = useState(false);
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
 
@@ -67,7 +66,6 @@ const OrderForm = () => {
       district: district, // Use the inputted district
       street: street,
       house: house,
-      status: isPriceNegotiable ? 'NEGOTIABLE' : 'ACTIVE' // Set status based on price negotiation
     };
 
     try {
@@ -199,16 +197,7 @@ const OrderForm = () => {
                 placeholder="UAN"
                 required
               />
-            </div>
-            <div className="checkbox">
-              <input
-                type="checkbox"
-                id="price-agreement"
-                checked={isPriceNegotiable}
-                onChange={(e) => setIsPriceNegotiable(e.target.checked)}
-              />
-              <label htmlFor="price-agreement">Ціна договірна</label>
-            </div>
+            </div>          
           </div>
         </div>
 

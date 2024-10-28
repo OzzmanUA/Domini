@@ -359,21 +359,57 @@ export const removePhoto = async (photoId, token) => {
   };
 
 
-  export const createTaskForWorker = async (taskCreateDTO, workerId) => {
-	try {
-	  // Make the POST request to the backend API
-	  const response = await api.post(
-		`/task/create-for-worker`, 
-		taskCreateDTO, 
-		{ params: { workerId } }  // Pass the workerId as a query parameter
-	  );
+//   export const createTaskForWorker = async (taskCreateDTO, workerId) => {
+// 	try {
+// 	  // Make the POST request to the backend API
+// 	  const response = await api.post(
+// 		`/task/create-for-worker`, 
+// 		taskCreateDTO, 
+// 		{ params: { workerId } }  // Pass the workerId as a query parameter
+// 	  );
 	  
-	  // Return the response or success message
-	  return response.data;
+// 	  // Return the response or success message
+// 	  return response.data;
+// 	} catch (error) {
+// 	  // Handle errors and return the error message
+// 	  console.error('Error creating task for worker:', error.response || error);
+// 	  return error.response ? error.response.data : 'An error occurred';
+// 	}
+//   };
+export const createTaskForWorker = async (taskData, workerId) => {
+	try {
+	  // Prepare the data to match the backend's expected structure
+	  const requestData = {
+		description: taskData.description,
+		details: taskData.details,
+		price: parseFloat(taskData.price), // Ensure price is a number
+		completionDate: taskData.completionDate,
+		categoryId: taskData.categoryId,
+		clientId: taskData.clientId,
+		status: taskData.status || 'ACTIVE', // Default task status if not provided
+		country: taskData.country,   // Location fields
+		city: taskData.city,         // Location fields
+		district: taskData.district, // Location fields
+		street: taskData.street,     // Location fields
+		house: taskData.house        // Location fields
+	  };
+  
+	  // Send a POST request to create the task with the modified request data
+	  const response = await api.post('/task/create-for-worker', requestData, {
+		params: { workerId },
+
+	  });
+  
+	  // Check if the task was created successfully
+	  if (response.status >= 200 && response.status < 300) {
+		return response.data; // Return the response data if successful
+	  } else {
+		throw new Error('Task creation failed.'); // Handle unsuccessful creation
+	  }
 	} catch (error) {
-	  // Handle errors and return the error message
-	  console.error('Error creating task for worker:', error.response || error);
-	  return error.response ? error.response.data : 'An error occurred';
+	  // Log and throw the error for the calling function to handle
+	  console.error('Error creating task:', error.response?.data?.message || error.message || error);
+	  throw error; // Rethrow error to handle it in the calling function
 	}
   };
   export const getUserTasks = async (userId, token) => {
