@@ -9,6 +9,8 @@ import './extended-performer-profile-style.css';
 import { AuthContext } from "../../auth/AuthProvider"
 import { Link, useNavigate } from "react-router-dom"
 
+import UserProfileLink from '../../common/UserProfileLink';
+
 
 // const reviews = [
 //   { name: 'Анастасія О.', location: 'Україна', rating: '⭐⭐⭐⭐ 4.70', date: '3 місяці тому', review: '...' },
@@ -813,6 +815,21 @@ const ExtendedPerformerProfile = () => {
     fetchCategories();
   }, []);
 
+// // Метод для сохранения категорий, в которых работает пользователь
+// const handleSaveCategories = async () => {
+//   try {
+//     const updatedCategoryData = {
+//       categoryIds: formValues.categories, // Массив ID выбранных категорий
+//     };
+
+//     await updatePrivateInformation(updatedCategoryData, token);
+//     alert('Категории успешно сохранены!');
+//   } catch (error) {
+//     console.error('Ошибка при сохранении категорий:', error);
+//     alert('Не удалось сохранить категории.');
+//   }
+// };
+
   // Функция для отображения раздела с категориями и установкой цены
   
   const renderCategorySection = (sectionName, label) => (
@@ -870,7 +887,8 @@ const ExtendedPerformerProfile = () => {
                 placeholder="Введіть ціну"
                 className="categ-price-input"
               />
-            <button type="button" onClick={handleAddCategoryPrice}>
+            <button type="button"  >
+            {/* onClick={handleAddCategoryPrice} */}
               Додати ціну
             </button>
             </div>
@@ -887,7 +905,11 @@ const ExtendedPerformerProfile = () => {
               );
             })}
           </ul>
-          <button class="edit-button-ext-perf" id="btn-categ">Зберегти</button>
+          <button class="edit-button-ext-perf" 
+                  id="btn-categ"  
+                  type="button" 
+                  // onClick={handleSaveCategories}
+          >Зберегти</button>
         </>
       )}
     </div>
@@ -920,24 +942,41 @@ const ExtendedPerformerProfile = () => {
     setServicePrice(e.target.value);
   };
 
-  const handleAddCategoryPrice = () => {
-    if (selectedCategoryForPrice && servicePrice) {
-      if (!formValues.categoryPrices.some(priceObj => priceObj.categoryId === selectedCategoryForPrice)) {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          categoryPrices: [
-            ...prevFormValues.categoryPrices,
-            {
-              categoryId: selectedCategoryForPrice,
-              servicePrice: parseFloat(servicePrice),
-            },
-          ],
-        }));
-        setSelectedCategoryForPrice('');
-        setServicePrice('');
-      }
-    }
-  };
+  // Handle category price updates
+// // Метод для добавления цены к категории и сохранения ее
+// const handleAddCategoryPrice = async () => {
+//   if (selectedCategoryForPrice && servicePrice) {
+//     // Добавляем цену к выбранной категории в состояние
+//     const newPriceEntry = {
+//       categoryId: selectedCategoryForPrice,
+//       servicePrice: parseFloat(servicePrice),
+//     };
+
+//     setFormValues((prevFormValues) => ({
+//       ...prevFormValues,
+//       categoryPrices: [...prevFormValues.categoryPrices, newPriceEntry],
+//     }));
+
+//     try {
+//       // Сохраняем обновленный массив цен на сервере
+//       const updatedPriceData = {
+//         categoryPrices: [...formValues.categoryPrices, newPriceEntry],
+//       };
+      
+//       await updatePrivateInformation(updatedPriceData, token);
+//       alert('Цена успешно добавлена и сохранена!');
+      
+//       // Сброс полей выбора
+//       setSelectedCategoryForPrice('');
+//       setServicePrice('');
+//     } catch (error) {
+//       console.error('Ошибка при сохранении цены:', error);
+//       alert('Не удалось сохранить цену.');
+//     }
+//   } else {
+//     alert('Пожалуйста, выберите категорию и введите цену.');
+//   }
+// };
 
 
 
@@ -955,7 +994,8 @@ const ExtendedPerformerProfile = () => {
                 {isEditing ? (
                   <input type="file" accept="image/*" onChange={handleFileChange} />
                 ) : (
-                  <img className="avatar-img-extend" src={avatar} alt="Avatar" />
+                  // <img className="avatar-img-extend" src={avatar} alt="Avatar" />
+                  <UserProfileLink />
                 )}
               </div>
               <div className="cust-pof-top-extend">

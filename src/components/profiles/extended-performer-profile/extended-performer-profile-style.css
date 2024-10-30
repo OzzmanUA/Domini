@@ -200,8 +200,7 @@ textarea.edit-area-ext-perf {
     height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #0E142B;
-    margin-left: 162px;
+    margin-left: 130px;
   }
   
   .cust-pof-top-extend input {
@@ -378,6 +377,9 @@ textarea.edit-area-ext-perf {
 }
 #btn-categ{
   margin-left: 720px;
+}
+.UserProfileLink{
+  margin-left: 0;
 }
 
 

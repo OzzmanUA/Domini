@@ -54,7 +54,7 @@ const Header_auth = () => {
         {/* <a href="#" className="demo_user">
           <img src={user_demo} alt="user_demo" />
         </a> */}
-        <UserProfileLink />
+        <div className="user-avatar-foto"><UserProfileLink /></div>
       </div>
     </div>
           <div className="nav-container">
