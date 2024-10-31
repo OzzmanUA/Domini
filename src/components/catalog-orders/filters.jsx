@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './filters.css'; // CSS для фильтров
-
+import { fetchCities } from '../utils/ApiFunctions';
 // Import images
 import arrowIcon from './images/show_container.png';
 import findLogo from './images/find_logo.png';
@@ -17,6 +17,16 @@ const FilterComponent = () => {
         minPrice: 0,
         maxPrice: 10000
     });
+
+    const [cities, setCities] = useState([]); // State for cities
+
+    useEffect(() => {
+        const loadCities = async () => {
+            const fetchedCities = await fetchCities();
+            setCities(fetchedCities);
+        };
+        loadCities();
+    }, []);
 
     const toggleSection = (section) => {
         setOpenSections((prevState) => ({
@@ -142,10 +152,9 @@ const FilterComponent = () => {
                     <div className="content">
                         <select id="location">
                             <option value="">Оберіть місто</option>
-                            <option value="Kyiv">Київ</option>
-                            <option value="Lviv">Львів</option>
-                            <option value="Odessa">Одеса</option>
-                            <option value="Kharkiv">Харків</option>
+                            {cities.map((city) => (
+                                <option key={city} value={city}>{city}</option>
+                            ))}
                         </select>
                     </div>
                 )}

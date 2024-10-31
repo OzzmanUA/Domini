@@ -666,3 +666,13 @@ export const getTasksByCategory = async (categoryId, filters = {}) => {
 	  throw error;
 	}
   };
+
+  export const fetchCities = async () => {
+    try {
+        const response = await api.get('/category/cities');
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching cities:", error);
+        return [];
+    }
+};
