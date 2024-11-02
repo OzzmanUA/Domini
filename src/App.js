@@ -137,7 +137,7 @@ function App() {
 
 
 					{/* <Route path="/homereg" element={token ? <HomeReg /> : <Navigate to="/" />} /> */}
-					<Route path="/private-information" element={isAuthenticated ? <Profile /> : <Navigate to="/" />} />
+					<Route path="/private-information" element={ <Profile />} />
 					
 										
 					
