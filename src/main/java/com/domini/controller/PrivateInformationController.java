@@ -1,6 +1,7 @@
 package com.domini.controller;
 
 import com.domini.dtos.CategoryWithPriceDTO;
+import com.domini.dtos.PhotoDTO;
 import com.domini.dtos.PrivateInformationDTO;
 import com.domini.dtos.ReviewDTO;
 import com.domini.enums.UserStatus;
@@ -126,7 +127,7 @@ public class PrivateInformationController {
             privateInfo.setSkills(privateInfoDTO.getSkills());
             privateInfo.setEducation(privateInfoDTO.getEducation());
             privateInfo.setExperienceYears(privateInfoDTO.getExperienceYears());
-            privateInfo.setAvatarUrl(privateInfoDTO.getAvatarUrl());
+            //privateInfo.setAvatarUrl(privateInfoDTO.getAvatarUrl());
 
             // Обновляем категории
             if (privateInfoDTO.getCategoryIds() != null && !privateInfoDTO.getCategoryIds().isEmpty()) {
@@ -262,5 +263,33 @@ public class PrivateInformationController {
     public ResponseEntity<List<ReviewDTO>> getUserReviews(@PathVariable Long workerId) {
         List<ReviewDTO> reviews = reviewService.getReviewsByWorkerId(workerId);
         return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/portfolio")
+    public ResponseEntity<?> getPortfolio(@RequestHeader("Authorization") String authorizationHeader) {
+        Optional<User> userOpt = getCurrentUser();
+
+        if (userOpt.isPresent()) {
+            PrivateInformation privateInfo = userOpt.get().getPrivateInformation();
+
+            if (privateInfo != null && !privateInfo.getPortfolio().isEmpty()) {
+                List<PhotoDTO> portfolio = privateInfo.getPortfolio().stream()
+                        .map(photo -> new PhotoDTO(
+                                photo.getId(),
+                                photo.getName(),
+                                photo.getSize(),
+                                photo.getContentType(),
+                                photo.getImagePath(),
+                                photo.isPreviewImage()
+                        ))
+                        .toList();
+
+                return ResponseEntity.ok(portfolio);
+            } else {
+                return ResponseEntity.status(204).body("Портфолио отсутствует.");
+            }
+        } else {
+            return ResponseEntity.status(403).body("Пользователь не найден.");
+        }
     }
 }
