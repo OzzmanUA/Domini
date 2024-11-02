@@ -551,7 +551,7 @@ const ExtendedPerformerProfile = () => {
     skills: false,
     education: false
   }); // Track editing state for each section
-
+  const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);         // Текущие выбранные изображения
   const [savedImages, setSavedImages] = useState([]); // Массив для сохранённых изображений
   const handleSaveImages = () => {
@@ -595,13 +595,15 @@ const ExtendedPerformerProfile = () => {
             servicePrice: priceObj.servicePrice
           })) || []
         });
-        setAvatar(data.avatar || null); // Initialize avatar
+        setAvatar(data.avatar || null);
+         // Initialize avatar
       } catch (error) {
         console.error('Error fetching private information:', error);
       } finally {
         setIsLoading(false); // Mark loading as complete
       }
     };
+    
 
     const fetchCategories = async () => {
       try {
@@ -666,9 +668,9 @@ const ExtendedPerformerProfile = () => {
     }
   };
   const handlePortfolioUpload = async () => {
-    if (avatar) {
+    if (image) {
       try {
-        const response = await addPhoto(avatar, token); // Upload the selected photo
+        const response = await addPhoto(image, token); // Upload the single selected photo
         alert(response); // Show success message
       } catch (error) {
         console.error('Error uploading photo:', error);
@@ -695,6 +697,58 @@ const ExtendedPerformerProfile = () => {
 
 
   // Render a section with photo upload
+  // const renderPhotoSection = () => (
+  //   <div className="section-ext-perf">
+  //     <div
+  //       className="section-header-ext-perf"
+  //       onClick={() => handleToggle('photos')}
+  //       style={{ cursor: 'pointer' }}
+  //     >
+  //       <h2>Портфоліо</h2>
+  //       <span>{isOpenSections.photos ? 'Згорнути' : 'Змінити'}</span>
+  //     </div>
+  //     {isOpenSections.photos && (
+  //       <>
+  //         <input
+  //           type="file"
+  //           accept="image/*"
+  //           multiple
+  //           onChange={(e) => {
+  //             images.forEach((src) => URL.revokeObjectURL(src));
+  //             const files = Array.from(e.target.files).slice(0, 5);
+  //             const urls = files.map((file) => URL.createObjectURL(file));
+  //             setImages(urls); // Сохраняем выбранные изображения
+  //           }}
+  //         />
+  //         <div className="image-preview-container">
+  //           {images.map((src, index) => (
+  //             <img
+  //               key={index}
+  //               src={src}
+  //               alt={`Фото ${index + 1}`}
+  //               className="image-preview"
+  //             />
+  //           ))}
+  //         </div>
+  //         <button className="upload-foto" onClick={handlePortfolioUpload}>Зберегти фото</button> {/* Кнопка сохранить */}
+  //         <div className="saved-images-container">
+  //           <h3>Збережені фото:</h3>
+  //           <div className="image-preview-container">
+  //             {savedImages.map((src, index) => (
+  //               <img
+  //                 key={index}
+  //                 src={src}
+  //                 alt={`Сохраненное фото ${index + 1}`}
+  //                 className="image-preview"
+  //               />
+  //             ))}
+  //           </div>
+  //         </div>
+  //       </>
+  //     )}
+  //   </div>
+  // );
+
   const renderPhotoSection = () => (
     <div className="section-ext-perf">
       <div
@@ -710,38 +764,13 @@ const ExtendedPerformerProfile = () => {
           <input
             type="file"
             accept="image/*"
-            multiple
             onChange={(e) => {
-              images.forEach((src) => URL.revokeObjectURL(src));
-              const files = Array.from(e.target.files).slice(0, 5);
-              const urls = files.map((file) => URL.createObjectURL(file));
-              setImages(urls); // Сохраняем выбранные изображения
+              if (e.target.files[0]) {
+                setImage(e.target.files[0]); // Store the selected image
+              }
             }}
           />
-          <div className="image-preview-container">
-            {images.map((src, index) => (
-              <img
-                key={index}
-                src={src}
-                alt={`Фото ${index + 1}`}
-                className="image-preview"
-              />
-            ))}
-          </div>
-          <button className="upload-foto" onClick={handlePortfolioUpload}>Зберегти фото</button> {/* Кнопка сохранить */}
-          <div className="saved-images-container">
-            <h3>Збережені фото:</h3>
-            <div className="image-preview-container">
-              {savedImages.map((src, index) => (
-                <img
-                  key={index}
-                  src={src}
-                  alt={`Сохраненное фото ${index + 1}`}
-                  className="image-preview"
-                />
-              ))}
-            </div>
-          </div>
+          <button className="upload-foto" onClick={handlePortfolioUpload}>Зберегти фото</button> {/* Save button */}
         </>
       )}
     </div>
@@ -804,6 +833,7 @@ const ExtendedPerformerProfile = () => {
 
   // Загрузка категорий
   useEffect(() => {
+    
     const fetchCategories = async () => {
       try {
         const categoryList = await getAllCategories();
@@ -813,7 +843,31 @@ const ExtendedPerformerProfile = () => {
       }
     };
     fetchCategories();
+    
   }, []);
+  
+
+
+
+  const handleAddCategoryPrice = () => {
+    if (selectedCategoryForPrice && servicePrice) {
+      // Prevent adding the same category more than once
+      if (!formValues.categoryPrices.some(priceObj => priceObj.categoryId === selectedCategoryForPrice)) {
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          categoryPrices: [...prevFormValues.categoryPrices, {
+            categoryId: selectedCategoryForPrice,
+            servicePrice: parseFloat(servicePrice)
+          }],
+        }));
+
+        // Reset the selected category and price
+        setSelectedCategoryForPrice('');
+        setServicePrice('');
+      }
+    }
+  };
+
 
 // // Метод для сохранения категорий, в которых работает пользователь
 // const handleSaveCategories = async () => {
@@ -888,7 +942,7 @@ const ExtendedPerformerProfile = () => {
                 className="categ-price-input"
               />
             <button type="button"  >
-            {/* onClick={handleAddCategoryPrice} */}
+            onClick={handleAddCategoryPrice}
               Додати ціну
             </button>
             </div>
