@@ -626,18 +626,73 @@ const ExtendedPerformerProfile = () => {
     });
   };
 
-  // Handle form submission for individual sections or entire profile
+  // // Handle form submission for individual sections or entire profile
+  // const handleSubmitSection = async (sectionName) => {
+  //   try {
+  //     const updatedData = {
+  //       ...formValues, // Отправляем все данные формы
+  //     };
+  //     await updatePrivateInformation(updatedData, token); // Update user's general private information
+  //     alert(`${sectionName} information updated successfully!`);
+
+  //     // Disable editing for the general profile or the specific section after save
+  //     if (sectionName === 'profile') {
+  //       setIsEditing(false); // Disable editing for the whole profile after saving
+  //     } else {
+  //       setIsEditingSections({
+  //         ...isEditingSections,
+  //         [sectionName]: false,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error updating ${sectionName} information:`, error);
+  //     alert(`Failed to update ${sectionName} information.`);
+  //   }
+  // };
+
+
+  
+  const handleAddCategoryPrice = () => {
+    if (selectedCategoryForPrice && servicePrice) {
+      // Создаем запись для новой цены
+      const newPriceEntry = {
+        categoryId: selectedCategoryForPrice,
+        servicePrice: parseFloat(servicePrice),
+      };
+  
+      // Обновляем состояние с новыми данными по ценам
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        categoryPrices: [...(prevFormValues.categoryPrices || []), newPriceEntry],
+      }));
+  
+      // Сбрасываем поля ввода
+      setSelectedCategoryForPrice('');
+      setServicePrice('');
+    } else {
+      alert('Пожалуйста, выберите категорию и введите цену.');
+    }
+  };
+  
   const handleSubmitSection = async (sectionName) => {
     try {
+      // Обновляем форму с новыми ценами перед отправкой
+      handleAddCategoryPrice();
+  
+      // Создаем объект для обновления всех данных формы
       const updatedData = {
-        ...formValues, // Отправляем все данные формы
+        ...formValues, // Все данные формы
+        categoryIds: formValues.categories || [], // Массив ID выбранных категорий
+        categoryPrices: formValues.categoryPrices || [], // Массив цен по категориям
       };
-      await updatePrivateInformation(updatedData, token); // Update user's general private information
+  
+      // Обновляем информацию пользователя, включая категории и цены
+      await updatePrivateInformation(updatedData, token);
       alert(`${sectionName} information updated successfully!`);
-
-      // Disable editing for the general profile or the specific section after save
+  
+      // Отключаем режим редактирования для профиля или для определенного раздела после сохранения
       if (sectionName === 'profile') {
-        setIsEditing(false); // Disable editing for the whole profile after saving
+        setIsEditing(false); // Отключить редактирование для всего профиля после сохранения
       } else {
         setIsEditingSections({
           ...isEditingSections,
@@ -649,6 +704,11 @@ const ExtendedPerformerProfile = () => {
       alert(`Failed to update ${sectionName} information.`);
     }
   };
+  
+  
+  
+
+
 
   // Handle file (avatar) change
   const handleFileChange = (e) => {
@@ -849,24 +909,24 @@ const ExtendedPerformerProfile = () => {
 
 
 
-  const handleAddCategoryPrice = () => {
-    if (selectedCategoryForPrice && servicePrice) {
-      // Prevent adding the same category more than once
-      if (!formValues.categoryPrices.some(priceObj => priceObj.categoryId === selectedCategoryForPrice)) {
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          categoryPrices: [...prevFormValues.categoryPrices, {
-            categoryId: selectedCategoryForPrice,
-            servicePrice: parseFloat(servicePrice)
-          }],
-        }));
-
-        // Reset the selected category and price
-        setSelectedCategoryForPrice('');
-        setServicePrice('');
-      }
-    }
-  };
+  // const handleAddCategoryPrice = () => {
+  //   if (selectedCategoryForPrice && servicePrice) {
+  //     // Prevent adding the same category more than once
+  //     if (!formValues.categoryPrices.some(priceObj => priceObj.categoryId === selectedCategoryForPrice)) {
+  //       setFormValues((prevFormValues) => ({
+  //         ...prevFormValues,
+  //         categoryPrices: [...prevFormValues.categoryPrices, {
+  //           categoryId: selectedCategoryForPrice,
+  //           servicePrice: parseFloat(servicePrice)
+  //         }],
+  //       }));
+  //
+  //       // Reset the selected category and price
+  //       setSelectedCategoryForPrice('');
+  //       setServicePrice('');
+  //     }
+  //   }
+  // };
 
 
 // // Метод для сохранения категорий, в которых работает пользователь
@@ -941,8 +1001,10 @@ const ExtendedPerformerProfile = () => {
                 placeholder="Введіть ціну"
                 className="categ-price-input"
               />
-            <button type="button"  >
-            onClick={handleAddCategoryPrice}
+            <button type="button" 
+            onClick={handleAddCategoryPrice} 
+            >
+            
               Додати ціну
             </button>
             </div>
@@ -950,15 +1012,25 @@ const ExtendedPerformerProfile = () => {
 
           <p className="user-categ-p">Ціни по категоріям:</p>
           <ul>
-            {formValues.categoryPrices.map((priceObj) => {
-              const categoryName = categories.find((cat) => cat.id === priceObj.categoryId)?.name;
-              return (
-                <li key={priceObj.categoryId}>
-                  {categoryName}: {priceObj.servicePrice} ₴
-                </li>
-              );
-            })}
-          </ul>
+  {formValues.categoryPrices && formValues.categoryPrices.length > 0 ? (
+    formValues.categoryPrices.map((priceObj) => {
+      const categoryName = categories.find((cat) => cat.id === priceObj.categoryId)?.name;
+
+      if (!categoryName) {
+        console.warn(`Category not found for id: ${priceObj.categoryId}`, categories);
+      }
+
+      return (
+        <li key={priceObj.categoryId}>
+          {categoryName ? `${categoryName}: ${priceObj.servicePrice} ₴` : "Category not found"}
+        </li>
+      );
+    })
+  ) : (
+    <p>No category prices available or loading...</p>
+  )}
+</ul>
+
           <button class="edit-button-ext-perf" 
                   id="btn-categ"  
                   type="button" 
