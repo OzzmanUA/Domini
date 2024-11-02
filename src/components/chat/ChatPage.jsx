@@ -8,6 +8,7 @@ import send_logo from './images/send_logo.png';
 import question_logo from './images/question_logo.png';
 import support_logo from './images/support_logo.png';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../utils/ApiFunctions';
 
 const ChatPage = () => {
     const token = localStorage.getItem('token');
@@ -138,7 +139,7 @@ const ChatPage = () => {
                     <ul>
                         {filteredChats.map((chat, index) => (
                             <li key={index} onClick={() => handleUserSelect(chat)}>
-                                <img src={avatar1} alt={chat.firstName} className="avatar" />
+                                <img src={(`${api.defaults.baseURL}${chat.avatarUrl}`)} alt={chat.lastName} className="avatar" />
                                 <div className="user-info">
                                     <div className="user-info-top">
                                         <p className="user-name">{chat.firstName} {chat.lastName}</p>
@@ -154,7 +155,7 @@ const ChatPage = () => {
                 {selectedChat && (
                     <div className="chat-window">
                         <div className="chat-header">
-                            <img src={avatar1} alt={selectedChat.firstName} className="avatar" />
+                            <img src={(`${api.defaults.baseURL}${selectedChat.avatarUrl}`)} alt={selectedChat.lastName} className="avatar" />
                             <div className="user-status">
                                 <h2>{selectedChat.firstName} {selectedChat.lastName}</h2>
                                 <p>Online</p>

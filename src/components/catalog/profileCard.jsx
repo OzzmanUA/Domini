@@ -1,6 +1,7 @@
 import React from 'react';
 import './profileCard.css'; // CSS for the profile card
 import { Link } from 'react-router-dom';
+import { api } from '../utils/ApiFunctions';
 // Import images directly
 import favouriteIcon from './images/favourite.png';
 import moneyLogo from './images/money_logo.png';
@@ -115,7 +116,7 @@ const ProfileCard = ({ profile }) => {
       <div className="profile-header">
         <div className="profile-header-left">
           <div className="profile-picture">
-            <img src={profile.image || '/path/to/default-image.png'} alt="Profile Picture" />
+            <img src={(`${api.defaults.baseURL}${profile.avatarUrl}`) || '/path/to/default-image.png'} alt="Profile Picture" />
           </div>
           <div className="profile-info">
             <h2>{profile.firstName} {profile.lastName}</h2> {/* Updated for full name */}
