@@ -24,10 +24,9 @@ public class LocationService {
 //        }
 //        return null;
 //    }
-public Location addLocation(Location location) {
-    Optional<Location> existingLocation = locationRepository.findByCountryAndCity(location.getCountry(), location.getCity());
-    return existingLocation.orElseGet(() -> locationRepository.save(location));
-}
+    public Location addLocation(Location location) {
+        return locationRepository.save(location);
+    }
 
     public Location updateLocation(Location location, Long id) {
         return locationRepository.findById(id).map(location1 -> {
