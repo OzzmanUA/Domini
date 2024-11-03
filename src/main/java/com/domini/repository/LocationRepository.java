@@ -11,4 +11,5 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     Location findByDistrict(String district);
     boolean existsByCity(String city);
     Optional<Location> findByCountryAndCityAndDistrictAndStreetAndHouse(String country, String city, String district, String street, String house);
+    Optional<Location> findByCountryAndCity(String country, String city);
 }

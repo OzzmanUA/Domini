@@ -52,6 +52,10 @@ public class LocationService {
         return locationRepository.save(newLocation);
     }
 
+    public Location findByCountryAndCity(String country, String city) {
+        return locationRepository.findByCountryAndCity(country, city).orElse(null);
+    }
+
     public List<String> getAllCities() {
         return locationRepository.findAll().stream()
                 .map(Location::getCity)

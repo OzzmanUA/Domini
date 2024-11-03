@@ -101,7 +101,7 @@ public class PrivateInformationController {
                     privateInfo.getCategories() != null ? privateInfo.getCategories().stream().map(Category::getId).toList() : null,
                     country,
                     city,
-                    privateInfo.getAvatarUrl() != null ? privateInfo.getAvatarUrl() : "/uploads/images/avatar.png",
+                    privateInfo.getAvatarUrl(),// != null ? privateInfo.getAvatarUrl() : "/uploads/images/avatar.png",
                     categoryPrices
             );
             return ResponseEntity.ok(dto);
@@ -137,17 +137,16 @@ public class PrivateInformationController {
                 privateInfo.getCategories().clear(); // Очищаем категории, если список пуст
             }
 
-            // Обновляем или создаем новую локацию
             if (privateInfoDTO.getCountry() != null && privateInfoDTO.getCity() != null) {
-                Location location = user.getLocation();
-                if (location != null) {
-                    // Обновляем существующую локацию
-                    location.setCountry(privateInfoDTO.getCountry());
-                    location.setCity(privateInfoDTO.getCity());
+                Location existingLocation = locationService.findByCountryAndCity(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
+
+                if (existingLocation != null) {
+                    // Используем существующую локацию
+                    user.setLocation(existingLocation);
                 } else {
                     // Создаем новую локацию, если её нет
-                    location = new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
-                    Location savedLocation = locationService.addLocation(location);
+                    Location newLocation = new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
+                    Location savedLocation = locationService.addLocation(newLocation);
                     user.setLocation(savedLocation);
                 }
             }
