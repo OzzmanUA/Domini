@@ -43,12 +43,26 @@ import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
 
 import Chat from '../components/chat/chat';
+import { useState, useEffect } from 'react';
+import Page404 from '../components/404-page/404-page';
 
 function PChat() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	useEffect(() => {
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); 
+	if (isAuthenticated === null) {
+	  return <div>Loading...</div>;
+	}
 
   return (
     <main>
-			<AuthProvider>
+			
 					{/* <NavBfar /> */}
 					{/* <Routes>
 					<Route path="/login" element={<Login />} />
@@ -56,12 +70,23 @@ function PChat() {
 					</Routes> */}
 
 					<div className="PChat">
-						<Header_auth />
-						<Chat/>
+					{isAuthenticated ? (
+						<AuthProvider>
+							<Header_auth />
+							<Chat/>
+							<Footer/>
+						</AuthProvider>	
+					) : (
+						<AuthProvider>
+							<Header />
+							<Page404/>
+							<Footer/>
+						</AuthProvider>	
+					)};
 					</div>
 
 
-			</AuthProvider>			
+					
 		</main>
   );
 }

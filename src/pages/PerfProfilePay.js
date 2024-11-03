@@ -41,12 +41,26 @@ import PerformerProfilePay from '../components/profiles/performer-profile-pay/pe
 
 import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
+import { useState, useEffect } from 'react';
+import Page404 from '../components/404-page/404-page';
 
 function PerfProfilePay() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	useEffect(() => {
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); 
+	if (isAuthenticated === null) {
+	  return <div>Loading...</div>;
+	}
 
   return (
     <main>
-			<AuthProvider>
+			
 					{/* <NavBfar /> */}
 					{/* <Routes>
 					<Route path="/login" element={<Login />} />
@@ -54,13 +68,23 @@ function PerfProfilePay() {
 					</Routes> */}
 
 					<div className="PerfProfilePay">
-						<Header_auth />
-						<PerformerProfilePay/>
-						<Footer/>
+					{isAuthenticated ? (
+						<AuthProvider>
+							<Header_auth />
+							<PerformerProfilePay/>
+							<Footer/>
+						</AuthProvider>
+					) : (
+						<AuthProvider>
+							<Header />
+							<Page404/>
+							<Footer/>
+						</AuthProvider>
+					)};
 					</div>
 
 
-			</AuthProvider>			
+						
 		</main>
   );
 }

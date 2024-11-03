@@ -22,13 +22,14 @@ import portfolio2 from './images/portfolio_2.png';
 import portfolio3 from './images/portfolio_3.png';
 import portfolio4 from './images/portfolio_4.png';
 import portfolio5 from './images/portfolio_5.png';
-
+import { api } from '../../utils/ApiFunctions';
 
 // Placeholder images (you can dynamically load these as well if they're part of the worker's data)
 
 
 // Initialize the component
 const PerformerProfile = () => {
+    const [avatarUrl, setAvatarUrl] = useState(null);
     const currentUserId = localStorage.getItem('userId');
     const token = localStorage.getItem('token')
   const { userId } = useParams(); // Get workerId from the route
@@ -43,7 +44,8 @@ const PerformerProfile = () => {
               const workerData = await fetchWorkerDetailedInfo(userId);
               console.log(workerData)
               setWorker(workerData); // Store the worker's data
-              setLoading(false); // Stop loading once data is fetched
+              setLoading(false);
+              setAvatarUrl(`${api.defaults.baseURL}${workerData.avatarUrl}`); // Stop loading once data is fetched
           } catch (error) {
               console.error('Error fetching worker data:', error);
               setLoading(false);
@@ -82,7 +84,7 @@ const PerformerProfile = () => {
       <div className="performer-profile-all">
           <div className="user-parts">
               <div className="user-part-left">
-                  <img className="user-img" src={userImage} alt="User" />
+                  <img className="user-img" src={avatarUrl || userImage} alt="User" />
                   <div className="user-information">
                       <h1>{worker.firstName} {worker.lastName}</h1>
                       <div className="map">

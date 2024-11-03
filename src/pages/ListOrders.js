@@ -42,6 +42,7 @@ import Order from '../components/order/order'
 import UserOrdersList from '../components/user-order-list/user-order-list'
 import AddCategory from '../components/admin/AddCategory';
 import { useEffect, useState } from 'react';
+import Page404 from '../components/404-page/404-page';
 
 function ListOrders() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -69,7 +70,7 @@ function ListOrders() {
 		) : (
 			<AuthProvider>
 				<Header />
-				<UserOrdersList/>
+				<Page404 />
 				<Footer/>
 			</AuthProvider>
 		)};

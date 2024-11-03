@@ -42,6 +42,7 @@ import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
 
 import { useState, useEffect } from 'react';
+import Page404 from '../components/404-page/404-page';
 
 function PerfProfile() {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -69,7 +70,7 @@ function PerfProfile() {
 		) : (
 			<AuthProvider>
 				<Header />
-				<PerformerProfile/>
+				<Page404/>
 				<Footer/>
 			</AuthProvider>		
 		)};

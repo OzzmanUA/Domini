@@ -19,7 +19,9 @@ body {
 .user-img{
   width: 140px;
   height: 140px;
+  border-radius: 50%;
 }
+
 .user-information{
   margin-left: 24px;
 }

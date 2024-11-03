@@ -40,12 +40,26 @@ import PerformerProfile from '../components/profiles/performer-profile/performer
 
 import Order from '../components/order/order'
 import AddCategory from '../components/admin/AddCategory';
+import { useEffect, useState } from 'react';
+import Page404 from '../components/404-page/404-page';
 
 function OrderP() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	useEffect(() => {
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); 
+	if (isAuthenticated === null) {
+	  return <div>Loading...</div>;
+	}
 
   return (
     <main>
-			<AuthProvider>
+			
 					{/* <NavBfar /> */}
 					{/* <Routes>
 					<Route path="/login" element={<Login />} />
@@ -53,13 +67,24 @@ function OrderP() {
 					</Routes> */}
 
 					<div className="OrderP">
-						<Header_auth />
-						<Order/>
-      					<Footer/>
+					{isAuthenticated ? (
+						<AuthProvider>
+							<Header_auth />
+							<Order/>
+      						<Footer/>
+						</AuthProvider>
+					) : (
+						<AuthProvider>
+							<Header />
+							<Page404/>
+						  	<Footer/>
+						</AuthProvider>
+
+					)}
 					</div>
 
 
-			</AuthProvider>			
+						
 		</main>
   );
 }

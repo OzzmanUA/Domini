@@ -117,6 +117,7 @@ function App() {
 					
 
 					<Route path="/oCatalog/:categoryId/tasks" element={<OCatalog />} />
+					{/* <Route path="/perfProfile/:userId" element={<PerfProfile />} /> */}
 					<Route path="/perfProfile/:userId" element={<PerfProfile />} />
 					<Route path="/perfProfilePay" element={<PerfProfilePay />} />
 

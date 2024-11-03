@@ -48,14 +48,29 @@ import Logout from "../components/auth/Logout"
 import AvatarUploadPage from '../components/catalog/AvatarUpload';
 import UserTasks from '../components/catalog/UserTasks';
 import ExtendedPerformerProfile from '../components/profiles/extended-performer-profile/extended-performer-profile';
+import { useEffect, useState } from 'react';
+import Page404 from '../components/404-page/404-page';
+
 function Profile() {
+	const [isAuthenticated, setIsAuthenticated] = useState(null);
+	const token = localStorage.getItem('token');
+	useEffect(() => {
+	  if (token) {
+		setIsAuthenticated(true);
+	  } else {
+		setIsAuthenticated(false);
+	  }
+	}, [token]); 
+	if (isAuthenticated === null) {
+	  return <div>Loading...</div>;
+	}
 // const { username, token } = useAuth(); // Get userId and token from context
 // console.log(useAuth());
 
 
   return (
     <main>
-			<AuthProvider>
+			
 					{/* <NavBfar /> */}
 					{/* <Routes>
 					<Route path="/login" element={<Login />} />
@@ -63,29 +78,24 @@ function Profile() {
 					</Routes> */}
 
 					<div className="profile">
-						<Header_auth />
-						<ExtendedPerformerProfile/>
+					{isAuthenticated ? (
+						<AuthProvider>
+							<Header_auth />
+							<ExtendedPerformerProfile/>					
+      						<Footer/>
+						</AuthProvider>
+					) : (
+						<AuthProvider>
+							<Header />
+							<Page404/>					
+						  	<Footer/>
+						</AuthProvider>
 
-                        {/* <ProfilePage/> */}
-
-
-						{/* <UserProfile /> */}
-						
-
-
-						{/* <AvatarUploadPage /> */}
-						{/* <CreateTask /> */}
-						{/* <UserTasks /> */}
-						{/* <Logout /> */}
-						{/* <Categories /> */}
-						{/* <PerformerProfile/> */}
-						{/* <Order/> */}
-						
-      					<Footer/>
+					)}
 					</div>
 
 
-			</AuthProvider>			
+						
 		</main>
   );
 }
