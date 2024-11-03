@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,12 +18,16 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
-    public Location addLocation(Location location) {
-        if (!locationRepository.existsByCity(location.getCity())) {
-            return locationRepository.save(location);
-        }
-        return null;
-    }
+//    public Location addLocation(Location location) {
+//        if (!locationRepository.existsByCity(location.getCity())) {
+//            return locationRepository.save(location);
+//        }
+//        return null;
+//    }
+public Location addLocation(Location location) {
+    Optional<Location> existingLocation = locationRepository.findByCountryAndCity(location.getCountry(), location.getCity());
+    return existingLocation.orElseGet(() -> locationRepository.save(location));
+}
 
     public Location updateLocation(Location location, Long id) {
         return locationRepository.findById(id).map(location1 -> {

@@ -137,19 +137,8 @@ public class PrivateInformationController {
                 privateInfo.getCategories().clear(); // Очищаем категории, если список пуст
             }
 
-            if (privateInfoDTO.getCountry() != null && privateInfoDTO.getCity() != null) {
-                Location existingLocation = locationService.findByCountryAndCity(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
-
-                if (existingLocation != null) {
-                    // Используем существующую локацию
-                    user.setLocation(existingLocation);
-                } else {
-                    // Создаем новую локацию, если её нет
-                    Location newLocation = new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity());
-                    Location savedLocation = locationService.addLocation(newLocation);
-                    user.setLocation(savedLocation);
-                }
-            }
+            Location savedLocation = locationService.addLocation(new Location(privateInfoDTO.getCountry(), privateInfoDTO.getCity()));
+            user.setLocation(savedLocation);
 
             // Обновляем или добавляем записи WorkerCategoryPrice
             if (privateInfoDTO.getCategoryPrices() != null) {
