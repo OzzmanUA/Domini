@@ -281,6 +281,19 @@ export const addPhoto = async (file, token) => {
 	  throw error;
 	}
   };
+export const getPortfolio = async (token) => {
+	try {
+	  const response = await api.get('/private-information/portfolio', {
+		headers: {
+		  Authorization: `Bearer ${token}`
+		}
+	  });
+	  return response.data;
+	} catch (error) {
+	  console.error('Error fetching portfolio:', error);
+	  throw error;
+	}
+};
   
   // Function to remove a photo from the user's portfolio
 export const removePhoto = async (photoId, token) => {
