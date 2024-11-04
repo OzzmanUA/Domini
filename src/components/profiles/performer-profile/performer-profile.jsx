@@ -26,10 +26,49 @@ import { api } from '../../utils/ApiFunctions';
 
 // Placeholder images (you can dynamically load these as well if they're part of the worker's data)
 
+const reviews = [
+  {
+    title: "Потрібна нова оббивка для дивану",
+    rating: "⭐⭐⭐⭐ 4.70",
+    date: "29 травня 2024 – 21 червня 2024",
+    content: "Замовляли нову оббивку для нашого старого дивану, і результат перевершив усі наші очікування! Майстер допоміг обрати ідеальну тканину, яка не тільки пасує до інтер'єру, а й дуже приємна на дотик. Робота була виконана швидко та професійно. Диван виглядає як новий, і тепер він став головною прикрасою нашої вітальні. Дуже задоволені якістю роботи та обслуговуванням. Рекомендуємо!"
+  },
+  {
+    title: "Ремонт пошкодженої оббивки",
+    rating: "⭐⭐⭐⭐⭐ 5.00",
+    date: "1 червня 2024 – 16 червня 2024",
+    content: "Зверталися для ремонту пошкодженої оббивки на кріслах. Робота виконана швидко та якісно. Майстер професійно підібрав матеріали, і крісла тепер виглядають як нові. Дуже задоволені результатом, будемо рекомендувати!"
+  },
+  {
+    title: "Заміна оббивки на кухонних стільцях",
+    rating: "⭐⭐⭐⭐⭐ 5.00",
+    date: "18 червня 2024 – 25 червня 2024",
+    content: "Замовляли заміну оббивки на кухонних стільцях і залишились дуже задоволені результатом. Майстер не тільки професійно підібрав якісну та зносостійку тканину, але й врахував усі наші побажання щодо дизайну. Ремонт був виконаний швидко, і стільці виглядають як нові. Тепер вони гармонійно вписуються в інтер'єр кухні і додають їй стильного вигляду. Величезне дякую за уважний підхід і чудову роботу. Рекомендуємо всім, хто шукає якісний ремонт меблів!"
+  },
+  {
+    title: "Потрібна нова оббивка для дивану",
+    rating: "⭐⭐⭐⭐ 4.70",
+    date: "29 травня 2024 – 21 червня 2024",
+    content: "Замовляли нову оббивку для нашого старого дивану, і результат перевершив усі наші очікування! Майстер допоміг обрати ідеальну тканину, яка не тільки пасує до інтер'єру, а й дуже приємна на дотик. Робота була виконана швидко та професійно. Диван виглядає як новий, і тепер він став головною прикрасою нашої вітальні. Дуже задоволені якістю роботи та обслуговуванням. Рекомендуємо!"
+  },
+  {
+    title: "Ремонт пошкодженої оббивки",
+    rating: "⭐⭐⭐⭐⭐ 5.00",
+    date: "1 червня 2024 – 16 червня 2024",
+    content: "Зверталися для ремонту пошкодженої оббивки на кріслах. Робота виконана швидко та якісно. Майстер професійно підібрав матеріали, і крісла тепер виглядають як нові. Дуже задоволені результатом, будемо рекомендувати!"
+  },
+  {
+    title: "Заміна оббивки на кухонних стільцях",
+    rating: "⭐⭐⭐⭐⭐ 5.00",
+    date: "18 червня 2024 – 25 червня 2024",
+    content: "Замовляли заміну оббивки на кухонних стільцях і залишились дуже задоволені результатом. Майстер не тільки професійно підібрав якісну та зносостійку тканину, але й врахував усі наші побажання щодо дизайну. Ремонт був виконаний швидко, і стільці виглядають як нові. Тепер вони гармонійно вписуються в інтер'єр кухні і додають їй стильного вигляду. Величезне дякую за уважний підхід і чудову роботу. Рекомендуємо всім, хто шукає якісний ремонт меблів!"
+  }
+];
 
 // Initialize the component
 const PerformerProfile = () => {
     const [avatarUrl, setAvatarUrl] = useState(null);
+    
     const currentUserId = localStorage.getItem('userId');
     const token = localStorage.getItem('token')
   const { userId } = useParams(); // Get workerId from the route
@@ -46,6 +85,7 @@ const PerformerProfile = () => {
               setWorker(workerData); // Store the worker's data
               setLoading(false);
               setAvatarUrl(`${api.defaults.baseURL}${workerData.avatarUrl}`); // Stop loading once data is fetched
+              
           } catch (error) {
               console.error('Error fetching worker data:', error);
               setLoading(false);
@@ -126,23 +166,97 @@ const PerformerProfile = () => {
                           <p>Кількість годин</p>
                       </div>
                   </div>
+                  <div className="user-work-info-bottom">
+          <div className="info_bottom_item">
+            <img src={satisfactionIcon} alt="Satisfied Clients" />
+            <div className="bottom-item-describe">
+              <h2>100%</h2>
+              <p>Задоволених клієнтів</p>
+            </div>
+          </div>
+          <div className="info_bottom_item">
+            <img src={feedbackIcon} alt="Positive Feedback" />
+            <div className="bottom-item-describe">
+              <h2>215</h2>
+              <p>Позитивних відгуків</p>
+            </div>
+          </div>
+          <div className="info_bottom_item">
+            <img src={qualityIcon} alt="Work Quality" />
+            <div className="bottom-item-describe">
+              <h2>100%</h2>
+              <p>Якість роботи</p>
+            </div>
+          </div>
+          <div className="info_bottom_item">
+            <img src={politenessIcon} alt="Politeness" />
+            <div className="bottom-item-describe">
+              <h2>100%</h2>
+              <p>Ввічливість</p>
+            </div>
+          </div>
+          <div className="info_bottom_item">
+            <img src={punctualityIcon} alt="Punctuality" />
+            <div className="bottom-item-describe">
+              <h2>100%</h2>
+              <p>Пунктуальність</p>
+            </div>
+          </div>
+          <div className="info_bottom_item">
+            <img src={efficiencyIcon} alt="Efficiency" />
+            <div className="bottom-item-describe">
+              <h2>100%</h2>
+              <p>Ефективність</p>
+            </div>
+          </div>
+          </div>
               </div>
 
               <div className="info-part-right">
                   <div className="user-categories">
                       <div className="categ_left">
-                          <h2>{worker.portfolio.join(' | ')}</h2>
+                          <h2>{worker.about}</h2>
                       </div>
 
                   </div>
                   <p>{worker.description}</p>
               </div>
           </div>
+          <div className="portfolio">
+      <h2>Портфоліо</h2>
+      <div className="portfolio-images">
+        <img src={portfolio1} alt="Меблі 1" />
+        <img src={portfolio2} alt="Меблі 2" />
+        <img src={portfolio3} alt="Меблі 3" />
+        <img src={portfolio4} alt="Меблі 4" />
+        <img src={portfolio5} alt="Меблі 5" />
+      </div>
+    </div>
+
+    <div className="review-container">
+      <h2>Відгуки</h2>
+      <div className="review-list" id="review-list">
+        {reviews.map((review, index) => (
+          <div className="review" key={index}>
+            <h3>{review.title}</h3>
+            <p>{review.rating} | {review.date}</p>
+            <p>{review.content}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <Accordion/>
+          
+          
+          
 
           {/* Render portfolio and reviews here if available */}
       </div>
+      
   );
 };
+
+
 
 export default PerformerProfile;
 // const reviews = [

@@ -6,7 +6,7 @@ import './profilesCatalog.css'; // CSS для каталога
 import profile_image01 from './images/demo_user_1.png';
 import middleBg from './images/middle_bg.png';
 import { getWorkersByCategory } from '../utils/ApiFunctions';
-
+import { Link } from 'react-router-dom';
 const ProfilesCatalog = () => {
     const { categoryId } = useParams(); // Access the categoryId from the URL
     const [workers, setWorkers] = useState([]);
@@ -69,7 +69,7 @@ const ProfilesCatalog = () => {
                 </div>
             </div>
             <div className="img-middle-catalog" style={{ backgroundImage: `url(${middleBg})` }}>
-                <button>Створити замовлення</button>
+                <Link to="/order"><button >Створити замовлення</button></Link>
             </div>
         </div>
     );
