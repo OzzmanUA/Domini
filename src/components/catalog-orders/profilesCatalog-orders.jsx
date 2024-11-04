@@ -7,6 +7,11 @@ import profile_image01 from './images/demo_user_4.png';
 import middleBg from './images/middle_bg.png';
 import { getTasksByCategory, acceptTask } from '../utils/ApiFunctions';  // Import the function to fetch tasks
 
+import demo_user_ava from './images/demo_user_2.png'
+import money_logo from './images/money_logo.png'
+import data_logo from './images/reviews_logo.png'
+import zamownyk from './images/zamow.png'
+
 const TasksCatalog = () => {
   const { categoryId } = useParams();  // Get categoryId from the URL
   const [tasks, setTasks] = useState([]);
@@ -76,7 +81,11 @@ const TasksCatalog = () => {
 
   return (
     <div className="catalog-container">
+      <div className="transition-block">
       <h2 className="catalog-h2-top">Каталог завдань</h2>
+      <button className="transition-btn">Каталог майстрів</button>
+      </div>
+
       <div className="catalog-content">
         <Filters onApplyFilters={handleApplyFilters} /> {/* Pass handleApplyFilters to Filters */}
         <div className="catalog-right">
@@ -85,15 +94,34 @@ const TasksCatalog = () => {
               tasks.map((task, index) => (
                 <div className="task-card" key={index}>
                   <h3>{task.title}</h3>
-                  <p>Опис: {task.description}</p>
-                  <p>Вартість: {task.price} грн</p>
-                  <p>Замовник: {task.firstName} {task.lastName}</p>
+                  <div className="order-avat-btn">
+                    <div className="avatar-descript">
+                        <img src={demo_user_ava}/>
+                        <p className="or-p-descript">{task.description}</p>
+                    </div>
                   <button
                     onClick={() => handleAcceptTask(task.taskId)} // task.id is passed here
                     disabled={acceptingTaskId === task.taskId}  // Button disabled while accepting
                   >
                   {acceptingTaskId === task.taskId ? 'Приймається...' : 'Прийняти завдання'}
                   </button>
+                  </div>
+                  <div className="or-prise-items-itd">
+                    <div className="or-prise-item">
+                        <img src={money_logo}/>
+                        <p>{task.price} грн</p>
+                    </div>
+                    <div className="or-prise-item">
+                        <img src={data_logo}/>
+                        <p>Кінцева дата виконання</p>
+                    </div>
+                    <div className="or-prise-item">
+                        <img className="zamov-img" src={zamownyk}/>
+                        <p>{task.firstName} {task.lastName}</p>
+                    </div>
+                  </div>
+
+
                 </div>
               ))
             ) : (

@@ -181,17 +181,17 @@ const UserOrdersList = () => {
                  <td>
                    {order.status === 'IN_PROCESS' && (
                      <>
-                       <button onClick={() => handleComplete(order.id)}>Завершити</button>
-                       <button onClick={() => handleCancel(order.id)}>Скасувати</button>
-                       <button onClick={() => handleReport(order.id)}>Поскаржитися</button>
+                       <button className="processing-buttons" onClick={() => handleComplete(order.id)}>Завершити</button>
+                       <button className="processing-buttons" onClick={() => handleCancel(order.id)}>Скасувати</button>
+                       <button className="processing-buttons" onClick={() => handleReport(order.id)}>Поскаржитися</button>
                      </>
                    )}
                    
                    {order.status === 'ACTIVE' && (
                      <>
-                       <button onClick={() => handleComplete(order.id)}>Завершити</button>
-                       <button onClick={() => handleCancel(order.id)}>Скасувати</button>
-                       <button onClick={() => handleReport(order.id)}>Поскаржитися</button>
+                       <button className="processing-buttons" onClick={() => handleComplete(order.id)}>Завершити</button>
+                       <button className="processing-buttons" onClick={() => handleCancel(order.id)}>Скасувати</button>
+                       <button className="processing-buttons" onClick={() => handleReport(order.id)}>Поскаржитися</button>
                      </>
                    )}
                  

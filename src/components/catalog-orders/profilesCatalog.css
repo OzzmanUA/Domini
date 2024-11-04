@@ -124,3 +124,78 @@
     padding-left: 0;
     list-style: none;
 }
+
+.task-card{
+    margin-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-bottom: 2px solid #CFCFCF;
+}
+
+.order-avat-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.order-avat-btn img{
+    width: 90px;
+    height: 90px;
+}
+.order-avat-btn button{
+    width: 230px;
+    height: 50px;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    background-color: #1CC41C;
+    border-radius: 10px;
+}
+
+.or-prise-items-itd{
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+.or-prise-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.or-prise-item img{
+    width: 40px;
+    height: 40px;
+}
+.or-prise-item p{
+    color: #727272;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.or-p-descript{
+    margin-top: 10px;
+    font-size: 18px;
+    color: #0E142B;
+}
+.zamov-img{
+    width: 48px !important;
+    height: 35px !important;
+}
+.avatar-descript{
+    display: flex;
+    gap: 25px;
+}
+.transition-btn{
+    width: 210px;
+    height: 40px;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    background-color: #1CC41C;
+    border-radius: 10px;
+    padding: 0;
+}
+.transition-block{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}

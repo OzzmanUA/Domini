@@ -53,7 +53,10 @@ const ProfilesCatalog = () => {
   
     return (
         <div className="catalog-container">
-            <h2 className="catalog-h2-top">Каталог майстрів</h2>
+            <div className="transition-block">
+                <h2 className="catalog-h2-top">Каталог майстрів</h2>
+                <button className="transition-btn">Каталог завдань</button>
+            </div>
             <div className="catalog-content">
                 <Filters onApplyFilters={handleApplyFilters} /> {/* Pass handleApplyFilters */}
                 <div className="catalog-right">
