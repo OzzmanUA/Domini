@@ -4,7 +4,7 @@ import avatarImage from '../customer-profile/images/demo_user.png';
 import countryImage from '../customer-profile/images/country.png'
 import locationIcon from '../customer-profile/images/location_logo.png';
 import joinDateIcon from '../customer-profile/images/user_logo.png';
-import { getPrivateInformation, updatePrivateInformation, getAllCategories, addPhoto, removePhoto, uploadAvatar, getPortfolio } from '../../utils/ApiFunctions';
+import { getPrivateInformation, updatePrivateInformation, getAllCategories, addPhoto, removePhoto, uploadAvatar, getPortfolio, becomeWorker } from '../../utils/ApiFunctions';
 import './extended-performer-profile-style.css';
 import { AuthContext } from "../../auth/AuthProvider"
 import { Link, useNavigate } from "react-router-dom"
@@ -217,7 +217,14 @@ const ExtendedPerformerProfile = () => {
   };
   
   
-  
+  const handleBecomeWorker = async () => {
+    try {
+      const message = await becomeWorker(token);
+      alert(message); // Display success message
+    } catch (error) {
+      alert(`Error: ${error.message}`); // Display error message
+    }
+  };
 
 
 
@@ -267,59 +274,6 @@ const ExtendedPerformerProfile = () => {
     });
   };
 
-
-  // Render a section with photo upload
-  // const renderPhotoSection = () => (
-  //   <div className="section-ext-perf">
-  //     <div
-  //       className="section-header-ext-perf"
-  //       onClick={() => handleToggle('photos')}
-  //       style={{ cursor: 'pointer' }}
-  //     >
-  //       <h2>Портфоліо</h2>
-  //       <span>{isOpenSections.photos ? 'Згорнути' : 'Змінити'}</span>
-  //     </div>
-  //     {isOpenSections.photos && (
-  //       <>
-  //         <input
-  //           type="file"
-  //           accept="image/*"
-  //           multiple
-  //           onChange={(e) => {
-  //             images.forEach((src) => URL.revokeObjectURL(src));
-  //             const files = Array.from(e.target.files).slice(0, 5);
-  //             const urls = files.map((file) => URL.createObjectURL(file));
-  //             setImages(urls); // Сохраняем выбранные изображения
-  //           }}
-  //         />
-  //         <div className="image-preview-container">
-  //           {images.map((src, index) => (
-  //             <img
-  //               key={index}
-  //               src={src}
-  //               alt={`Фото ${index + 1}`}
-  //               className="image-preview"
-  //             />
-  //           ))}
-  //         </div>
-  //         <button className="upload-foto" onClick={handlePortfolioUpload}>Зберегти фото</button> {/* Кнопка сохранить */}
-  //         <div className="saved-images-container">
-  //           <h3>Збережені фото:</h3>
-  //           <div className="image-preview-container">
-  //             {savedImages.map((src, index) => (
-  //               <img
-  //                 key={index}
-  //                 src={src}
-  //                 alt={`Сохраненное фото ${index + 1}`}
-  //                 className="image-preview"
-  //               />
-  //             ))}
-  //           </div>
-  //         </div>
-  //       </>
-  //     )}
-  //   </div>
-  // );
 
   const renderPhotoSection = () => (
     <div className="section-ext-perf">
@@ -795,6 +749,7 @@ const ExtendedPerformerProfile = () => {
             {renderSection('skills', 'Навички', formValues.skills)}
             {renderSection('education', 'Освіта', formValues.education)}
             {renderCategorySection('categorySection', 'Категорії та ціни')}
+            <button className="logout-user-btn"  onClick={handleBecomeWorker}>Стати робітником</button>
             <button className="logout-user-btn"  onClick={handleLogout}>Вийти</button>
           </div>
         </div>

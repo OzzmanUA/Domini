@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './user-order-list-style.css';
-import { getUserTasks, completeTask, cancelTask, reportTask, leaveReview  } from '../utils/ApiFunctions';
+import { getUserTasks, completeTask, cancelTask, reportTask, leaveReview, acceptTask  } from '../utils/ApiFunctions';
 // const ordersData = [
 //   {
 //     id: '57529184',
@@ -68,7 +68,15 @@ const UserOrdersList = () => {
     fetchTasks();
   }, [userId, token]);
 
-
+  const handleAccept = async (taskId) => { 
+    try {
+      const response = await acceptTask(taskId, userId, token); // Call acceptTask API
+      alert('Task accepted successfully!'); // Show success message
+    } catch (error) {
+      console.error('Error accepting task:', error);
+      alert(`Failed to accept task: ${error.message}`); // Show error message
+    }
+  };
 
   const handleComplete = async (taskId) => {
     try {
@@ -125,7 +133,7 @@ const UserOrdersList = () => {
     <div className='user-orders-container-bg'>
       <div className="user-orders-container">
         <div className="top-user-orders-list">
-          <h2>Мої замовлення</h2>
+          <h2>Вихідні замовлення</h2>
         </div>
 
         <table>
@@ -156,6 +164,7 @@ const UserOrdersList = () => {
                      order.status === 'COMPLETED' ? 'completed' :
                      order.status === 'CANCELED' ? 'canceled' :
                      order.status === 'PROBLEM' ? 'problem' :
+                     order.status === 'NEGOTIATE' ? 'problem' :
                      'active'
                    }>
                      {
@@ -163,6 +172,7 @@ const UserOrdersList = () => {
                        order.status === 'COMPLETED' ? 'Завершено' :
                        order.status === 'CANCELED' ? 'Скасовано' :
                        order.status === 'PROBLEM' ? 'Проблема' :
+                       order.status === 'NEGOTIATE' ? 'Не принято' :
                        'Активне'
                      }
                    </span>
@@ -173,6 +183,7 @@ const UserOrdersList = () => {
                      <>
                        <button onClick={() => handleComplete(order.id)}>Завершити</button>
                        <button onClick={() => handleCancel(order.id)}>Скасувати</button>
+                       <button onClick={() => handleReport(order.id)}>Поскаржитися</button>
                      </>
                    )}
                    
@@ -180,13 +191,12 @@ const UserOrdersList = () => {
                      <>
                        <button onClick={() => handleComplete(order.id)}>Завершити</button>
                        <button onClick={() => handleCancel(order.id)}>Скасувати</button>
+                       <button onClick={() => handleReport(order.id)}>Поскаржитися</button>
                      </>
                    )}
                  
                    {order.status === 'PROBLEM' && (
-                     <>
-                       <button onClick={() => handleReport(order.id)}>Поскаржитися</button>
-                     </>
+                     <span>Флаговано</span>
                    )}
                  
                    {order.status === 'COMPLETED' && (
@@ -196,18 +206,19 @@ const UserOrdersList = () => {
                    {order.status === 'CANCELED' && (
                      <span>Скасовано</span>
                    )}
+
                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7">Немає створених замовлень.</td>
+                <td colSpan="7">Немає вихідних замовлень.</td>
               </tr>
             )}
           </tbody>
         </table>
         <div className="top-user-orders-list">
-          <h2>Прийняті завдання</h2>
+          <h2>Вхідні замовлення</h2>
         </div>
         <table>
           <thead>
@@ -241,12 +252,33 @@ const UserOrdersList = () => {
                         <button onClick={() => handleReview(task.id)}>Відправити відгук</button>
                       </div>
                     )}
+                    {task.status === 'NEGOTIATE' && (
+                    <>
+                     <button onClick={() => handleCancel(task.id)}>Скасувати</button>
+                     <button onClick={() => handleAccept(task.id)}>Прийняти</button>
+                    </>
+                    )}
+                    {task.status === 'IN_PROCESS' && (
+                     <>
+                       <button onClick={() => handleComplete(task.id)}>Завершити</button>
+                       <button onClick={() => handleCancel(task.id)}>Скасувати</button>
+
+                     </>
+                    )}
+                   
+                    {task.status === 'ACTIVE' && (
+                     <>
+                       <button onClick={() => handleComplete(task.id)}>Завершити</button>
+                       <button onClick={() => handleCancel(task.id)}>Скасувати</button>
+
+                     </>
+                    )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6">Немає прийнятих завдань.</td>
+                <td colSpan="6">Немає вхідних завдань.</td>
               </tr>
             )}
           </tbody>

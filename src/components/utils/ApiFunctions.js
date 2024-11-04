@@ -689,3 +689,25 @@ export const getTasksByCategory = async (categoryId, filters = {}) => {
         return [];
     }
 };
+
+export const becomeWorker = async (token) => {
+  try {
+    const response = await api.post(
+      '/private-information/become-worker',
+      {},
+      {
+        headers: {
+
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    );
+
+    return response.data; // "Теперь вы работник!"
+  } catch (error) {
+    // If the server responds with an error, axios stores it in error.response
+    const errorMessage = error.response ? error.response.data : 'Network error';
+    console.error("Error in becoming a worker:", errorMessage);
+    throw new Error(errorMessage);
+  }
+};

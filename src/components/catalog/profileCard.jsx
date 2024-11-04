@@ -7,6 +7,7 @@ import favouriteIcon from './images/favourite.png';
 import moneyLogo from './images/money_logo.png';
 import reviewsLogo from './images/reviews_logo.png';
 import successLogo from './images/success_logo.png';
+
 //hi
 
 // const ProfileCard = ({ profile }) => {
@@ -110,7 +111,17 @@ import successLogo from './images/success_logo.png';
   
 // export default ProfileCard;
 
-const ProfileCard = ({ profile }) => {
+const ProfileCard = ({ profile, categoryId }) => {
+
+  const parsedCategoryId = parseInt(categoryId, 10);
+  console.log("Category ID from URL:", parsedCategoryId);
+  console.log(profile)
+  console.log("Category prices array:", profile.categoriesWithPrices);
+  const categoryWithPrice = profile.categoriesWithPrices?.find(
+    (category) => category.categoryId === parseInt(categoryId, 10)
+  );
+  console.log(categoryWithPrice)
+  
   return (
     <div className="profile-card">
       <div className="profile-header">
@@ -120,7 +131,10 @@ const ProfileCard = ({ profile }) => {
           </div>
           <div className="profile-info">
             <h2>{profile.firstName} {profile.lastName}</h2> {/* Updated for full name */}
-            <p className="user_categ">{profile.categories || 'Category not specified'}</p> {/* Assuming profile.category is an object */}
+            {/* <p className="user_categ">{profile.categories || 'Category not specified'}</p>  */}
+            <p className="user_categ">
+              {profile.categories ? profile.categories.join(', ') : 'Category not specified'}
+            </p>
             <p className="location">{profile.city}, {profile.country}</p> {/* Assuming location is an object */}
           </div>
         </div>
@@ -135,7 +149,10 @@ const ProfileCard = ({ profile }) => {
       <div className="profile-stats">
         <div className="stat-item">
           <img src={moneyLogo} alt="Price" />
-          <span>{profile.price ? `$${profile.price}` : 'Price not available'}</span>
+          {/* <span>{profile.price ? `$${profile.price}` : '3500 UAH'}</span> */}
+          <span>
+            {categoryWithPrice ? `UAH ${categoryWithPrice.servicePrice}` : 'Price not set'}
+          </span>
         </div>
         <div className="stat-item">
           <img src={reviewsLogo} alt="Feedback" />
@@ -147,17 +164,7 @@ const ProfileCard = ({ profile }) => {
         </div>
       </div>
 
-      <div className="profile-services">
-        {profile.services?.length > 0 ? (
-          profile.services.map((service, index) => (
-            <div key={index} className="profile-services-item">
-              {service}
-            </div>
-          ))
-        ) : (
-          <div>No services offered</div>
-        )}
-      </div>
+
 
       <div className="profile-description">
         <p>{profile.about || 'No description provided'}</p>

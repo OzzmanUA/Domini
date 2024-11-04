@@ -58,8 +58,6 @@ const TasksCatalog = () => {
   const handleAcceptTask = async (taskId) => {
     setAcceptingTaskId(taskId); // Track the task being accepted (to disable button or show loading state)
     try {
-      console.log(taskId)
-      console.log(workerId)
       const response = await acceptTask(taskId, workerId, token); // Call acceptTask API
       alert('Task accepted successfully!'); // Show success message
       // Optionally, refetch tasks or update the UI after task acceptance

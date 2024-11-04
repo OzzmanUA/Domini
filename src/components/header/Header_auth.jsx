@@ -18,6 +18,9 @@ const Header_auth = () => {
   const handleChatClick = () => {
     navigate(`/chat`);  // Navigate to create-task-for-worker page with workerId
   };
+  const handleOffersClick = () => {
+    navigate(`/favouriteOffersPage`);  // Navigate to create-task-for-worker page with workerId
+  };
   const handleTasksClick = () => {
     navigate(`/listOrders`);  // Navigate to create-task-for-worker page with workerId
   };
@@ -39,7 +42,7 @@ const Header_auth = () => {
         </a>
         <div className="header_menu">
         <a href="#">
-          <img src={favourite} alt="favourite" />
+          <img src={favourite} onClick={handleOffersClick} alt="favourite" />
         </a>
         <a href="#">
           <img src={messages} onClick={handleChatClick} alt="messages" />

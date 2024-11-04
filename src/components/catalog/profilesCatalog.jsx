@@ -60,7 +60,7 @@ const ProfilesCatalog = () => {
                     <div id="catalog-top-right-id_01">
                         {workers.length > 0 ? (
                             workers.map((worker, index) => (
-                                <ProfileCard key={index} profile={worker} />
+                                <ProfileCard key={index} profile={worker} categoryId={categoryId} />
                             ))
                         ) : (
                             <div>No workers found for this category</div>

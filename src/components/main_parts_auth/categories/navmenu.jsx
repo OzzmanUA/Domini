@@ -1,3 +1,5 @@
+import "../../header/Header_style.css"
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllParentCategories } from "../../utils/ApiFunctions"; // Assuming you already have this function

@@ -114,15 +114,15 @@ const PerformerProfile = () => {
               <div className="info-part-left">
                   <div className="user-work-info-top">
                       <div className="info_top_item">
-                          <h2>{worker.totalEarnings}₴</h2>
+                          <h2>{worker.totalEarnings}45000 UAH</h2>
                           <p>Загальний дохід</p>
                       </div>
                       <div className="info_top_item">
-                          <h2>{worker.projectCount}</h2>
+                          <h2>{worker.projectCount}35</h2>
                           <p>Кількість проектів</p>
                       </div>
                       <div className="info_top_item">
-                          <h2>{worker.hoursWorked}</h2>
+                          <h2>{worker.hoursWorked}70</h2>
                           <p>Кількість годин</p>
                       </div>
                   </div>
@@ -133,9 +133,7 @@ const PerformerProfile = () => {
                       <div className="categ_left">
                           <h2>{worker.portfolio.join(' | ')}</h2>
                       </div>
-                      <div className="categ_right">
-                          <h2>{worker.rate}грн/год</h2>
-                      </div>
+
                   </div>
                   <p>{worker.description}</p>
               </div>
