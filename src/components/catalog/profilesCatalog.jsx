@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ProfileCard from './profileCard';
 import Filters from './filters';
 import './profilesCatalog.css'; // CSS для каталога
@@ -8,6 +8,7 @@ import middleBg from './images/middle_bg.png';
 import { getWorkersByCategory } from '../utils/ApiFunctions';
 import { Link } from 'react-router-dom';
 const ProfilesCatalog = () => {
+    const navigate = useNavigate();
     const { categoryId } = useParams(); // Access the categoryId from the URL
     const [workers, setWorkers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,6 +19,9 @@ const ProfilesCatalog = () => {
     const isEmptyFilters = (filters) => {
         return Object.keys(filters).length === 0 || 
                Object.values(filters).every(value => value === null || value === '' || value === undefined);
+    };
+    const handleCatClick = () => {
+        navigate(`/ocatalog/${categoryId}/tasks`);  // Navigate to create-task-for-worker page with workerId
     };
   
     // Fetch workers with or without filters
@@ -55,7 +59,7 @@ const ProfilesCatalog = () => {
         <div className="catalog-container">
             <div className="transition-block">
                 <h2 className="catalog-h2-top">Каталог майстрів</h2>
-                <button className="transition-btn">Каталог завдань</button>
+                <button onClick={handleCatClick} className="transition-btn">Каталог завдань</button>
             </div>
             <div className="catalog-content">
                 <Filters onApplyFilters={handleApplyFilters} /> {/* Pass handleApplyFilters */}

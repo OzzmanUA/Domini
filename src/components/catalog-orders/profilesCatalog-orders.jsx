@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ProfileCard from './profileCard';
 import Filters from './filters';
 import './profilesCatalog.css'; // CSS для каталога
 import profile_image01 from './images/demo_user_4.png';
 import middleBg from './images/middle_bg.png';
-import { getTasksByCategory, acceptTask } from '../utils/ApiFunctions';  // Import the function to fetch tasks
+import { getTasksByCategory, acceptTask, api } from '../utils/ApiFunctions';  // Import the function to fetch tasks
 
 import demo_user_ava from './images/demo_user_2.png'
 import money_logo from './images/money_logo.png'
@@ -13,6 +13,7 @@ import data_logo from './images/reviews_logo.png'
 import zamownyk from './images/zamow.png'
 
 const TasksCatalog = () => {
+  const navigate = useNavigate();
   const { categoryId } = useParams();  // Get categoryId from the URL
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,9 @@ const TasksCatalog = () => {
            Object.values(filters).every(value => value === null || value === '' || value === undefined);
   };
 
+  const handleCatClick = () => {
+    navigate(`/pcatalog/${categoryId}`);  // Navigate to create-task-for-worker page with workerId
+  };
   // Fetch tasks with or without filters
   const fetchTasks = async (appliedFilters = {}) => {
     setLoading(true);
@@ -83,7 +87,7 @@ const TasksCatalog = () => {
     <div className="catalog-container">
       <div className="transition-block">
       <h2 className="catalog-h2-top">Каталог завдань</h2>
-      <button className="transition-btn">Каталог майстрів</button>
+      <button onClick={handleCatClick} className="transition-btn">Каталог майстрів</button>
       </div>
 
       <div className="catalog-content">
@@ -96,7 +100,7 @@ const TasksCatalog = () => {
                   <h3>{task.title}</h3>
                   <div className="order-avat-btn">
                     <div className="avatar-descript">
-                        <img src={demo_user_ava}/>
+                        <img className="profile-picture" src={(`${api.defaults.baseURL}${task.userAvatar}`) || '/path/to/default-image.png'}/>
                         <p className="or-p-descript">{task.description}</p>
                     </div>
                   <button
@@ -113,7 +117,7 @@ const TasksCatalog = () => {
                     </div>
                     <div className="or-prise-item">
                         <img src={data_logo}/>
-                        <p>Кінцева дата виконання</p>
+                        <p>Кінцева дата виконання - {task.dueDate}</p>
                     </div>
                     <div className="or-prise-item">
                         <img className="zamov-img" src={zamownyk}/>
