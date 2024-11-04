@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import './pop_services_style.css';
 
 import prybKwarImg from './images/pryb_kwar.png';
@@ -21,9 +21,9 @@ const PopServices = () => {
       <div className='pop_services_all'>
         <h2 className="pop_services">Популярні сервіси</h2>
         <div className="container_pop" style={{ position: 'relative' }}>
-          <div className="scroll-container">
+          <div className="scroll-container">            
             <div className="item green">
-              <h3>Прибирання квартир</h3>
+            <h3>Прибирання квартир</h3>
               <img src={prybKwarImg} alt="Cleaning" />
             </div>
             <div className="item blue">
