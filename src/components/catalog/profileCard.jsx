@@ -156,18 +156,18 @@ const ProfileCard = ({ profile, categoryId }) => {
         </div>
         <div className="stat-item">
           <img src={reviewsLogo} alt="Feedback" />
-          <span>{profile.feedback || 'No feedback yet'}</span>
+          <span>{profile.feedback || 'Нема фідбеку'}</span>
         </div>
         <div className="stat-item">
           <img src={successLogo} alt="Projects" />
-          <span>{profile.projects || 'No projects yet'}</span>
+          <span>{profile.projects || 'Нема проєктів'}</span>
         </div>
       </div>
 
 
 
       <div className="profile-description">
-        <p>{profile.about || 'No description provided'}</p>
+        <p>{profile.about || 'Нема опису'}</p>
       </div>
     </div>
   );

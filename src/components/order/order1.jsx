@@ -69,7 +69,7 @@ const OrderFormNonSpecific = () => {
       console.log('Task Payload:', taskPayload);
       const response = await createTask(taskPayload, token); // Call createTask and pass token
       console.log(response);
-      setMessage("Task created successfully!");
+      setMessage("Завдання створено!");
 
       // Reset form fields
       setTaskData({

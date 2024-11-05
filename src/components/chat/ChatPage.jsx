@@ -206,7 +206,7 @@ const ChatPage = () => {
 
                         <p className="user-info-about">{selectedChat.about}</p>
                         <div className="button-make-order-block">
-                            <button onClick={handleProposeWorkClick} className="make-order">Make an Order</button>
+                            <button onClick={handleProposeWorkClick} className="make-order">Зробити замовлення</button>
                         </div>
                         <div className="support-block">
                             <div className="support-block-item">

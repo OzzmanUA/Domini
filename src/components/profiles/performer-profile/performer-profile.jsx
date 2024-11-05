@@ -108,7 +108,7 @@ const PerformerProfile = () => {
       navigate(`/OrderP/${userId}`);  // Navigate to create-task-for-worker page with workerId
   };
   const handleSendMessage = async () => {
-    const content = 'Hi, I would like to connect!'; // Customize message
+    const content = 'Добрий день!'; // Customize message
     try {
       // Send the message
       await sendMessage(userId, content, token);
