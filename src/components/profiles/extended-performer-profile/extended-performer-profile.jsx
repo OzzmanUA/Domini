@@ -181,7 +181,7 @@ const ExtendedPerformerProfile = () => {
       setSelectedCategoryForPrice('');
       setServicePrice('');
     } else {
-      alert('Пожалуйста, выберите категорию и введите цену.');
+      // alert('Пожалуйста, выберите категорию и введите цену.');
     }
   };
   
@@ -238,10 +238,10 @@ const ExtendedPerformerProfile = () => {
     if (avatar) {
       try {
         const response = await uploadAvatar(avatar, token); // Upload the selected photo
-        alert(response); // Show success message
+ // Show success message
       } catch (error) {
         console.error('Error uploading photo:', error);
-        alert('Failed to upload photo.');
+        alert('Помилка :(');
       }
     }
   };
@@ -249,7 +249,7 @@ const ExtendedPerformerProfile = () => {
     if (image) {
       try {
         const response = await addPhoto(image, token); // Upload the single selected photo
-        alert(response); // Show success message
+ // Show success message
       } catch (error) {
         console.error('Error uploading photo:', error);
         alert('Failed to upload photo.');
@@ -390,7 +390,7 @@ const ExtendedPerformerProfile = () => {
           setSavedImages(portfolioData); // Store fetched images
         }
       } catch (error) {
-        console.error('Error fetching portfolio images:', error);
+        console.error('Ошибка при загрузке портфолио:', error);
       }
     };
 
